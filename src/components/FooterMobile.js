@@ -41,7 +41,7 @@ function FooterMobile() {
 
       <div className="grid grid-rows-4 place-items-center bg-[#F9F5FF] shadow-footer-shadow">
         {/* 1st col */}
-        <div className="grid-rows-2 ">
+        <div className="grid-rows-2 my-7">
           <div className="flex flex-row justify-center items-center">
             <img src={logo} height="70px" width="75px" className=""></img>
             <div className="flex flex-col justify-center items-start">
@@ -69,43 +69,11 @@ function FooterMobile() {
           </div>
         </div>
         {/* 2nd col */}
-        <div className="grid-cols-6">
-          <div className="mb-6 mt-2 font-bold text-center">Pages</div>
-          <div className="flex flex-col justify-center items-center">
-            <Link to="/services">
-              <div className="mb-4">Services</div>
-            </Link>
-            <Link to="/gallery">
-              <div className="mb-4">Gallery</div>
-            </Link>
-            <Link to="/blogs">
-              <div className="mb-4">Blogs</div>
-            </Link>
-            <Link to="/about">
-              <div className="mb-4">About Us</div>
-            </Link>
+        <div className="grid-cols-2">
+          <div className="mb-6 mt-2 font-bold text-center">Contact</div>
+          <div className="flex flex-col justify-center items-center">  
             <Link to="/contact">
-              <div className="mb-4">Contact Us</div>
-            </Link>
-
-            <div className="mb-4 cursor-pointer ">
-              FAQ
-            </div>
-          </div>
-        </div>
-        {/* 3rd col */}
-        <div className="grid-cols-4 place-self-center">
-          <div className="mb-6 font-bold text-center">Services</div>
-          <div className="flex flex-col justify-center items-center">
-            <div className="mb-4">Weddings Packages</div>
-            <div className="mb-4">Party Packages</div>
-            <div className="">Daily LifeStyles Packages</div>
-          </div>
-        </div>
-        {/* 4th col */}
-        <div className="grid-cols-4 place-self-center mt-[-12%]">
-          <div className="mb-6 font-bold text-center">Contact</div>
-          <div className="flex flex-row justify-center items-center mb-4">
+            <div className="flex flex-row justify-center items-center mb-4">
             <img
               src={phone}
               width="14.5px"
@@ -114,7 +82,12 @@ function FooterMobile() {
             ></img>
             <span>(436)555-0120</span>
           </div>
-          <div className="flex flex-row justify-center items-center mb-4">
+            </Link>
+          </div>
+        </div>
+        {/* 3rd col */}
+        <div className="grid-cols-1 place-self-center">
+        <div className="flex flex-row justify-center items-center mb-4">
             <img
               src={email}
               width="14.5px"
@@ -123,6 +96,9 @@ function FooterMobile() {
             ></img>
             <span>support@groobe.in</span>
           </div>
+        </div>
+        {/* 4th col */}
+        <div className="grid-cols-1 place-self-center mt-[-12%]"> 
           <div className="flex flex-row justify-center items-center mb-4">
             <img
               src={location}

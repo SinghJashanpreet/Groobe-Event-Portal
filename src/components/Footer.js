@@ -153,7 +153,7 @@ function Footer() {
       </div>
     </>
   ) : (
-    ""
+    <FooterMobile/>
   );
 }
 
