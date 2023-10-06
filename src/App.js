@@ -30,15 +30,15 @@ export default App;
 // import './App.css';
 
 // function App() {
-//   const [formData, setFormData] = useState({ FirstName: '', LastName: '', Email: '', Country: '', Address: '', City: '', State: '', Zip: '', Suscribe:false, Commentator:false, Viewers:false, radio:""});
-//   function changeHandler(event) {
-//     const {name, value, checked,type} = event.target
-//     setFormData((prevFormData) => {
-//       return {
-//         ...prevFormData, [name]: type == 'checkbox' ? checked : value
-//       }
-//     })
-//   }
+  // const [formData, setFormData] = useState({ FirstName: '', LastName: '', Email: '', Country: '', Address: '', City: '', State: '', Zip: '', Suscribe:false, Commentator:false, Viewers:false, radio:""});
+  // function changeHandler(event) {
+  //   const {name, value, checked,type} = event.target
+  //   setFormData((prevFormData) => {
+  //     return {
+  //       ...prevFormData, [name]: type == 'checkbox' ? checked : value
+  //     }
+  //   })
+  // }
 
 //   const submitHandler = (event) =>{
 //       event.preventDefault();

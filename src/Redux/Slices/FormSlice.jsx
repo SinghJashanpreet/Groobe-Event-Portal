@@ -1,21 +1,28 @@
-//Reducer takes 3 things
-// Initial name, InitialState, reducer(functiions all)
-
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  value: "hellow",
+const initialFormData = {
+  Society: "",
+  Service: "",
+  Design: "",
+  Hands: "",
+  Length: "",
+  
 };
 
 const FormSlice = createSlice({
   name: "FormData",
-  initialState,
+  initialState: initialFormData,
   reducers: {
     print: (state) => {
-      return {...state, value: state.value + "love u"}
+      const stateObject = { ...state };
+      console.log("State as Object:", stateObject);
+    },
+    setData: (state, action) => {
+      // Merge the payload with the existing state
+      return { ...state, ...action.payload };
     },
   },
 });
 
-export const { print } = FormSlice.actions;
+export const { print, setData } = FormSlice.actions;
 export default FormSlice.reducer;
