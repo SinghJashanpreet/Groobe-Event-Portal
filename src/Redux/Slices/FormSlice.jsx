@@ -6,7 +6,11 @@ const initialFormData = {
   Design: "",
   Hands: "",
   Length: "",
-  
+  Name: "",
+  PhoneNumber: "",
+  Date: "",
+  Slot: "",
+  Price: ""
 };
 
 const FormSlice = createSlice({
