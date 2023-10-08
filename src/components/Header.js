@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import HeaderNavbar from "./Navbar";
-// import HeaderText from "./HeaderText";
-// import HeaderSearch from "./HeaderSearch";
-// import HomeMobileListView from "./HomeMobileListView";
 import backgroundImgHome from "../assets/images/Home/pexels-deepak-khirodwala-3865895.png";
+import backgroundImgNail from "../assets/images/Home/Mask group.png";
 function Homeheader(props) {
+  var bg = props.bg;
+  bg = bg === undefined ? backgroundImgHome : backgroundImgNail;
   const forBlog = true;
   const rowCount = 1;
-  const bgImage = backgroundImgHome;
   const headerStyles = {
-    backgroundImage: `url(${bgImage})`,
+    backgroundImage: `url(${backgroundImgHome})`,
     backgroundPosition: "certer",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -38,10 +37,10 @@ function Homeheader(props) {
             <>
               <div className="flex flex-col justify-center md:justify-start items-center">
                 <h1 className="font-bell font-[400] text-3xl  md:text-4xl mt-0  md:mt-9 mb-1">
-                  Karwachauth Event
+                  {props.line1}
                 </h1>
                 <p className="font-Bell font-[400] text-xl md:text-2xl">
-                  Mehndi | Nail art service
+                  {props.line2}
                 </p>
               </div>
             </>
@@ -49,10 +48,10 @@ function Homeheader(props) {
             <>
               <div className="flex flex-col justify-center md:justify-start items-center">
                 <h1 className="font-bell font-[400] text-3xl  md:text-4xl mt-0  md:mt-9 mb-1">
-                  Karwachauth Event
+                  {props.line1}
                 </h1>
                 <p className="font-Bell font-[400] text-xl md:text-2xl">
-                  Mehndi | Nail art service
+                  {props.line2}
                 </p>
               </div>
             </>

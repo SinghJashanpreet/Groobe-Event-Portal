@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
+import whatsapp from '../../assets/images/Frame 2219.svg'
 function Society() {
   const formData = useSelector((state) => state.FormData);
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function Society() {
 
   return (
     <div className="text-center">
+      <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
       {/* {dispatch(print())} */}
       <h1>Choose Your Society</h1>
       <div className="flex flex-col">

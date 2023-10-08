@@ -5,23 +5,25 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
 import { Link } from "react-router-dom";
-
+import whatsapp from "../../assets/images/Frame 2219.svg";
 function Time() {
   const [fName, setFname] = useState("");
   const [phone, setPhone] = useState("");
+  var [error, seterror] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
 
   const HandleNameChange = (event) => {
+    seterror(false);
     setFname(event.target.value);
   };
 
   const HandlePhoneChange = (event) => {
+    seterror(false);
     setPhone(event.target.value);
   };
 
   const HandleDate = (name) => {
-    console.log(name);
     setSelectedDate(name);
   };
   const HandleSlot = (name) => {
@@ -34,6 +36,7 @@ function Time() {
   // Your changeHandler function
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
+    seterror(fName === "" || phone === "" ? true : false);
     const Date = selectedDate;
     const Slot = selectedSlot;
     const ph = phone;
@@ -59,22 +62,30 @@ function Time() {
   ];
   return (
     <div>
-      <Homeheader />
+      <img
+        src={whatsapp}
+        width="120px"
+        height="70px"
+        className="fixed top-[50vh] right-0"
+      ></img>
+      <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="flex flex-row justify-evenly">
         <div className="flex flex-col">
           <label>Full Name</label>
           <input
             value={fName}
             type="text"
-            className="border-2"
+            className={error === true ? "border-2 border-red-600" : "border-2"}
             onChange={HandleNameChange}
+            required
           />
           <label>Phone Number</label>
           <input
             value={phone}
             type="number"
-            className="border-2"
+            className={error === true ? "border-2 border-red-600" : "border-2"}
             onChange={HandlePhoneChange}
+            required
           />
         </div>
         <div className="w-[35%]">
@@ -107,8 +118,8 @@ function Time() {
               </buttton>
             ))}
           </div>
-          <Link to='/confirm'>
-          <button onClick={changeHandler}>Book</button>
+          <Link to={fName === "" || phone === "" ? "" : "/confirm"}>
+            <button onClick={changeHandler}>Book</button>
           </Link>
         </div>
       </div>
