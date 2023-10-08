@@ -6,7 +6,7 @@ import img2 from "../../assets/images/Services/Nail Art.svg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
-
+import whatsapp from "../../assets/images/Frame 2219.svg";
 function Service() {
   const formData = useSelector((state) => state.FormData);
   const dispatch = useDispatch();
@@ -14,13 +14,19 @@ function Service() {
   // Your changeHandler function
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
-    const selectedService = event.target.getAttribute('name');
+    const selectedService = event.target.getAttribute("name");
     dispatch(setData({ Service: selectedService }));
-    dispatch(print()); 
+    dispatch(print());
   }
   return (
     <div>
-      <Homeheader />
+      <img
+        src={whatsapp}
+        width="120px"
+        height="70px"
+        className="fixed top-[50vh] right-0"
+      ></img>
+      <Homeheader line1="Karwachauth Event" line2="Mehndi | Nail art service" />
       <div>
         <Link to="/design">
           <img src={img1} name="Mehndi" onClick={changeHandler}></img>

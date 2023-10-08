@@ -5,6 +5,7 @@ import HandLengthImage from "../../assets/images/Price/Group 2237.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
 import { Link } from "react-router-dom";
+import whatsapp from "../../assets/images/Frame 2219.svg";
 function Price() {
   const [SelectedPrice, setSelectedPrice] = useState(null);
   const [SelectedHands, setSelectedHands] = useState(null);
@@ -26,14 +27,14 @@ function Price() {
     const selectedHands = SelectedHands;
     const selectedLength = SelectedPrice;
     var price = 0;
-    switch(selectedLength){
-      case 'Elbow':
+    switch (selectedLength) {
+      case "Elbow":
         price = 253;
         break;
-      case 'Wrist':
+      case "Wrist":
         price = 252;
         break;
-      case 'Palm':
+      case "Palm":
         price = 251;
         break;
     }
@@ -43,7 +44,13 @@ function Price() {
   }
   return (
     <div>
-      <Homeheader />
+      <img
+        src={whatsapp}
+        width="120px"
+        height="70px"
+        className="fixed top-[50vh] right-0"
+      ></img>
+      <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="flex flex-row">
         {/* left */}
         <div>
