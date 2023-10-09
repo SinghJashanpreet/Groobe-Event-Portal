@@ -23,7 +23,7 @@ function Homeheader(props) {
       <div
         style={headerStyles}
         className="
-          font-Bell
+        font-Bell
         md:h-[54vh]
         sm:h-[54vh]
         h-[45vh]
@@ -32,7 +32,7 @@ function Homeheader(props) {
     "
       >
         <HeaderNavbar isOpen={isOpen} setOpen={setOpen} />
-        <div className={`grid grid-rows-1 gap-0 h-[80%] md:h-[50vh]`}>
+         <div className={`grid grid-rows-1 gap-0 `}> {/*h-[80%] md:h-[50vh]  */}
           {!isOpen ? (
             <>
               <div className="flex flex-col justify-center md:justify-start items-center">
