@@ -12,12 +12,15 @@ function Society() {
     // const { name, value, checked, type } = event.target;
     const selectedSociety = event.target.getAttribute('name');
     dispatch(setData({ Society: selectedSociety }));
-    dispatch(print()); 
+    dispatch(print());
   }
 
   return (
     <div className="text-center">
-      <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
+      <a href="https://api.whatsapp.com/send?phone=918360741113&text=Hi,%20I%27ve%20seen%20your%20portfolio%20and%20want%20the%20booking">
+        <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
+      </a>
+
       {/* {dispatch(print())} */}
       <h1>Choose Your Society</h1>
       <div className="flex flex-col">

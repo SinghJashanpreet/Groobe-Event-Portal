@@ -1,4 +1,4 @@
-import {React} from "react";
+import { React } from "react";
 import Homeheader from "../Header";
 import Footer from "../Footer";
 import Modal from "react-modal";
@@ -20,12 +20,9 @@ function Confirm() {
   return (
     <>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
-      <img
-        src={whatsapp}
-        width="120px"
-        height="70px"
-        className="fixed top-[50vh] right-0"
-      ></img>
+      <a href="https://api.whatsapp.com/send?phone=918360741113&text=Hi,%20I%27ve%20seen%20your%20portfolio%20and%20want%20the%20booking">
+        <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
+      </a>
       <div className="flex flex-row justify-evenly">
         <div className="border-2 border-[#440BB7]">
           <h1>{formData.Name}</h1>
@@ -53,7 +50,7 @@ function Confirm() {
           </div>
         </div>
       </div>
-      <button onClick={()=>toggleModal()}>Confirm and Pay</button>
+      <button onClick={() => toggleModal()}>Confirm and Pay</button>
       <Modal
         isOpen={isModalOpen}
         onRequestClose={toggleModal}
@@ -64,8 +61,8 @@ function Confirm() {
         shouldCloseOnEsc={true} // Close on pressing the Escape key
       >
         <PopupContent onClose={toggleModal} />
-        
-        
+
+
       </Modal>
       <Footer />
     </>

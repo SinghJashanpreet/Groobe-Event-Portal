@@ -25,53 +25,53 @@ function Design() {
   const designArray =
     formData.Service === "Mehndi"
       ? [
-          {
-            src: img1,
-            name: "Bridal Mehndi",
-          },
-          {
-            src: img2,
-            name: "Arabic Mehndi",
-          },
-          {
-            src: img3,
-            name: "Khafif Mehndi",
-          },
-          {
-            src: img4,
-            name: "Indo Arabic Mehndi",
-          },
-          {
-            src: img5,
-            name: "Tattoo Mehndi",
-          },
-        ]
+        {
+          src: img1,
+          name: "Bridal Mehndi",
+        },
+        {
+          src: img2,
+          name: "Arabic Mehndi",
+        },
+        {
+          src: img3,
+          name: "Khafif Mehndi",
+        },
+        {
+          src: img4,
+          name: "Indo Arabic Mehndi",
+        },
+        {
+          src: img5,
+          name: "Tattoo Mehndi",
+        },
+      ]
       : [
-          {
-            src: img6,
-            name: "Colored-Tip Nails",
-          },
-          {
-            src: img7,
-            name: "Freehand Nails",
-          },
-          {
-            src: img8,
-            name: "Air Brushing Nails",
-          },
-          {
-            src: img9,
-            name: "Sticker Nails",
-          },
-          {
-            src: img10,
-            name: "Stencil Nails",
-          },
-          {
-            src: img11,
-            name: "Glitter Nails",
-          },
-        ];
+        {
+          src: img6,
+          name: "Colored-Tip Nails",
+        },
+        {
+          src: img7,
+          name: "Freehand Nails",
+        },
+        {
+          src: img8,
+          name: "Air Brushing Nails",
+        },
+        {
+          src: img9,
+          name: "Sticker Nails",
+        },
+        {
+          src: img10,
+          name: "Stencil Nails",
+        },
+        {
+          src: img11,
+          name: "Glitter Nails",
+        },
+      ];
   // Your changeHandler function
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
@@ -82,12 +82,9 @@ function Design() {
 
   return (
     <div>
-      <img
-        src={whatsapp}
-        width="120px"
-        height="70px"
-        className="fixed top-[50vh] right-0"
-      ></img>
+      <a href="https://api.whatsapp.com/send?phone=918360741113&text=Hi,%20I%27ve%20seen%20your%20portfolio%20and%20want%20the%20booking">
+        <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
+      </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" bg={bg} />
       <div>
         {designArray.map((design) => (

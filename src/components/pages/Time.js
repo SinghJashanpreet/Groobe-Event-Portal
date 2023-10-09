@@ -62,12 +62,9 @@ function Time() {
   ];
   return (
     <div>
-      <img
-        src={whatsapp}
-        width="120px"
-        height="70px"
-        className="fixed top-[50vh] right-0"
-      ></img>
+      <a href="https://api.whatsapp.com/send?phone=918360741113&text=Hi,%20I%27ve%20seen%20your%20portfolio%20and%20want%20the%20booking">
+        <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
+      </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="flex flex-row justify-evenly">
         <div className="flex flex-col">

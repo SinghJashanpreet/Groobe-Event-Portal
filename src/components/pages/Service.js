@@ -20,12 +20,9 @@ function Service() {
   }
   return (
     <div>
-      <img
-        src={whatsapp}
-        width="120px"
-        height="70px"
-        className="fixed top-[50vh] right-0"
-      ></img>
+      <a href="https://api.whatsapp.com/send?phone=918360741113&text=Hi,%20I%27ve%20seen%20your%20portfolio%20and%20want%20the%20booking">
+        <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
+      </a>
       <Homeheader line1="Karwachauth Event" line2="Mehndi | Nail art service" />
       <div>
         <Link to="/design">

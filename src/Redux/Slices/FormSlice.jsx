@@ -10,7 +10,8 @@ const initialFormData = {
   PhoneNumber: "",
   Date: "",
   Slot: "",
-  Price: ""
+  Price: "",
+  PayMethod: "",
 };
 
 const FormSlice = createSlice({
