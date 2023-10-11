@@ -23,22 +23,28 @@ function Design() {
     return (
     <div>
         <Homeheader/>
-        <div>
+        <div className="flex lg:flex-row flex-col justify-center mt-10 w-[100%] ">
+        {/* <div className="flex  space-x-5 "> */}
+        <div className="flex flex-col space-y-2 ">
           <Link to='/price'>
-            <img src={img1} name="Bridal Mehndi" onClick={changeHandler}></img>    
+            <img src={img1} className="w-[90%] ml-10 justify-center" name="Bridal Mehndi" onClick={changeHandler}></img>    
           </Link>
           <Link to='/price'>
-            <img src={img2} name="Arabic Mehndi" onClick={changeHandler}></img>    
+            <img src={img2} className="w-[90%] ml-10" name="Arabic Mehndi" onClick={changeHandler}></img>    
           </Link>
           <Link to='/price'>
-            <img src={img3} name="Khafif Mehndi" onClick={changeHandler}></img>    
+            <img src={img3} className="w-[90%] ml-10" name="Khafif Mehndi" onClick={changeHandler}></img>    
+          </Link>
+          </div>
+          <div className="flex flex-col space-y-2">
+          <Link to='/price'>
+            <img src={img4} className="w-[90%] ml-10" name="Indo Arabic Mehndi" onClick={changeHandler}></img>    
           </Link>
           <Link to='/price'>
-            <img src={img4} name="Indo Arabic Mehndi" onClick={changeHandler}></img>    
+            <img src={img5} className="w-[90%] ml-10" name="Tattoo Mehndi" onClick={changeHandler}></img>    
           </Link>
-          <Link to='/price'>
-            <img src={img5} name="Tattoo Mehndi" onClick={changeHandler}></img>    
-          </Link>
+          </div>
+          {/* </div> */}
         </div>
         <Footer/>
     </div>

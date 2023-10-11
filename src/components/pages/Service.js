@@ -21,15 +21,17 @@ function Service() {
   return (
     <div>
       <Homeheader />
-      <div>
-        <Link to="/design">
-          <img src={img1} name="Mehndi" onClick={changeHandler}></img>
-        </Link>
+        <div className="flex flex-row justify-center">
+        <div className="flex justify-between lg:space-x-12 space-x-5">
+          <Link to="/design">
+            <img src={img1} className="lg:mt-20 lg:mb-16 mt-10 mb-10 " name="Mehndi" onClick={changeHandler}></img>
+          </Link>
 
-        <Link to="/design">
-          <img src={img2} name="Nail Art" onClick={changeHandler}></img>
-        </Link>
-      </div>
+          <Link to="/design">
+            <img src={img2} className="lg:mt-20 lg:mb-16 mt-10 mb-10" name="Nail Art" onClick={changeHandler}></img>
+          </Link>
+        </div>
+        </div>
       <Footer />
     </div>
   );
