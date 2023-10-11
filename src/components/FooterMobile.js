@@ -39,7 +39,7 @@ function FooterMobile() {
         </Modal>
       </div> */}
 
-      <div className="grid grid-rows-4 place-items-center bg-[#F9F5FF] shadow-footer-shadow">
+      <div className="grid grid-rows-[_2fr_1fr_1fr_1fr] sm:grid-rows-[_2fr_1fr_1fr_1.3fr] place-items-center bg-[#F9F5FF] shadow-footer-shadow">
         {/* 1st col */}
         <div className="grid-rows-2 my-7">
           <div className="flex flex-row justify-center items-center">
