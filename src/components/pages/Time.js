@@ -101,8 +101,8 @@ function Time() {
               <buttton
                 className={
                   selectedSlot === slot
-                    ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-3 lg:pl-10"
-                    : "border border-black rounded-md lg:pl-10 m-3 p-3"
+                    ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-3 2lg:pl-9 2md:pl-3 md:pl-1"
+                    : "border border-black rounded-md 2lg:pl-9 2md:pl-3 md:pl-1 m-3 p-1"
                 }
                 onClick={() => HandleSlot(slot)}
               >
