@@ -29,22 +29,31 @@ function Design() {
             src: img1,
             name: "Bridal Mehndi",
             color: "#264653",
+            textColor: "white",
           },
           {
             src: img2,
             name: "Arabic Mehndi",
+            color: "#2A9D8F",
+            textColor: "white",
           },
           {
             src: img3,
             name: "Khafif Mehndi",
+            color: "#E9C46A",
+            textColor: "white",
           },
           {
             src: img4,
             name: "Indo Arabic Mehndi",
+            color: "#F4A261",
+            textColor: "white",
           },
           {
             src: img5,
             name: "Tattoo Mehndi",
+            color: "#E76F51",
+            textColor: "white",
           },
         ]
       : [
@@ -104,11 +113,13 @@ function Design() {
         ></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" bg={bg} />
+      {console.log(formData.Service)}
       <div className="grid grid-rows-1 md:grid-cols-[_2fr_2fr] mx-[6.5%] gap-x-[7%]">
         {designArray.map((design) => (
           <Link to={formData.Service === "Nail Art" ? "/time" : "/price"}>
             <div
-              className={`bg-[${design.color}]
+            style={{ backgroundColor: design.color }}
+              className={`
             grid grid-cols-[_2fr_1.5fr] lg:grid-cols-[_2.5fr_1.5fr] 
             min-w-[310px] max-w-[650px] min-h-[210px]
             max-h-[400px] w-full rounded-lg my-7
