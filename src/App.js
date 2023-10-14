@@ -9,6 +9,7 @@ import Design from "./components/pages/Design";
 import Confirm from "./components/pages/Confirm";
 import Time from "./components/pages/Time";
 import Price from "./components/pages/Price";
+import Receipt from "./components/Receipt";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="price" element={<Price />} />
       <Route path="time" element={<Time />} />
       <Route path="confirm" element={<Confirm />} />
+      <Route path="receipt" element={<Receipt/>} />
     </Routes>
   );
 }

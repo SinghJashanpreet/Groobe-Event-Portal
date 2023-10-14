@@ -7,7 +7,7 @@ import Society from '../pages/Society';
 function Main() {
   return (
     <div>
-      <Homeheader/>
+      <Homeheader line1="Karwachauth Event" line2="Mehndi | Nail art service"/>
       <Society/>
       <Footer />
     </div>

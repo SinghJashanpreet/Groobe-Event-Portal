@@ -4,13 +4,14 @@ const initialFormData = {
   Society: "",
   Service: "",
   Design: "",
-  Hands: "",
-  Length: "",
+  Hands: "Both Hands",
+  Length: "Full",
   Name: "",
   PhoneNumber: "",
   Date: "",
   Slot: "",
-  Price: ""
+  Price: "",
+  PayMethod: "",
 };
 
 const FormSlice = createSlice({
