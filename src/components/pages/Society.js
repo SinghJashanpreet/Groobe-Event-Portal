@@ -28,21 +28,21 @@ function Society() {
 
         <div className="flex flex-col lg:w-96 w-[100%]">
           <Link to="/service">
-            <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="JLPL1" onClick={changeHandler}>Suncity Parikarma</div>
+            <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="Suncity Parikarma" onClick={changeHandler}>Suncity Parikarma</div>
           </Link>
           <Link to="/service">
-            <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="JLPL2" onClick={changeHandler}>Homeland</div>
+            <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="Homeland" onClick={changeHandler}>Homeland</div>
           </Link>
           <Link to="/service">
-            <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="JLPL3" onClick={changeHandler}>GBP Sunview</div>
+            <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="GBP Sunview" onClick={changeHandler}>GBP Sunview</div>
           </Link>
         </div>
         <div className="flex flex-col lg:w-96 w-[100%] ">
         <Link to="/service">
-          <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="JLPL4" onClick={changeHandler}>GMS-31</div>
+          <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="GMS-31" onClick={changeHandler}>GMS-31</div>
         </Link>
         <Link to="/service">
-          <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="JLPL5" onClick={changeHandler}>Mona City Homes</div>
+          <div className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl" name="Mona City Homes" onClick={changeHandler}>Mona City Homes</div>
         </Link>
       </div>
       </div>

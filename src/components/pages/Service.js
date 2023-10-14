@@ -46,11 +46,8 @@ function Service() {
       <div className="grid grid-rows-1 md:grid-cols-[0.6fr_1.9fr_1.9fr_0.6fr] md:gap-7 place-items-center">
         <div></div>
         {serviceMap.map((service) => (
-          <Link
-            to={{ pathname: "/design", state: { serviceName: service.name } }}
-            // name={service.name}
-            // onClick={changeHandler}
-          >
+          <Link  to={{ pathname: "/design", state: { serviceName: service.name } }}>
+          <div  >  
             <div
               className={
                 service.name === "Mehndi Design"
