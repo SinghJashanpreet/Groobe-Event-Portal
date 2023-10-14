@@ -17,43 +17,44 @@ function Receipt() {
   }
   return (
     <div>
-      <img src={groobeLogo}></img>
-      <div className='border-2 border-black w-max'>
-        <div className='flex flex-row'>
-          <h1>Name:  </h1>
-          <h1>{formData.Name}</h1>
+      <img className="flex flex-row ml-[50%]" src={groobeLogo}></img>
+      <div className="border-2 border-gray-500 w-max rounded-lg pr-14 pl-14 pt-3 pb-6 ml-[42%] text-xl mt-2">
+        <div className='flex flex-row mb-3'>
+          <h1>Name :</h1>
+          <h1 className='ml-1'>{formData.Name}</h1>
         </div>
-        <div className='flex flex-row'>
-          <h1>Ph. No: </h1>
-          <h1>{formData.PhoneNumber}</h1>
+        <div className='flex flex-row mb-3'>
+          <h1>Ph. No :</h1>
+          <h1 className='ml-1'>{formData.PhoneNumber}</h1>
         </div>
-        <div className='flex flex-row'>
-          <h1>Date: </h1>
-          <h1>{formData.Date}</h1>
+        <div className='flex flex-row mb-3'>
+          <h1>Date :</h1>
+          <h1 className='ml-1'>{formData.Date}</h1>
         </div>
-        <div className='flex flex-row'>
-          <h1>Service: </h1>
-          <h1>{formData.Service}</h1>
+        <div className='flex flex-ro mb-3w'>
+          <h1>Service :</h1>
+          <h1 className='ml-1'>{formData.Service}</h1>
         </div>
-        <div className='flex flex-row'>
-          <h1>Hands: </h1>
-          <h1>{formData.Hands}</h1>
+        <div className='flex flex-row mb-3'>
+          <h1>Hands :</h1>
+          <h1 className='ml-1'>{formData.Hands}</h1>
         </div>
-        <div className='flex flex-row'>
-          <h1>Amount:</h1>
-          <h1>{formData.Price}</h1>
+        <div className='flex flex-row mb-3'>
+          <h1>Amount :</h1>
+          <h1 className='ml-1'>{formData.Price}</h1>
         </div>
-        <div className='flex flex-row'>
-          <h1>Payment:</h1>
-          <h1 className='bg-[#9DC9A2]'>{formData.PayMethod}</h1>
+        <div className='flex flex-row mb-3'>
+          <h1>Payment :</h1>
+          <h1 className='bg-[#9DC9A2] p-1 rounded-md ml-1'>{formData.PayMethod}</h1>
         </div>
 
         <img src=''></img>
-        <h1>s.no: xx8239233231</h1>
-        <img src={QR}></img>
+        
+        <img className='ml-[10%] mb-3' src={QR}></img>
+        <h1 className='mb-3 ml-1 font-bold'>s.no : xx8239233231</h1>
       </div>
       <div>
-        <button>Download</button>
+        <button className='bg-[#440BB7] rounded-md pl-10 pr-10 pt-2 pb-2 w-1/4 ml-[42%] mt-10 text-white' >Download</button>
       </div>
     </div>
 

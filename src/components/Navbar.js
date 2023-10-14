@@ -59,7 +59,7 @@ function HeaderNavbar(props) {
       sm:ml-0"
       >
         <Link to="/">
-          <img src={logo} alt="Logo" className="w-[70px] h-[50px]" />
+          <img src={logo} alt="Logo" className="w-[120px] h-[70px] lg:w-[120px] lg:h-[70px] m:h-[80px] m:w-[60px] s:h-[70px] s:w-[50px]"  />
         </Link>
       </div>
       {/* The rest of your grid items */}

@@ -27,6 +27,7 @@ function Service() {
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
     const selectedService = event.target.getAttribute("name");
+    console.log(selectedService)
     dispatch(setData({ Service: selectedService }));
     dispatch(print());
   }
@@ -40,12 +41,13 @@ function Service() {
           className="fixed top-[50vh] right-0"
         ></img>
       </a>
-      <Homeheader line1="Karwachauth Event" line2="Mehndi | Nail art service" />
+      <Homeheader className="m:w-5 m:h-5 " line1="Karwachauth Event" line2="Mehndi | Nail art service" />
 
       <div className="grid grid-rows-1 md:grid-cols-[0.6fr_1.9fr_1.9fr_0.6fr] md:gap-7 place-items-center">
         <div></div>
         {serviceMap.map((service) => (
           <Link to="/design">
+          <div  >  
             <div
               className={
                 service.name === "Mehndi Design"
@@ -58,19 +60,21 @@ function Service() {
                   max-h-[400px] w-[32vw] h-full rounded-lg my-0 mb-[1.2rem] 
                   md:my-[3rem]`
               }
-              onClick={changeHandler}
+             
               name={service.name}
-            >
+             
+                >
               <span className="flex flex-col justify-center">
                 <h1 className="pl-3 font-Bell text-4xl">{service.name}</h1>
                 <h2 className="pl-3 font-inter text-base">{service.desc}</h2>
               </span>
-              <div className="flex items-end justify-end grow-0">
+              <div className="flex items-end justify-end grow-0 " onClick={changeHandler}>
                 <img
                   src={service.src}
                   name={service.name}
                   className="lg:w-[80%]"
                 ></img>
+                </div>
               </div>
             </div>
           </Link>

@@ -28,7 +28,7 @@ function Design() {
           {
             src: img1,
             name: "Bridal Mehndi",
-            color: "#264653",
+            color: "264653",
           },
           {
             src: img2,
@@ -47,7 +47,7 @@ function Design() {
             name: "Tattoo Mehndi",
           },
         ]
-      : [
+      :[
           {
             src: img6,
             name: "Colored-Tip Nails",
@@ -83,7 +83,7 @@ function Design() {
             name: "Glitter Nails",
             color: "#264653",
             textColor: "white",
-          },
+          }
         ];
   // Your changeHandler function
   function changeHandler(event) {
