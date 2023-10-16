@@ -36,7 +36,7 @@ function Homeheader(props) {
           {!isOpen ? (
             <>
               <div className="flex flex-col justify-center md:justify-start items-center">
-                <h1 className="font-bell font-[400] text-3xl  md:text-4xl mt-0  md:mt-9 mb-1">
+                <h1 className="font-bell font-[400] text-3xl  md:text-4xl mt-0  md:mt-9 mb-1 m:mt-14">
                   {props.line1}
                 </h1>
                 <p className="font-Bell font-[400] text-xl md:text-2xl">

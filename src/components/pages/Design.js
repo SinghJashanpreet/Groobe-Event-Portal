@@ -14,6 +14,7 @@ import img9 from "../../assets/images/Design/airbrushing_nails 1 (3).svg";
 import img10 from "../../assets/images/Design/colored_tip_nails_1 1 (1).svg";
 import img11 from "../../assets/images/Design/colored_tip_nails_1 1 (2).svg";
 
+
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
@@ -56,7 +57,7 @@ function Design() {
             textColor: "white",
           },
         ]
-      :[
+       :[
           {
             src: img6,
             name: "Colored-Tip Nails",
@@ -109,7 +110,7 @@ function Design() {
           src={whatsapp}
           width="120px"
           height="70px"
-          className="fixed top-[50vh] right-0"
+          className="fixed top-[50vh] right-0 z-[1]"
         ></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" bg={bg} />

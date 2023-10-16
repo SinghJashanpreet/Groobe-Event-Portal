@@ -48,17 +48,17 @@ function Price() {
         <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
-      <div className="flex flex-row justify-between">
+      <div className="md:flex md:flex-row  lg:justify-between ">
         {/* left */}
-        <div className="border border-black ml-[10%]">
-          <h1 className="font-Bell text-2xl ml-[10%] mt-[8%]">Bridal Mehendi</h1>
+        <div className="shadow-xl border-1 lg:ml-[10%]">
+          <h1 className="font-Bell text-2xl font-semibold ml-[10%] mt-[8%] cursor-pointer">Bridal Mehendi</h1>
           <div className="text-xl mt-[8%] ml-[10%] flex justify-between mr-[10%]">
             <button
               name="Both Hands"
               className={ 
                 SelectedHands === "Both Hands"
-                  ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10"
-                  : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10"
+                  ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
+                  : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
               }
               onClick={() => HandleHands("Both Hands")}
             >
@@ -68,18 +68,18 @@ function Price() {
               name="Single Hand"
               className={
                 SelectedHands === "Single Hand"
-                ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10"
-                : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10"
+                ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
+                : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
               }
               onClick={() => HandleHands("Single Hand")}
             >
               Single Hand
             </button>
           </div>
-          <img className="md:w-fit md:h-fit 2md:w-fit 2md:h-fit" src={HandLengthImage}></img>
+          <img className="md:w-fit md:h-fit 2md:w-fit md:sm-[10%] " src={HandLengthImage}></img>
         </div>
         {/* right */}
-        <div className="border border-black mr-[10%] text-xl">
+        <div className="shadow-xl border-1 lg:mr-[10%] text-xl">
           <div
             className={
               SelectedPrice === "Palm" 
@@ -90,7 +90,7 @@ function Price() {
             onClick={() => HandleLength("Palm")}
           >
           <div className=" flex justify-between">
-            <p className="inline clear-right">Palm Length</p>
+            <p className="inline clear-right cursor-pointer">Palm Length</p>
             <p className="inline clear-left">₹251</p>
             </div>
           </div>
@@ -104,7 +104,7 @@ function Price() {
             onClick={() => HandleLength("Wrist")}
           >
           <div className=" flex justify-between">
-            <p className="inline clear-right">Wrist Length</p>
+            <p className="inline clear-right cursor-pointer">Wrist Length</p>
             <p className="inline clear-left">₹252</p>
           </div>
           </div>
@@ -118,12 +118,12 @@ function Price() {
             onClick={() => HandleLength("Elbow")}
           >
           <div className=" flex justify-between">
-             <p className="inline clear-right">Elbow Length</p>
+             <p className="inline clear-right cursor-pointer">Elbow Length</p>
             <p className="inline clear-left">₹252</p>
             </div>
           </div>
           <Link to="/time">
-            <button className="bg-[#440BB7] text-white lg:w-60 w-32 h-10 rounded-lg m-16 " onClick={changeHandler}>BOOK</button>
+            <button className="bg-[#440BB7] text-white w-72 s:mt-[10%] h-10 rounded-lg m-10" onClick={changeHandler}>BOOK</button>
           </Link>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import logo from "../assets/images/groobe logo2.svg";
-import { Divide as Hamburger } from "hamburger-react";
+// import { Divide as Hamburger } from "hamburger-react";
 import { Link, useNavigate } from "react-router-dom";
 function HeaderNavbar(props) {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ function HeaderNavbar(props) {
   const menuRef = useRef(null);
 
   // Function to handle hamburger click
-  const handleHamburgerClick = () => {
-    setOpen(!isOpen);
-    // setShowMyList(!showMyList)
-  };
+  // const handleHamburgerClick = () => {
+  //   setOpen(!isOpen);
+   
+  // };
 
   // Effect to listen for screen size changes and update otherServices state
   useEffect(() => {
@@ -87,7 +87,7 @@ function HeaderNavbar(props) {
       )}
       {/* Add the "hamburger-react" component */}
       <div ref={menuRef} className="md:hidden flex justify-end mr-1 2m:mr-5 sm:mr-7 mt-1">
-        <Hamburger toggled={isOpen} toggle={handleHamburgerClick} />
+        {/* <Hamburger toggled={isOpen} toggle={handleHamburgerClick} /> */}
       </div>
     </div>
   );

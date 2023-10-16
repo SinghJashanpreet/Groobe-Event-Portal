@@ -90,7 +90,7 @@ function Time() {
           </div>
         </div>
         <div className="w-1/2  shadow-xl border-1 p-10 rounded-lg">
-          <p>Time and Date</p>
+          <p className="">Time and Date</p>
           <div className="w-auto border border-black grid grid-cols-4 rounded-md p-1 mt-2">
             {datesArray.map((date) => (
               <button
