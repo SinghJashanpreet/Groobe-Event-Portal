@@ -42,10 +42,35 @@ const PopupContent = ({ onClose }) => {
 
 
 
-  const HandleMethod = (event) => {
-    const method = event.target.getAttribute("name");
-    dispatch(setData({ PayMethod: method }));
-    dispatch(print());
+  const HandleMethod = async(event) => {
+    try{
+      const method = event.target.getAttribute("name");
+      dispatch(setData({ PayMethod: method }));
+      // const data = {
+      //   sid: formData.SocietyId,
+      //   time: formData.Slot,
+      //   date: formData.Date,
+      //   location: formData.Society,
+      //   name: formData.Name,
+      //   mobile: formData.PhoneNumber,
+      //   paymentStatus: "Not Paid",
+      //   bookedServices: formData.ServiceId,
+      //   paymentMode: "Unverified",
+      // };
+      // const response = await fetch("http://localhost:8000/booking", {
+      //   method: "POST",
+      //   body: JSON.stringify(data),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      // const result = await response.json();
+      // console.log(result);
+      dispatch(print());
+    }
+    catch(e){
+      console.log(e);
+    }
   }
 
   return (
