@@ -6,12 +6,14 @@ import { print, setData } from "../Redux/Slices/FormSlice";
 // import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 // import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 // import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import groobe from '../assets/images/groobe logo2.svg'
+import groobe from "../assets/images/groobe logo2.svg";
 import { Link } from "react-router-dom";
+import Receipt from "./Receipt";
 const PopupContent = ({ onClose }) => {
   const dispatch = useDispatch();
   // Initialize an array of isDetailsOpen states, one for each details element
   const [isDetailsOpen, setIsDetailsOpen] = useState(new Array(12).fill(false));
+  const [showReceipt, setShowReceipt] = useState(false);
 
   // Function to toggle the state of a specific details element
   const toggleDetails = (index) => {
@@ -40,11 +42,25 @@ const PopupContent = ({ onClose }) => {
     };
   }, [onClose]);
 
-
-
-  const HandleMethod = async(event) => {
-    try{
+  const HandleMethod = async (event) => {
+    try {
       const method = event.target.getAttribute("name");
+
+      // Retrieve the existing data from localStorage, if any
+      const existingData = localStorage.getItem("eventData");
+
+      // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+      const eventData = existingData ? JSON.parse(existingData) : {};
+
+      // Add or update the Service and ServiceId properties
+      eventData.PayMethod = method;
+
+      // Convert the updated object to a JSON string
+      const jsonString = JSON.stringify(eventData);
+
+      // Store the updated JSON string in localStorage
+      localStorage.setItem("eventData", jsonString);
+
       dispatch(setData({ PayMethod: method }));
       // const data = {
       //   sid: formData.SocietyId,
@@ -67,25 +83,44 @@ const PopupContent = ({ onClose }) => {
       // const result = await response.json();
       // console.log(result);
       dispatch(print());
-    }
-    catch(e){
+      setShowReceipt(true);
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   return (
     <div className="relative">
-      <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full">
-        <img src={groobe} width='60px'></img>
-      </h1>
+      {showReceipt === false ? (
+        <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full">
+          <img src={groobe} width="60px"></img>
+        </h1>
+      ) : (
+        <></>
+      )}
 
       <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg  pr-5 pl-5">
-        <Link to='/receipt'>
-          <h1 className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5" name="Pay After Service" onClick={HandleMethod}>Pay after Service</h1>
-        </Link>
-        <Link to='/receipt'>
-          <h1 className="border border-gray-300 pl-5 pt-2 pb-2  mb-5" name="Online" onClick={HandleMethod}>Pay Now</h1>
-        </Link> 
+        {showReceipt === false ? (
+          <>
+            <h1
+              className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5"
+              name="Pay After Service"
+              onClick={HandleMethod}
+            >
+              Pay after Service
+            </h1>
+
+            <h1
+              className="border border-gray-300 pl-5 pt-2 pb-2  mb-5"
+              name="Online"
+              onClick={HandleMethod}
+            >
+              Pay Now
+            </h1>
+          </>
+        ) : (
+          <Receipt />
+        )}
       </div>
     </div>
   );

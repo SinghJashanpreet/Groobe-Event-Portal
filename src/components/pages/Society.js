@@ -47,7 +47,17 @@ function Society() {
   // Your changeHandler function
   function changeHandler(event, idd) {
     // const { name, value, checked, type } = event.target;
-    
+    // Create an object to store Society and SocietyId
+    const EventData = {
+      Society: event,
+      SocietyId: idd,
+    };
+
+    // Convert the object to a JSON string
+    const jsonString = JSON.stringify(EventData);
+
+    // Store the JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
     dispatch(setData({ Society: event, SocietyId: idd }));
     dispatch(print());
   }
@@ -81,7 +91,7 @@ function Society() {
                     <div
                       className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl"
                       name={arr.name}
-                      onClick={()=>changeHandler(arr.name, arr.id)}
+                      onClick={() => changeHandler(arr.name, arr.id)}
                     >
                       {arr.name}
                     </div>
@@ -96,7 +106,7 @@ function Society() {
                     <div
                       className=" border border-3 p-3 border-purple-700 rounded-lg mt-8 h-14 text-xl"
                       name={arr.name}
-                      onClick={()=>changeHandler(arr.name, arr.id)}
+                      onClick={() => changeHandler(arr.name, arr.id)}
                     >
                       {arr.name}
                     </div>

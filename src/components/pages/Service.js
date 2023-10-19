@@ -9,13 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
 import whatsapp from "../../assets/images/Frame 2219.svg";
 function Service() {
-
   const [ServiceApiData, setServiceApiData] = useState(null);
   const [serviceID, setServiceID] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
-      
       try {
         setLoading(true);
         const response = await fetch("http://localhost:8000/service-data", {
@@ -58,12 +56,26 @@ function Service() {
   const dispatch = useDispatch();
 
   // Your changeHandler function
-  function changeHandler(event , idd) {
+  function changeHandler(event, idd) {
     // const { name, value, checked, type } = event.target;
     const selectedService = event;
+    // Retrieve the existing data from localStorage, if any
+    const existingData = localStorage.getItem("eventData");
 
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    // Add or update the Service and ServiceId properties
+    eventData.Service = event;
+    eventData.ServiceId = idd;
+
+    // Convert the updated object to a JSON string
+    const jsonString = JSON.stringify(eventData);
+
+    // Store the updated JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
     // const selectedService = event.location.state.serviceName;
-    dispatch(setData({ Service: selectedService, ServiceId:idd }));
+    dispatch(setData({ Service: selectedService, ServiceId: idd }));
     dispatch(print());
   }
   return (
@@ -91,8 +103,9 @@ function Service() {
           </div>
         ) : (
           ServiceApiData.map((service) => (
-            <Link to={{ pathname: "/design", state: { serviceId: service.id } }}>
-
+            <Link
+              to={{ pathname: "/design", state: { serviceId: service.id } }}
+            >
               {/* {console.group(service.id)} */}
               <div>
                 <div
@@ -102,7 +115,7 @@ function Service() {
                     max-h-[400px] w-[32vw] h-full rounded-lg mt-[0.9rem] mb-[0.9rem] 
                     md:my-[3rem]`}
                   onClick={() => {
-                    changeHandler(service.name,service.id);
+                    changeHandler(service.name, service.id);
                   }}
                 >
                   <span className="flex flex-col justify-center">

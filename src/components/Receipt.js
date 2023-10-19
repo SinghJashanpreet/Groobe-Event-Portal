@@ -5,7 +5,9 @@ import groobeLogo from '../assets/images/groobe logo2.svg'
 import QR from '../assets/images/Receipt/QR.svg'
 
 function Receipt() {
-  const formData = useSelector((state) => state.FormData);
+  // const formData = useSelector((state) => state.FormData);
+  let formData = localStorage.getItem("eventData");
+  formData = JSON.parse(formData);
   const dispatch = useDispatch();
 
   // Your changeHandler function
@@ -16,7 +18,7 @@ function Receipt() {
     // dispatch(print()); 
   }
   return (
-    <div>
+    <div className='w-full h-full'>
       <img className="flex flex-row ml-[50%]" src={groobeLogo}></img>
       <div className="border-2 border-gray-500 w-max rounded-lg pr-14 pl-14 pt-3 pb-6 ml-[42%] text-xl mt-2">
         <div className='flex flex-row mb-3'>

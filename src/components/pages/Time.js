@@ -8,6 +8,10 @@ import { Link, json } from "react-router-dom";
 import RingLoader from "react-spinners/RingLoader";
 import { app, auth, RecaptchaVerifier } from "../../firebase";
 import whatsapp from "../../assets/images/Frame 2219.svg";
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 
 function Time() {
   const [fName, setFname] = useState("");
@@ -23,6 +27,18 @@ function Time() {
   const [SlotsData, setSlotsData] = useState([]);
 
   const [loading, setLoading] = useState(true);
+  const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
+  const [verf, setVerf] = useState(false);
+  // ...
+
+  // Define a function to handle reCAPTCHA verification
+  const handleRecaptchaVerification = (token) => {
+    // The token parameter contains the reCAPTCHA response token.
+    // You can proceed with form submission or any other action here.
+    setVerf(true);
+    console.log("reCAPTCHA verification successful. Token: ", token);
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -119,22 +135,53 @@ function Time() {
       });
   };
 
-  const validateData = () =>{
+  const validateData = () => {
     seterror(
       fName === "" || phone === "" || phone.length < 10 || fName < 2
         ? true
         : false
     );
-  }
+  };
   const userApi = async () => {
     try {
       validateData();
-      
-      if(fName === "" || phone === "" || phone.length < 10 || fName < 2) return;
-      const ph = phone;
-      const name = fName;
-      dispatch(setData({ Name: name, PhoneNumber: ph }));
-      if(formData.UserId === ""){
+
+      if (fName === "" || phone === "" || phone.length < 10 || fName < 2)
+        return;
+
+      dispatch(setData({ Name: fName, PhoneNumber: phone }));
+
+      const getUser = await fetch("http://localhost:8000/user-data");
+      if (getUser.ok) {
+        const getData = await getUser.json();
+        const alreadyIdData = getData.data.filter(
+          (a) => a.mobile === phone && a.name === fName
+        );
+        const alreadyId =
+          alreadyIdData.length === 0 ? undefined : alreadyIdData[0].uid;
+
+        // Retrieve the existing data from localStorage, if any
+        const existingData = localStorage.getItem("eventData");
+
+        // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+        const eventData = existingData ? JSON.parse(existingData) : {};
+
+        // Add or update the Service and ServiceId properties
+        eventData.UserId = alreadyId;
+        eventData.Name = fName;
+        eventData.PhoneNumber = phone;
+        // Convert the updated object to a JSON string
+        const jsonString = JSON.stringify(eventData);
+
+        // Store the updated JSON string in localStorage
+        localStorage.setItem("eventData", jsonString);
+
+        dispatch(setData({ UserId: alreadyId }));
+      } else {
+        console.log("Request failed with status: " + getUser.status);
+      }
+
+      if (formData.UserId === undefined || "") {
         const data = {
           name: formData.Name,
           mobile: formData.PhoneNumber,
@@ -142,22 +189,36 @@ function Time() {
           societyId: formData.SocietyId,
           serviceId: formData.ServiceId,
         };
-          // console.log(formData);
-          // console.log(JSON.stringify(data));
-          const response = await fetch("http://localhost:8000/user-data", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const result = await response.json();
-          console.log(result);
+
+        const response = await fetch("http://localhost:8000/user-data", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        console.log(result);
+      } else {
+        const data = {
+          uid: formData.UserId,
+          name: formData.Name,
+          mobile: formData.PhoneNumber,
+          isVerified: 0,
+          societyId: formData.SocietyId,
+          serviceId: formData.ServiceId,
+        };
+        console.log(data);
+        const response = await fetch("http://localhost:8000/user-data", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        console.log(result);
       }
-      else{
-        
-      }
-      
     } catch (error) {
       console.error(error);
     }
@@ -166,11 +227,31 @@ function Time() {
   // Your changeHandler function
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
+    setReCAPTCHALoaded(true);
     seterror(fName === "" || phone === "" ? true : false);
     const Date = selectedDate;
     const Slot = selectedSlot;
     const ph = phone;
     const name = fName;
+
+    // Retrieve the existing data from localStorage, if any
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    // Add or update the Service and ServiceId properties
+    eventData.Name = name;
+    eventData.PhoneNumber = ph;
+    eventData.Date = Date;
+    eventData.Slot = Slot;
+
+    // Convert the updated object to a JSON string
+    const jsonString = JSON.stringify(eventData);
+
+    // Store the updated JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
+
     dispatch(setData({ Name: name, PhoneNumber: ph, Date: Date, Slot: Slot }));
 
     dispatch(print());
@@ -201,6 +282,7 @@ function Time() {
           className="fixed top-[50vh] right-0"
         ></img>
       </a>
+
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="flex flex-row justify-evenly ">
         <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg">
@@ -214,26 +296,6 @@ function Time() {
               required
             />
           </div>
-          {/* <div className="flex flex-col mt-6">
-            <label>Phone Number</label>
-            <input
-              value={phone}
-              type="number"
-              className="focus:border-[#440BB7] focus:text-[#440BB7] border border-black rounded-md mt-2 p-3 text-black "
-              onChange={HandlePhoneChange}
-              required
-            />
-          </div> */}
-          {/* <div className="flex flex-col mt-6">
-            <label>Otp</label>
-            <input
-              // value={otp}
-              type="number"
-              className="focus:border-[#440BB7] focus:text-[#440BB7] border border-black rounded-md mt-2 p-3 text-black "
-              // onChange={HandleOtp}
-              required
-            />
-          </div> */}
 
           <div
             className="flex flex-col mt-6"
@@ -321,7 +383,7 @@ function Time() {
                   </buttton>
                 ))}
           </div>
-          <Link to={fName === "" || phone === "" ? "" : "/confirm"}>
+          <Link to={fName === "" || phone === "" || !verf ? "" : "/confirm"}>
             <button
               className="w-[80%] bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] ml-[10%] "
               onClick={changeHandler}
@@ -329,6 +391,11 @@ function Time() {
               Book
             </button>
           </Link>
+          {reCAPTCHALoaded && (
+            <GoogleReCaptchaProvider reCaptchaKey="6LcAULIoAAAAAJkfN4QY1ANNk9zxbM5_-1jjTXWU">
+              <GoogleReCaptcha onVerify={handleRecaptchaVerification} />
+            </GoogleReCaptchaProvider>
+          )}
         </div>
       </div>
       <Footer />

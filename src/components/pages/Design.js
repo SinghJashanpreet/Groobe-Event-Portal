@@ -67,6 +67,20 @@ function Design() {
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
     const selectedDesign = event.target.getAttribute("name");
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    // Add or update the Service and ServiceId properties
+    eventData.Design = selectedDesign;
+    
+
+    // Convert the updated object to a JSON string
+    const jsonString = JSON.stringify(eventData);
+
+    // Store the updated JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
     dispatch(setData({ Design: selectedDesign }));
     dispatch(print());
   }

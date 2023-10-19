@@ -15,12 +15,28 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 
 function Confirm() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
+  const [verf, setVerf] = useState(false);
+  // ...
+
+  // Define a function to handle reCAPTCHA verification
+  const handleRecaptchaVerification = (token) => {
+    // The token parameter contains the reCAPTCHA response token.
+    // You can proceed with form submission or any other action here.
+    setVerf(true);
+    console.log("reCAPTCHA verification successful. Token: ", token);
+  };
 
   const toggleModal = async () => {
     try {
+      setReCAPTCHALoaded(true);
       const data = {
         sid: formData.SocietyId,
         time: formData.Slot,
@@ -28,7 +44,7 @@ function Confirm() {
         location: formData.Society,
         name: formData.Name,
         mobile: formData.PhoneNumber,
-        paymentStatus: "Not Paid",
+        paymentStatus: "UnPaid",
         bookedServices: formData.ServiceId,
         paymentMode: "Unverified",
       };
@@ -46,7 +62,10 @@ function Confirm() {
       console.log(e);
     }
   };
-  const formData = useSelector((state) => state.FormData);
+  // const formData = useSelector((state) => state.FormData);
+  let formData = localStorage.getItem("eventData");
+  formData = JSON.parse(formData);
+  console.log(formData)
   const dispatch = useDispatch();
 
   return (
@@ -140,6 +159,11 @@ function Confirm() {
         >
           Confirm and Pay
         </button>
+        {reCAPTCHALoaded && (
+          <GoogleReCaptchaProvider reCaptchaKey="6LcAULIoAAAAAJkfN4QY1ANNk9zxbM5_-1jjTXWU">
+            <GoogleReCaptcha onVerify={handleRecaptchaVerification} />
+          </GoogleReCaptchaProvider>
+        )}
       </div>
       <Footer />
     </>

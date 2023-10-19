@@ -60,6 +60,23 @@ function Price() {
     const selectedLength = SelectedPrice;
     const selectp = price;
 
+     // Retrieve the existing data from localStorage, if any
+     const existingData = localStorage.getItem("eventData");
+
+     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+     const eventData = existingData ? JSON.parse(existingData) : {};
+ 
+     // Add or update the Service and ServiceId properties
+     eventData.Hands = selectedHands;
+     eventData.Length = selectedLength;
+     eventData.Price = selectp;
+ 
+     // Convert the updated object to a JSON string
+     const jsonString = JSON.stringify(eventData);
+ 
+     // Store the updated JSON string in localStorage
+     localStorage.setItem("eventData", jsonString);
+
     dispatch(setData({ Hands: selectedHands }));
     dispatch(setData({ Length: selectedLength, Price: selectp }));
     dispatch(print());
