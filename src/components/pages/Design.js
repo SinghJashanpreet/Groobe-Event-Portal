@@ -2,17 +2,18 @@ import React from "react";
 import Homeheader from "../Header";
 import Footer from "../Footer";
 import img1 from "../../assets/images/Design/Varanasi_Mehndi_Design_Images_Pictures_(Ideas)-transformed 1.svg";
-import img2 from "../../assets/images/Design/Arabic_Mehndi_Designs-removebg-preview 1.svg";
+import img2 from "../../assets/images/Design/indo arabic 1.svg";
 import img3 from "../../assets/images/Design/Stylish_Mehndi_Designs-removebg-preview 1.svg";
 import img4 from "../../assets/images/Design/indo arabic 1.svg";
 import img5 from "../../assets/images/Design/Jaguar_Mhendi_Design-removebg-preview 1.svg";
 
 import img6 from "../../assets/images/Design/colored_tip_nails_1 1.svg";
 import img7 from "../../assets/images/Design/airbrushing_nails 1 (1).svg";
-import img8 from "../../assets/images/Design/airbrushing_nails 1 (2).svg";
-import img9 from "../../assets/images/Design/airbrushing_nails 1 (3).svg";
-import img10 from "../../assets/images/Design/colored_tip_nails_1 1 (1).svg";
-import img11 from "../../assets/images/Design/colored_tip_nails_1 1 (2).svg";
+import img8 from "../../assets/images/Design/svg/3.svg";
+import img9 from "../../assets/images/Design/svg/4.svg";
+import img10 from "../../assets/images/Design/svg/5.svg";
+import img11 from "../../assets/images/Design/svg/6.svg";
+
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +57,7 @@ function Design() {
             textColor: "white",
           },
         ]
-      :[
+       :[
           {
             src: img6,
             name: "Colored-Tip Nails",
@@ -73,13 +74,13 @@ function Design() {
             src: img8,
             name: "Air Brushing Nails",
             color: "#E9C46A",
-            textColor: "black",
+            textColor: "white",
           },
           {
             src: img9,
             name: "Sticker Nails",
             color: "#F4A261",
-            textColor: "black",
+            textColor: "white",
           },
           {
             src: img10,
@@ -109,7 +110,7 @@ function Design() {
           src={whatsapp}
           width="120px"
           height="70px"
-          className="fixed top-[50vh] right-0"
+          className="fixed top-[50vh] right-0 z-[1]"
         ></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" bg={bg} />
