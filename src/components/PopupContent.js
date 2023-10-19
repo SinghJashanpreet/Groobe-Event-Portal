@@ -54,7 +54,7 @@ const PopupContent = ({ onClose }) => {
         <img src={groobe} width='60px'></img>
       </h1>
 
-      <div className="flex flex-col gap-5 mx-[4%] m:mx-[3%] md:mx-[7%]  overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg pr-3 pl-3 h-auto">
+      <div className="flex flex-col gap-5 mx-[4%] m:mx-[1%] md:mx-[7%] m:px-[1%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg pr-3 pl-3 h-auto">
         <Link to='/receipt'>
           <h1 className="border border-gray-300 pl-2 pt-2 pb-2 mt-5 mb-5" name="Pay After Service" onClick={HandleMethod}>Pay after Service</h1>
         </Link>

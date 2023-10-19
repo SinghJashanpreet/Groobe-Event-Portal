@@ -51,7 +51,7 @@ function Service() {
             <div
               className={
                 service.name === "Mehndi Design"
-                  ? `bg-[#FFC087]
+                  ? `bg-[#e69c5b]
                   grid grid-cols-[_2fr_1.5fr] lg:grid-cols-[_2.5fr_1.5fr] min-w-[310px] max-w-[650px] min-h-[210px]
                   max-h-[400px] w-[32vw] h-full rounded-lg my-[1.2rem] 
                   md:my-[3rem]`
@@ -65,8 +65,8 @@ function Service() {
               }}
             >
               <span className="flex flex-col justify-center">
-                <h1 className="pl-3 font-Bell text-4xl">{service.name}</h1>
-                <h2 className="pl-3 font-inter text-base">{service.desc}</h2>
+                <h1 className="pl-3 font-Bell text-4xl text-white">{service.name}</h1>
+                <h2 className="pl-3 font-inter text-base text-white">{service.desc}</h2>
               </span>
               <div className="flex items-end justify-end grow-0 " onClick={changeHandler}>
                 <img

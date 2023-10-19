@@ -52,19 +52,29 @@ function FooterMobile() {
           <hr className="border-[1.3px] border-gray-400 my-4" />
           <div className="grid grid-cols-5">
             <span>
-              <img src={whatsapp} height="38px" width="38px"></img>
+            <a href="https://api.whatsapp.com/send?phone=918360741113&text=Hi,%20I%27ve%20seen%20your%20portfolio%20and%20want%20the%20booking">
+            <img src={whatsapp} height="38px" width="38px"></img>
+            </a>
             </span>
             <span>
-              <img src={instagram} height="38px" width="38px"></img>
+            <a href="https://www.instagram.com/my_groobe/">
+            <img src={instagram} height="38px" width="38px"></img>
+            </a>
             </span>
             <span>
-              <img src={facebook} height="38px" width="38px"></img>
+            <a href="https://www.facebook.com/people/GrooBe/100094184258742/">
+            <img src={facebook} height="38px" width="38px"></img>
+            </a>
             </span>
             <span>
-              <img src={youtube} height="38px" width="38px"></img>
+            <a href="https://www.youtube.com/channel/UCKjlgGAqCoTlptPmDWjVvTw">
+            <img src={youtube} height="38px" width="38px"></img>
+            </a>
             </span>
             <span>
-              <img src={linkedin} height="38px" width="38px"></img>
+            <a href="https://www.linkedin.com/company/groobe-beauty-and-grooming-services-llp/">
+            <img src={linkedin} height="38px" width="38px"></img>
+            </a>
             </span>
           </div>
         </div>
@@ -80,7 +90,7 @@ function FooterMobile() {
               height="14.5px"
               className="inline mx-4"
             ></img>
-            <span>(436)555-0120</span>
+            <span>+91-8360741113</span>
           </div>
             </Link>
           </div>

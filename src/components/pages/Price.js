@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import whatsapp from "../../assets/images/Frame 2219.svg";
 function Price() {
   const [SelectedPrice, setSelectedPrice] = useState(null);
-  const [SelectedHands, setSelectedHands] = useState(null);
+  const [SelectedHands, setSelectedHands] = useState("Both Hands");
 
   const HandleLength = (name) => {
     setSelectedPrice(name);
@@ -50,15 +50,15 @@ function Price() {
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="md:flex md:flex-row  lg:justify-between ">
         {/* left */}
-        <div className="shadow-xl border-1 lg:ml-[10%]">
-          <h1 className="font-Bell text-2xl font-semibold ml-[10%] mt-[8%] cursor-pointer">Bridal Mehendi</h1>
-          <div className="text-xl mt-[8%] ml-[10%] flex justify-between mr-[10%]">
+        <div className="shadow-xl  border-1 lg:ml-[10%]">
+          <h1 className="font-Bell text-2xl font-semibold ml-[10%] mt-[8%] cursor-pointer">Bridal Mehendi</h1>  {/* this mt is used for gap between thediv upper border and the bridal mehndi h1 */}
+          <div className="text-xl mt-[8%]  ml-[10%] flex justify-between mr-[10%]">  {/* this mt is used for gap between the bridal mehndi h1 and the buttons */}
             <button
               name="Both Hands"
               className={ 
                 SelectedHands === "Both Hands"
-                  ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
-                  : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
+                  ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
+                  : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
               }
               onClick={() => HandleHands("Both Hands")}
             >
@@ -68,8 +68,8 @@ function Price() {
               name="Single Hand"
               className={
                 SelectedHands === "Single Hand"
-                ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
-                : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:p-2"
+                ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
+                : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
               }
               onClick={() => HandleHands("Single Hand")}
             >
@@ -79,7 +79,7 @@ function Price() {
           <img className="md:w-fit md:h-fit 2md:w-fit md:sm-[10%] " src={HandLengthImage}></img>
         </div>
         {/* right */}
-        <div className="shadow-xl border-1 lg:mr-[10%] text-xl">
+        <div className="shadow-xl  border-1 lg:mr-[10%] text-xl">
           <div
             className={
               SelectedPrice === "Palm" 

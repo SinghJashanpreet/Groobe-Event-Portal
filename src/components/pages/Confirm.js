@@ -4,7 +4,8 @@ import Footer from "../Footer";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
-import henna from '../../assets/images/henna.svg' 
+import henna from "../../assets/images/henna.svg";
+import nail from "../../assets/images/nail.svg"; 
 
 import whatsapp from "../../assets/images/Frame 2219.svg";
 import { useState } from "react";
@@ -35,20 +36,20 @@ function Confirm() {
     <div className="md:flex md:flex-row justify-evenly">
       <div className="border-2  shadow-xl border-1 p-8 rounded-lg">
         <h1 className="flex items-center p-3 text-xl">
-        <FontAwesomeIcon className="mr-3 lg:w-[6%] lg:h-[6%] md:w-[6%] md:h-[6%] sm:w-[6%] sm:h-[6%] w-[8%] h-[8%]" icon={faUser} />
+        <FontAwesomeIcon className="mr-3 w-[4%] h-[4%]" icon={faUser} />
         {formData.Name}
         </h1>
         <h1 className="flex items-center p-3 text-xl">
-        <FontAwesomeIcon className="mr-3 lg:w-[6%] lg:h-[6%] md:w-[6%] md:h-[6%] sm:w-[6%] sm:h-[6%] w-[8%] h-[8%]" icon={faPhone} />
+        <FontAwesomeIcon className="mr-3 w-[4%] h-[4%]" icon={faPhone} />
         {formData.PhoneNumber}
         </h1>
         <h1 className="flex items-center p-3 text-xl">
-        <FontAwesomeIcon className="mr-3 lg:w-[6%] lg:h-[6%] md:w-[6%] md:h-[6%] sm:w-[6%] sm:h-[6%] w-[8%] h-[8%]" icon={faCalendar} />
+        <FontAwesomeIcon className="mr-3 w-[4%] h-[4%]" icon={faCalendar} />
         <h1>{formData.Date}</h1>
         <h1 className="ml-3">{formData.Slot}</h1>
         </h1>
         <h1 className="flex items-center p-3 text-xl">
-        <FontAwesomeIcon className="mr-3 lg:w-[6%] lg:h-[6%] md:w-[6%] md:h-[6%] sm:w-[6%] sm:h-[6%] w-[8%] h-[8%]" icon={faLocationDot} />
+        <FontAwesomeIcon className="mr-3 w-[4%] h-[4%]" icon={faLocationDot} />
         {formData.Society}
         </h1>
       </div>
@@ -57,7 +58,12 @@ function Confirm() {
         <div>
         <div  className="flex flex-row justify-evenly">
         <div className="flex flex-row justify-evenly">
+
+
         <img src={henna} className="w-14 h-14"></img>
+        <img src={nail} className="w-14 h-14"></img>
+
+        
         <div  className="flex flex-col justify-evenly">
         <h2 className="flex items-center text-xl">
         {formData.Design}
@@ -93,7 +99,7 @@ function Confirm() {
       </Modal>
       </div>
       <div classname="border-2 border-black rounded-lg w-[80%] h-10 text-white" >
-      <button className='bg-[#440BB7] text-white rounded-md pl-10 pr-10 pt-3 pb-3 ml-[30%] mt-10 mb-10 w-2/4 ' onClick={() => toggleModal()}>Confirm and Pay</button>
+      <button className='bg-[#440BB7] text-white rounded-md pl-10 pr-10 pt-3 pb-3 m:pl-5 m:pr-5 ml-[30%] mt-10 mb-10 w-2/4 ' onClick={() => toggleModal()}>Confirm and Pay</button>
       </div>
       <Footer />
     </>

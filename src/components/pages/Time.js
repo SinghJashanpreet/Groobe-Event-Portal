@@ -9,6 +9,9 @@ import whatsapp from "../../assets/images/Frame 2219.svg";
 function Time() {
   const [fName, setFname] = useState("");
   const [phone, setPhone] = useState("");
+
+
+  
   var [error, seterror] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
@@ -66,14 +69,15 @@ function Time() {
         <img src={whatsapp} width="120px" height="70px" className="fixed top-[50vh] right-0"></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
-      <div className="flex flex-row justify-evenly ">
+      <div className="md:flex md:flex-row  justify-evenly ">
         <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg">
         <div className="flex flex-col">
           <label>Full Name</label>
           <input
             value={fName}
             type="text"
-            className="focus:border-[#440BB7] focus:text-blue-800 border border-black rounded-md mt-2 p-3 text-black "
+            pattern="[A-Za-z]+"
+            className="focus:border-[#440BB7]  focus:text-blue-800 border rounded-md mt-2 p-3 border-black text-black "
             onChange={HandleNameChange}
             required
           />
@@ -83,15 +87,17 @@ function Time() {
           <input
             value={phone}
             type="number"
-            className="focus:border-[#440BB7] focus:text-[#440BB7] border border-black rounded-md mt-2 p-3 text-black "
+            className="focus:border-[#440BB7]  focus:text-[#440BB7] border rounded-md mt-2 p-3 border-black text-black "
             onChange={HandlePhoneChange}
+            maxLength="10"
             required
+            
           />
           </div>
         </div>
-        <div className="w-1/2  shadow-xl border-1 p-10 rounded-lg">
+        <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg">
           <p className="">Time and Date</p>
-          <div className="w-auto border border-black grid grid-cols-4 rounded-md p-1 mt-2">
+          <div className="border border-black grid grid-cols-4 rounded-md p-1 mt-2">
             {datesArray.map((date) => (
               <button
                 className={
@@ -109,8 +115,8 @@ function Time() {
               <buttton
                 className={
                   selectedSlot === slot
-                    ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 2lg:pl-9 2md:pl-3 md:pl-1"
-                    : "border border-black rounded-md 2lg:pl-9 2md:pl-3 md:pl-1 m-3 p-1"
+                    ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1"
+                    : "border border-black rounded-md  m-3 p-1"
                 }
                 onClick={() => HandleSlot(slot)}
               >
