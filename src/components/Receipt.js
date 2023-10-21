@@ -53,7 +53,7 @@ function Receipt() {
         <img src=''></img>
         
         <img className='ml-[10%] mb-3' src={QR}></img>
-        <h1 className='mb-3 ml-1 font-bold'>s.no : xx8239233231</h1>
+        <h1 className='mb-3 ml-1 font-bold'>s.no : {formData.bID}</h1>
       </div>
       <div>
         <button className='bg-[#440BB7] rounded-md pl-10 pr-10 pt-2 pb-2 w-1/4 ml-[42%] mt-10 text-white' >Download</button>

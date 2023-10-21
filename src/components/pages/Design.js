@@ -66,7 +66,7 @@ function Design() {
   // Your changeHandler function
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
-    const selectedDesign = event.target.getAttribute("name");
+    const selectedDesign = event;
     const existingData = localStorage.getItem("eventData");
 
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
@@ -112,7 +112,7 @@ function Design() {
             max-h-[400px] w-full rounded-lg my-7
             md:mt-[1.5rem]`}
                 name={design.name}
-                onClick={changeHandler}
+                onClick={()=>changeHandler(design.name)}
               >
                 <span
                   className="flex flex-col justify-center"

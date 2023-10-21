@@ -24,49 +24,126 @@ function Confirm() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
   const [verf, setVerf] = useState(false);
+  const [loading, setLoading] = useState(true);
   // ...
+  // const formData = useSelector((state) => state.FormData);
+  let formData = localStorage.getItem("eventData");
+  formData = JSON.parse(formData);
+  //console.log(formData);
+  const dispatch = useDispatch();
 
   // Define a function to handle reCAPTCHA verification
   const handleRecaptchaVerification = (token) => {
     // The token parameter contains the reCAPTCHA response token.
     // You can proceed with form submission or any other action here.
-    setVerf(true);
-    console.log("reCAPTCHA verification successful. Token: ", token);
+    //setVerf(true);
+    setLoading(false);
+    //console.group("reCAPTCHA verification successful. Token: ", token);
   };
 
   const toggleModal = async () => {
     try {
+      if (isModalOpen === true) {
+        setModalOpen(!isModalOpen);
+        return;
+      }
+
       setReCAPTCHALoaded(true);
-      const data = {
-        sid: formData.SocietyId,
-        time: formData.Slot,
-        date: formData.Date,
-        location: formData.Society,
-        name: formData.Name,
-        mobile: formData.PhoneNumber,
-        paymentStatus: "UnPaid",
-        bookedServices: formData.ServiceId,
-        paymentMode: "Unverified",
-      };
-      const response = await fetch("http://localhost:8000/booking", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = await response.json();
+
+      const getBookingData = await fetch("http://localhost:8000/booking");
+      if (getBookingData.ok || getBookingData.status == 500) {
+        let Bdata = await getBookingData.json();
+
+if(Bdata.message !== "Cannot read properties of null (reading 'list')"){
+        const BFilterdata = Bdata.data.filter((a) => {
+          return (
+            a.name == formData.Name &&
+            a.mobile == formData.PhoneNumber &&
+            a.sid == formData.SocietyId &&
+            a.time == formData.Slot &&
+            a.date == formData.Date &&
+            a.paymentStatus == "UnPaid" &&
+            a.bookedServices == formData.ServiceId &&
+            a.paymentMode == "Unverified"
+          );
+        });
+
+        const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+
+        formData.bID = bID;
+        const jsonString = JSON.stringify(formData);
+
+        // Store the updated JSON string in localStorage
+        localStorage.setItem("eventData", jsonString);
+      
+        const data = {
+          id: bID,
+          sid: formData.SocietyId,
+          time: formData.Slot,
+          date: formData.Date,
+          location: formData.Society,
+          name: formData.Name,
+          mobile: formData.PhoneNumber,
+          paymentStatus: "UnPaid",
+          bookedServices: formData.ServiceId,
+          paymentMode: "Unverified",
+        };
+        const response = await fetch("http://localhost:8000/booking", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        if(response.ok){
+        
+        formData.bID = result.Data[0].id;
+        const jsonStri = JSON.stringify(formData);
+        localStorage.setItem("eventData", jsonStri);
+      }
       console.log(result);
+
+        // Store the updated JSON string in localStorage
+        setModalOpen(!isModalOpen);
+        return;
+      }
+
+        const data = {
+      
+          sid: formData.SocietyId,
+          time: formData.Slot,
+          date: formData.Date,
+          location: formData.Society,
+          name: formData.Name,
+          mobile: formData.PhoneNumber,
+          paymentStatus: "UnPaid",
+          bookedServices: formData.ServiceId,
+          paymentMode: "Unverified",
+        };
+        const response = await fetch("http://localhost:8000/booking", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        formData.bID = result.data[0].id;
+        const jsonStri = JSON.stringify(formData);
+
+        // Store the updated JSON string in localStorage
+        localStorage.setItem("eventData", jsonStri);
+        console.log(result);
+      } else {
+        console.log("Request failed with status: " + getBookingData.status);
+      }
+
       setModalOpen(!isModalOpen);
     } catch (e) {
       console.log(e);
     }
   };
-  // const formData = useSelector((state) => state.FormData);
-  let formData = localStorage.getItem("eventData");
-  formData = JSON.parse(formData);
-  console.log(formData)
-  const dispatch = useDispatch();
 
   return (
     <>

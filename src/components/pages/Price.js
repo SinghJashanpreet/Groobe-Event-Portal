@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import RingLoader from "react-spinners/RingLoader";
 import whatsapp from "../../assets/images/Frame 2219.svg";
 function Price() {
-  const [SelectedPrice, setSelectedPrice] = useState(null);
-  const [SelectedHands, setSelectedHands] = useState(null);
+  const localData = JSON.parse(localStorage.getItem("eventData"));
+  const [SelectedPrice, setSelectedPrice] = useState(localData.Length || null);
+  const [SelectedHands, setSelectedHands] = useState(localData.Hands ||null);
   const [price, setPrice] = useState(null);
   const [PriceApiData, setPriceApiData] = useState(null);
   const [loading, setLoading] = useState(true);

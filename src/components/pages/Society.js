@@ -48,14 +48,17 @@ function Society() {
   function changeHandler(event, idd) {
     // const { name, value, checked, type } = event.target;
     // Create an object to store Society and SocietyId
-    const EventData = {
-      Society: event,
-      SocietyId: idd,
-    };
+    // Retrieve the existing data from localStorage, if any
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    eventData.Society = event;
+    eventData.SocietyId = idd;
 
     // Convert the object to a JSON string
-    const jsonString = JSON.stringify(EventData);
-
+    const jsonString = JSON.stringify(eventData);
     // Store the JSON string in localStorage
     localStorage.setItem("eventData", jsonString);
     dispatch(setData({ Society: event, SocietyId: idd }));

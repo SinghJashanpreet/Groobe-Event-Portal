@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import Homeheader from "../Header";
 import Footer from "../Footer";
+import CircularJSON from "circular-json";
 import img1 from "../../assets/images/Services/Varanasi_Mehndi_Design_Images_Pictures_(Ideas)-transformed 1 (1).svg";
 import img2 from "../../assets/images/Services/nails__nail_art__nail__nail_designs__nail_design__nail_polish__nail_ideas__spring_nails__spring_nail-transformed 1 (1).svg";
 import { Link } from "react-router-dom";
@@ -58,24 +59,25 @@ function Service() {
   // Your changeHandler function
   function changeHandler(event, idd) {
     // const { name, value, checked, type } = event.target;
-    const selectedService = event;
+    //const selectedService = event;
     // Retrieve the existing data from localStorage, if any
     const existingData = localStorage.getItem("eventData");
 
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
     const eventData = existingData ? JSON.parse(existingData) : {};
 
-    // Add or update the Service and ServiceId properties
-    eventData.Service = event;
-    eventData.ServiceId = idd;
+    if (eventData.Service != event && eventData.serviceID != idd) {
+      // Add or update the Service and ServiceId properties
+      eventData.Service = event;
+      eventData.ServiceId = idd;
 
-    // Convert the updated object to a JSON string
-    const jsonString = JSON.stringify(eventData);
+      // Convert the updated object to a JSON string
+      const jsonString = JSON.stringify(eventData);
+      localStorage.setItem("eventData", jsonString);
+    }
 
-    // Store the updated JSON string in localStorage
-    localStorage.setItem("eventData", jsonString);
     // const selectedService = event.location.state.serviceName;
-    dispatch(setData({ Service: selectedService, ServiceId: idd }));
+    dispatch(setData({ Service: event, ServiceId: idd }));
     dispatch(print());
   }
   return (

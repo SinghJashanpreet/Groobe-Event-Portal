@@ -62,26 +62,45 @@ const PopupContent = ({ onClose }) => {
       localStorage.setItem("eventData", jsonString);
 
       dispatch(setData({ PayMethod: method }));
-      // const data = {
-      //   sid: formData.SocietyId,
-      //   time: formData.Slot,
-      //   date: formData.Date,
-      //   location: formData.Society,
-      //   name: formData.Name,
-      //   mobile: formData.PhoneNumber,
-      //   paymentStatus: "Not Paid",
-      //   bookedServices: formData.ServiceId,
-      //   paymentMode: "Unverified",
-      // };
-      // const response = await fetch("http://localhost:8000/booking", {
-      //   method: "POST",
-      //   body: JSON.stringify(data),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-      // const result = await response.json();
-      // console.log(result);
+
+      const getBookingData = await fetch("http://localhost:8000/booking");
+      if (getBookingData.ok) {
+        let Bdata = await getBookingData.json();
+
+        const BFilterdata = Bdata.data.filter((a) => {
+          console.log(a.id, eventData.bID);
+          return a.id == eventData.bID;
+        });
+
+        console.log(BFilterdata);
+
+        const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+
+        console.log(bID);
+        eventData.bID = bID;
+        const jsonString = JSON.stringify(eventData);
+
+        // Store the updated JSON string in localStorage
+        localStorage.setItem("eventData", jsonString);
+
+        const data = {
+          id: bID,
+          paymentStatus: "UnPaid",
+          paymentMode: method,
+        };
+        const response = await fetch("http://localhost:8000/booking", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        console.log(result);
+      } else {
+        console.log("Request failed with status: " + getBookingData.status);
+      }
+
       dispatch(print());
       setShowReceipt(true);
     } catch (e) {
