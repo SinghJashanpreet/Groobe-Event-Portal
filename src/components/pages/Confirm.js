@@ -26,7 +26,7 @@ function Confirm() {
   const [verf, setVerf] = useState(false);
   const [loading, setLoading] = useState(true);
   // ...
-  // const formData = useSelector((state) => state.FormData);
+  const formData2 = useSelector((state) => state.FormData);
   let formData = localStorage.getItem("eventData");
   formData = JSON.parse(formData);
   //console.log(formData);
@@ -217,11 +217,13 @@ if(Bdata.message !== "Cannot read properties of null (reading 'list')"){
             </h2>
           </div>
         </div>
+       { console.log(formData2.showReceipt)}
         <Modal
           isOpen={isModalOpen}
           onRequestClose={toggleModal}
           contentLabel="Popup Modal"
-          className="popup-modal overflow-y-scroll no-scrollbar"
+          className= {formData2.showReceipt ? "popup-modal2 overflow-y-scroll no-scrollbar"
+        :"popup-modal overflow-y-scroll no-scrollbar"}
           overlayClassName="popup-overlay"
           shouldCloseOnOverlayClick={true} // Close on background click
           shouldCloseOnEsc={true} // Close on pressing the Escape key

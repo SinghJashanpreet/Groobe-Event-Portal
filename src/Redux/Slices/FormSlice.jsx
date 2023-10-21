@@ -16,7 +16,7 @@ const initialFormData = {
   SocietyId: "",
   UserId:"",
   BookingId:"",
-  
+  showReceipt: false
 };
 
 const FormSlice = createSlice({

@@ -203,10 +203,40 @@ function Time() {
 
       dispatch(setData({ Name: fName, PhoneNumber: phone }));
 
-      //const codeOtp = Math.floor(100000 + Math.random() * 900000);
+      // const codeOtp = Math.floor(100000 + Math.random() * 900000);
 
-      // const otpResponse = await fetch(`http://smsproadv.in/api/v2/SendSMS?SenderId=SANBAS&Is_Unicode=false&Is_Flash=false&Message=${codeOtp}.&MobileNumbers=+91${phone}&ApiKey=oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D&ClientId=d1d94ba5-44cb-4f51-aa4b-7cf751d58490`);
-      // console.log(otpResponse)
+      // // const otpResponse = await fetch(`http://smsproadv.in/api/v2/SendSMS?SenderId=SANBAS&Is_Unicode=false&Is_Flash=false&Message=${codeOtp}.&MobileNumbers=+91${phone}&ApiKey=oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D&ClientId=d1d94ba5-44cb-4f51-aa4b-7cf751d58490`);
+      // // console.log(otpResponse)
+
+      // console.log("otp is : ", codeOtp);
+
+      // const apiKey = "oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D";
+      // const clientId = "d1d94ba5-44cb-4f51-aa4b-7cf751d58490";
+
+      // const url = `http://localhost:8000/send-sms`;
+
+      // fetch(url, {
+      //   method: "GET",
+      //   headers: {
+      //     Accept: "text/plain",
+      //     mobile: phone,
+      //     otpcode: codeOtp
+      //   },
+      // })
+      //   .then((response) => {
+      //     if (!response.ok) {
+      //       throw new Error("Network response was not ok");
+      //     }
+      //     return response.text(); // or response.json() if the response is JSON
+      //   })
+      //   .then((data) => {
+      //     // Handle the response data here
+      //     console.log(data);
+      //   })
+      //   .catch((error) => {
+      //     // Handle errors here
+      //     console.error("There was a problem with the fetch operation:", error);
+      //   });
 
       const getUser = await fetch("http://localhost:8000/user-data");
       if (getUser.ok) {
@@ -245,15 +275,15 @@ function Time() {
           serviceId: formData.ServiceId || localData.ServiceId,
         };
 
-        const response = await fetch("http://localhost:8000/user-data", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const result = await response.json();
-        console.log(result);
+        // const response = await fetch("http://localhost:8000/user-data", {
+        //   method: "POST",
+        //   body: JSON.stringify(data),
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        // const result = await response.json();
+        // console.log(result);
       } else {
         const data = {
           uid: localData.UserId,
@@ -264,15 +294,15 @@ function Time() {
           serviceId: formData.ServiceId || localData.ServiceId,
         };
         console.log("else", data);
-        const response = await fetch("http://localhost:8000/user-data", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const result = await response.json();
-        console.log(result);
+        // const response = await fetch("http://localhost:8000/user-data", {
+        //   method: "POST",
+        //   body: JSON.stringify(data),
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        // const result = await response.json();
+        // console.log(result);
       }
     } catch (error) {
       console.error(error);

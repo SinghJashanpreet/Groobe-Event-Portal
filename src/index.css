@@ -48,6 +48,18 @@ code {
   outline: none;
 }
 
+.popup-modal2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #F0F0F0;
+  width: 40vw;
+  height: 90vh;
+  border-radius: 5px;
+  outline: none;
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;

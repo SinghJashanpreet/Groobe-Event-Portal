@@ -10,6 +10,8 @@ import groobe from "../assets/images/groobe logo2.svg";
 import { Link } from "react-router-dom";
 import Receipt from "./Receipt";
 const PopupContent = ({ onClose }) => {
+  let formData = localStorage.getItem("eventData");
+  formData = JSON.parse(formData);
   const dispatch = useDispatch();
   // Initialize an array of isDetailsOpen states, one for each details element
   const [isDetailsOpen, setIsDetailsOpen] = useState(new Array(12).fill(false));
@@ -31,8 +33,14 @@ const PopupContent = ({ onClose }) => {
     // Add a scroll event listener to the window
     const handleScroll = () => {
       // Close the modal when the background is scrolled
+      if (showReceipt === true)
+        dispatch(setData({ showReceipt: false }));
+
       onClose();
     };
+
+    if (showReceipt === true)
+      dispatch(setData({ showReceipt: false }));
 
     window.addEventListener("scroll", handleScroll);
 
@@ -82,7 +90,7 @@ const PopupContent = ({ onClose }) => {
 
         // Store the updated JSON string in localStorage
         localStorage.setItem("eventData", jsonString);
-
+        dispatch(setData({ showReceipt: true }));
         const data = {
           id: bID,
           paymentStatus: "UnPaid",
@@ -111,16 +119,16 @@ const PopupContent = ({ onClose }) => {
   return (
     <div className="relative">
       {showReceipt === false ? (
-        <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full">
-          <img src={groobe} width="60px"></img>
-        </h1>
-      ) : (
-        <></>
-      )}
+        <>
+          {showReceipt === false ? (
+            <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full">
+              <img src={groobe} width="60px"></img>
+            </h1>
+          ) : (
+            <></>
+          )}
 
-      <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg  pr-5 pl-5">
-        {showReceipt === false ? (
-          <>
+          <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg  pr-5 pl-5">
             <h1
               className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5"
               name="Pay After Service"
@@ -136,11 +144,11 @@ const PopupContent = ({ onClose }) => {
             >
               Pay Now
             </h1>
-          </>
-        ) : (
-          <Receipt />
-        )}
-      </div>
+          </div>
+        </>
+      ) : (
+        <Receipt />
+      )}
     </div>
   );
 };
