@@ -491,9 +491,9 @@ function Time() {
           {isOtpVerified && <h1>Verified</h1>} */}
         </div>
 
-        <div className="w-1/2  shadow-xl border-1 p-10 rounded-lg">
+        <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg">
           <p>Time and Date</p>
-          <div className="w-auto border border-black grid grid-cols-4 rounded-md p-1 mt-2">
+          <div className="border border-black grid grid-cols-4 rounded-md p-1 mt-2">
             {loading === true ? (
               <div className="relative top-[50%] left-[50%]">
                 <RingLoader color="#7E22CE" size={50} />
