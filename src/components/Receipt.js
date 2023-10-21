@@ -5,7 +5,9 @@ import groobeLogo from '../assets/images/groobe logo2.svg'
 import QR from '../assets/images/Receipt/QR.svg'
 
 function Receipt() {
-  const formData = useSelector((state) => state.FormData);
+  // const formData = useSelector((state) => state.FormData);
+  let formData = localStorage.getItem("eventData");
+  formData = JSON.parse(formData);
   const dispatch = useDispatch();
 
   // Your changeHandler function
@@ -16,9 +18,9 @@ function Receipt() {
     // dispatch(print()); 
   }
   return (
-    <div className="mx-[40%]">
-      <img className="flex flex-row ml-[40%]" src={groobeLogo}></img>
-      <div className="border-2 border-gray-500 w-max rounded-lg pr-14 pl-14 pt-3 pb-6 text-xl mt-2">
+    <div className='w-full'>
+      <img className="flex flex-row ml-[43%]" src={groobeLogo}></img>
+      <div className="border-2 border-gray-500 w-max rounded-lg pr-14 pl-14 pt-3 pb-6 mx-[18%]  text-xl mt-2">
         <div className='flex flex-row mb-3'>
           <h1>Name :</h1>
           <h1 className='ml-1'>{formData.Name}</h1>
@@ -51,10 +53,10 @@ function Receipt() {
         <img src=''></img>
         
         <img className='ml-[10%] mb-3' src={QR}></img>
-        <h1 className='mb-3 ml-1 font-bold'>s.no : xx8239233231</h1>
+        <h1 className='mb-3 ml-1 font-bold'>s.no : {formData.bID}</h1>
       </div>
       <div>
-        <button className='bg-[#440BB7] rounded-md pl-10 pr-10 pt-2 pb-2 ml-[30%] mt-10 text-white' >Download</button>
+        <button className='bg-[#440BB7] rounded-md pl-10 pr-10 pt-2 pb-2 w-1/4 mx-[35%] mb-7 mt-10 text-white' >Download</button>
       </div>
     </div>
 

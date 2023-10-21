@@ -12,6 +12,11 @@ const initialFormData = {
   Slot: "",
   Price: "",
   PayMethod: "",
+  ServiceId: "",
+  SocietyId: "",
+  UserId:"",
+  BookingId:"",
+  showReceipt: false
 };
 
 const FormSlice = createSlice({
