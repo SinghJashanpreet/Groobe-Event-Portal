@@ -69,7 +69,7 @@ function downloadReceiptAsPDF() {
         </div>
         <div className="flex flex-row mb-3">
           <h1>Payment :</h1>
-          <h1 className="bg-[#9DC9A2] p-1 rounded-md ml-1">
+          <h1 className="bg-[#9DC9A2] p-2 rounded-md ml-1">
             {formData.PayMethod}
           </h1>
         </div>

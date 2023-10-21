@@ -42,8 +42,8 @@ code {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #F0F0F0;
-  width: 75vw;
-  height: 80vh;
+  width: 45vw;
+  height: 60vh;
   border-radius: 5px;
   outline: none;
 }
@@ -82,9 +82,9 @@ tall:top-[4.5vh] */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FFF;
-    width: 90vw;
-    height: 90vh;
+    background-color: #F0F0F0;
+    width: 65vw;
+    height: 60vh;
 
     border-radius: 30px;
     outline: none;

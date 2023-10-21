@@ -83,11 +83,11 @@ function Footer() {
         </div>
         {/* 2nd col */}
         <div className="grid-cols-2 mt-5 place-self-center">
-          <div className="mb-4 mt-2 font-bold text-start ml-5 font-inter">
+          <div className="mb-4  font-bold text-start ml-5 font-inter">
             Contact
           </div>
           <div className="flex flex-col justify-start items-start ml-3 font-roboto text-xs">
-            <Link to="/contact">
+           
               <div className="mb-4">
                 <img
                   src={phone}
@@ -97,13 +97,13 @@ function Footer() {
                 ></img>
                 <span className="text-center">+91-8360741113</span>
               </div>
-            </Link>
+         
           </div>
         </div>
         {/* 3rd col */}
         <div className="grid-cols-1 mt-5 place-self-center">
           <div className="flex flex-col justify-start items-start ml-4 font-roboto text-xs">
-            <Link to="/services">
+          
               <div className="mb-4 mt-8">
                 <img
                   src={email}
@@ -113,7 +113,7 @@ function Footer() {
                 ></img>
                 <span>support@groobe.in</span>
               </div>
-            </Link>
+           
           </div>
         </div>
         {/* 4th col */}

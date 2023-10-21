@@ -126,7 +126,7 @@ const PopupContent = ({ onClose }) => {
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
     const eventData = existingData ? JSON.parse(existingData) : {};
   
-    if(eventData.bID != undefined){
+    if(eventData.bID != undefined && eventData.paymentMode !== undefined){
       dispatch(setData({ showReceipt: true }))
       setShowReceipt(true);}
   }, [])
@@ -137,16 +137,16 @@ const PopupContent = ({ onClose }) => {
       {!showReceipt  ? (
         <>
           {!showReceipt  ? (
-            <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full">
+            <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full ">
               <img src={groobe} width="60px"></img>
             </h1>
           ) : (
             <></>
           )}
 
-          <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg  pr-5 pl-5">
+          <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-xl  pr-5 pl-5 rounded-lg">
             <h1
-              className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5"
+              className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5 shadow-lg rounded-lg"
               name="Pay After Service"
               onClick={HandleMethod}
             >
@@ -154,7 +154,7 @@ const PopupContent = ({ onClose }) => {
             </h1>
 
             <h1
-              className="border border-gray-300 pl-5 pt-2 pb-2  mb-5"
+              className="border border-gray-300 pl-5 pt-2 pb-2  mb-5 shadow-lg rounded-lg"
               name="Online"
               onClick={HandleMethod}
             >
