@@ -432,7 +432,7 @@ function Time() {
 
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="md:flex md:flex-row  justify-evenly mt-[-8%] ">
-        <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg bg-white">
+        <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg bg-white  text-lg">
           <div className="flex flex-col ">
             <label>Full Name</label>
             <input
@@ -491,7 +491,7 @@ function Time() {
           {isOtpVerified && <h1>Verified</h1>} */}
         </div>
 
-        <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg bg-white">
+        <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg bg-white text-lg">
           <p>Time and Date</p>
           <div className="border border-black grid grid-cols-4 rounded-md p-1 mt-2">
             {loading === true ? (

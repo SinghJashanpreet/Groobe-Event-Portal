@@ -240,14 +240,14 @@ function Confirm() {
       </div>
       <div classname="border-2 border-black rounded-lg w-[80%] h-10 text-white">
         <button
-          className="bg-[#440BB7] text-white rounded-md pl-10 pr-10 pt-3 pb-3 ml-[30%] mt-10 mb-10 w-2/4"
+          className="bg-[#440BB7] text-white rounded-md pl-10 pr-10 pt-3 pb-3 ml-[25%] mt-10 mb-10 w-2/4"
           onClick={() => toggleModal()}
         >
           Confirm and Pay
         </button>
         {reCAPTCHALoaded && (
           <GoogleReCaptchaProvider reCaptchaKey="6LcAULIoAAAAAJkfN4QY1ANNk9zxbM5_-1jjTXWU">
-            <GoogleReCaptcha onVerify={handleRecaptchaVerification} />
+          <GoogleReCaptcha onVerify={handleRecaptchaVerification} />
           </GoogleReCaptchaProvider>
         )}
       </div>
