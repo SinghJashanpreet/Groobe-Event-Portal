@@ -54,63 +54,63 @@ function Confirm() {
       if (getBookingData.ok || getBookingData.status == 500) {
         let Bdata = await getBookingData.json();
 
-if(Bdata.message !== "Cannot read properties of null (reading 'list')"){
-        const BFilterdata = Bdata.data.filter((a) => {
-          return (
-            a.name == formData.Name &&
-            a.mobile == formData.PhoneNumber &&
-            a.sid == formData.SocietyId &&
-            a.time == formData.Slot &&
-            a.date == formData.Date &&
-            a.paymentStatus == "UnPaid" &&
-            a.bookedServices == formData.ServiceId &&
-            a.paymentMode == "Unverified"
-          );
-        });
+        if (
+          Bdata.message !== "Cannot read properties of null (reading 'list')"
+        ) {
+          const BFilterdata = Bdata.data.filter((a) => {
+            return (
+              a.name == formData.Name &&
+              a.mobile == formData.PhoneNumber &&
+              a.sid == formData.SocietyId &&
+              a.time == formData.Slot &&
+              a.date == formData.Date &&
+              a.paymentStatus == "UnPaid" &&
+              a.bookedServices == formData.ServiceId &&
+              a.paymentMode == "Unverified"
+            );
+          });
 
-        const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+          const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
 
-        formData.bID = bID;
-        const jsonString = JSON.stringify(formData);
+          formData.bID = bID;
+          const jsonString = JSON.stringify(formData);
 
-        // Store the updated JSON string in localStorage
-        localStorage.setItem("eventData", jsonString);
-      
+          // Store the updated JSON string in localStorage
+          localStorage.setItem("eventData", jsonString);
+
+          const data = {
+            id: bID,
+            sid: formData.SocietyId,
+            time: formData.Slot,
+            date: formData.Date,
+            location: formData.Society,
+            name: formData.Name,
+            mobile: formData.PhoneNumber,
+            paymentStatus: "UnPaid",
+            bookedServices: formData.ServiceId,
+            paymentMode: "Unverified",
+          };
+          const response = await fetch("http://localhost:8000/booking", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const result = await response.json();
+          if (response.ok) {
+            formData.bID = result.Data[0].id;
+            const jsonStri = JSON.stringify(formData);
+            localStorage.setItem("eventData", jsonStri);
+          }
+          console.log(result);
+
+          // Store the updated JSON string in localStorage
+          setModalOpen(!isModalOpen);
+          return;
+        }
+
         const data = {
-          id: bID,
-          sid: formData.SocietyId,
-          time: formData.Slot,
-          date: formData.Date,
-          location: formData.Society,
-          name: formData.Name,
-          mobile: formData.PhoneNumber,
-          paymentStatus: "UnPaid",
-          bookedServices: formData.ServiceId,
-          paymentMode: "Unverified",
-        };
-        const response = await fetch("http://localhost:8000/booking", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const result = await response.json();
-        if(response.ok){
-        
-        formData.bID = result.Data[0].id;
-        const jsonStri = JSON.stringify(formData);
-        localStorage.setItem("eventData", jsonStri);
-      }
-      console.log(result);
-
-        // Store the updated JSON string in localStorage
-        setModalOpen(!isModalOpen);
-        return;
-      }
-
-        const data = {
-      
           sid: formData.SocietyId,
           time: formData.Slot,
           date: formData.Date,
@@ -187,14 +187,11 @@ if(Bdata.message !== "Cannot read properties of null (reading 'list')"){
                 {formData.Service === "Nail Art" ? (
                   <img src={nail} className="w-14 h-14"></img>
                 ) : (
-          
-
-        <img src={henna} className="w-14 h-14"></img>
+                  <img src={henna} className="w-14 h-14"></img>
                 )}
-                <img src={nail} className="w-14 h-14"></img>
+                {/* <img src={nail} className="w-14 h-14"></img> */}
 
-        
-        <div className="flex flex-col justify-evenly">
+                <div className="flex flex-col justify-evenly">
                   <h2 className="flex items-center text-xl">
                     {formData.Design}
                   </h2>
@@ -209,7 +206,7 @@ if(Bdata.message !== "Cannot read properties of null (reading 'list')"){
                     {formData.Price}
                   </p>
                 </h2>
-                <p classname="ml-3 mr-3" >
+                <p classname="ml-3 mr-3">
                   {formData.Date} | {formData.Slot}
                 </p>
               </div>
@@ -222,13 +219,16 @@ if(Bdata.message !== "Cannot read properties of null (reading 'list')"){
             </h2>
           </div>
         </div>
-       { console.log(formData2.showReceipt)}
+        {console.log(formData2.showReceipt)}
         <Modal
           isOpen={isModalOpen}
           onRequestClose={toggleModal}
           contentLabel="Popup Modal"
-          className= {formData2.showReceipt ? "popup-modal2 overflow-y-scroll no-scrollbar"
-        :"popup-modal overflow-y-scroll no-scrollbar"}
+          className={
+            formData2.showReceipt
+              ? "popup-modal2 overflow-y-scroll no-scrollbar"
+              : "popup-modal overflow-y-scroll no-scrollbar"
+          }
           overlayClassName="popup-overlay"
           shouldCloseOnOverlayClick={true} // Close on background click
           shouldCloseOnEsc={true} // Close on pressing the Escape key

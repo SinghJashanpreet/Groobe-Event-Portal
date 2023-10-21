@@ -20,6 +20,8 @@ function Time() {
   const [fName, setFname] = useState(localData.Name || "");
   const [phone, setPhone] = useState(localData.PhoneNumber || "");
   var [error, seterror] = useState(false);
+  var [errorN, seterrorN] = useState(false);
+  var [errorP, seterrorP] = useState(false);
   const [selectedDate, setSelectedDate] = useState(localData.Date || "28 OCT");
   const [selectedSlot, setSelectedSlot] = useState(localData.Slot || null);
   const [otp, setotp] = useState("");
@@ -117,7 +119,39 @@ function Time() {
   const HandleNameChange = (event) => {
     seterror(false);
     setFname(event.target.value);
+    // Define a regular expression for name validation (letters and spaces)
+    const namePattern = /^[A-Za-z\s]+$/;
+
+    const isNameValid = namePattern.test(event.target.value);
+    seterrorN(!isNameValid);
+    if (isNameValid === false) {
+      seterror(true);
+      dispatch(setData({ error: "Enter Correct Name!" }));
+    }
+    //console.log(isNameValid);
   };
+
+  const HandlePhoneChange = (event) => {
+    seterror(false);
+    setPhone(event.target.value);
+
+    const phonePattern = /^[0-9]+$/;
+
+    const isPhoneValid = phonePattern.test(event.target.value);
+    seterrorP(!isPhoneValid);
+
+    if (event.target.value.length > 10) {
+      seterrorP(true);
+      seterror(true);
+      dispatch(setData({ error: "PhoneNumber length exceeded!" }));
+    }
+    if (isPhoneValid === false) {
+      seterror(true);
+      dispatch(setData({ error: "Enter Correct PhoneNumber!" }));
+    }
+
+  };
+
 
   const HandleDate = (name) => {
     setSelectedDate(name);
@@ -199,13 +233,13 @@ function Time() {
   //     });
   // };
 
-  const validateData = () => {
-    seterror(
-      fName === "" || phone === "" || phone.length < 10 || fName < 2
-        ? true
-        : false
-    );
-  };
+  // const validateData = () => {
+  //   seterror(
+  //     fName === "" || phone === "" || phone.length < 10 || fName < 2
+  //       ? true
+  //       : false
+  //   );
+  // };
 
   // const userApi = async () => {
   //   try {
@@ -405,7 +439,11 @@ function Time() {
               value={fName}
               type="text"
               pattern="[A-Za-z]+"
-              className="focus:border-[#440BB7]  focus:text-blue-800 border rounded-md mt-2 p-3 border-black text-black "
+              className={
+                errorN
+                  ? "focus:text-red-600 focus:border-[#440BB7] border rounded-md mt-2 p-3 border-red-600 text-black"
+                  : "focus:border-[#440BB7]  focus:text-blue-800 border rounded-md mt-2 p-3 border-black text-black"
+              }
               onChange={HandleNameChange}
               required
             />
@@ -417,14 +455,15 @@ function Time() {
             <input
               value={phone}
               type="tel"
-              onChange={(e) => {
-                seterror(false);
-                setPhone(e.target.value);
-              }}
+              onChange={HandlePhoneChange}
               placeholder="phone number"
-              className="focus:border-[#440BB7] focus:text-[#440BB7] border border-black rounded-md mt-2 p-3 text-black "
+              className={
+                errorP
+                  ? "focus:border-[#440BB7] focus:text-red-600 border border-red-600 rounded-md mt-2 p-3 text-black "
+                  : "focus:border-[#440BB7] focus:text-[#440BB7] border border-black rounded-md mt-2 p-3 text-black "
+              }
             />
-            {error && <p className="text-red-600">Enter Correctly </p>}
+            {error && <p className="text-red-600">{formData.error}</p>}
             <br />
             <br />
             {/* <div id="recaptcha-container"></div> */}
@@ -518,7 +557,8 @@ function Time() {
                 selectedSlot != null &&
                 phone != "" &&
                 fName != "" &&
-                phone.length === 10
+                phone.length === 10 &&
+                !error && !errorN && !errorP
                   ? "bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] ml-[10%] w-[80%]"
                   : "bg-[#440BB7] cursor-not-allowed rounded-lg text-white p-3 mt-[7%] ml-[10%] w-[80%]"
               }

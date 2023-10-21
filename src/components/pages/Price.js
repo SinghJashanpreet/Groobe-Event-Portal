@@ -11,7 +11,7 @@ function Price() {
   const localData = JSON.parse(localStorage.getItem("eventData"));
   const [SelectedPrice, setSelectedPrice] = useState(localData.Length || null);
   const [SelectedHands, setSelectedHands] = useState(localData.Hands ||null);
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(localData.Price ||null);
   const [PriceApiData, setPriceApiData] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
