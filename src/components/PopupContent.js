@@ -128,9 +128,9 @@ const PopupContent = ({ onClose }) => {
             <></>
           )}
 
-          <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-lg  pr-5 pl-5">
+          <div className="flex flex-col gap-5 mx-[4%] 2m:mx-[7%] md:mx-[7%] overflow-y-scroll no-scrollbar mb-8 text-xl shadow-xl  pr-5 pl-5">
             <h1
-              className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5"
+              className="border border-gray-300 pl-5 pt-2 pb-2 mt-5 mb-5 shadow-lg"
               name="Pay After Service"
               onClick={HandleMethod}
             >
@@ -138,7 +138,7 @@ const PopupContent = ({ onClose }) => {
             </h1>
 
             <h1
-              className="border border-gray-300 pl-5 pt-2 pb-2  mb-5"
+              className="border border-gray-300 pl-5 pt-2 pb-2  mb-5 shadow-lg"
               name="Online"
               onClick={HandleMethod}
             >

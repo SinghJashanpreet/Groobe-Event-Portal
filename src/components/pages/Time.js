@@ -431,9 +431,9 @@ function Time() {
       </a>
 
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
-      <div className="md:flex md:flex-row  justify-evenly ">
-        <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg">
-          <div className="flex flex-col">
+      <div className="md:flex md:flex-row  justify-evenly mt-[-8%] ">
+        <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg bg-white">
+          <div className="flex flex-col ">
             <label>Full Name</label>
             <input
               value={fName}
@@ -491,7 +491,7 @@ function Time() {
           {isOtpVerified && <h1>Verified</h1>} */}
         </div>
 
-        <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg">
+        <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg bg-white">
           <p>Time and Date</p>
           <div className="border border-black grid grid-cols-4 rounded-md p-1 mt-2">
             {loading === true ? (
@@ -521,8 +521,8 @@ function Time() {
                   <buttton
                     className={
                       selectedSlot === slot.time
-                        ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 2lg:pl-9 2md:pl-3 md:pl-1"
-                        : "border border-black rounded-md 2lg:pl-9 2md:pl-3 md:pl-1 m-3 p-1"
+                        ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 text-center"
+                        : "border border-black rounded-md m-3 p-1 text-center"
                     }
                     onClick={() => HandleSlot(slot.time)}
                   >
@@ -533,8 +533,8 @@ function Time() {
                   <buttton
                     className={
                       selectedSlot === slot
-                        ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 2lg:pl-9 2md:pl-3 md:pl-1"
-                        : "border border-black rounded-md 2lg:pl-9 2md:pl-3 md:pl-1 m-3 p-1"
+                        ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 "
+                        : "border border-black rounded-md  m-3 p-1"
                     }
                     onClick={() => HandleSlot(slot)}
                   >

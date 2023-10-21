@@ -82,7 +82,7 @@ function FooterMobile() {
         <div className="grid-cols-2">
           <div className="mb-6 mt-2 font-bold text-center">Contact</div>
           <div className="flex flex-col justify-center items-center">  
-            <Link to="/contact">
+           
             <div className="flex flex-row justify-center items-center mb-4">
             <img
               src={phone}
@@ -92,7 +92,7 @@ function FooterMobile() {
             ></img>
             <span>+91-8360741113</span>
           </div>
-            </Link>
+            
           </div>
         </div>
         {/* 3rd col */}

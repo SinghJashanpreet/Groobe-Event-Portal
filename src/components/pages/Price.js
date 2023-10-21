@@ -94,9 +94,9 @@ function Price() {
         ></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
-      <div className="md:flex md:flex-row  lg:justify-between ">
+      <div className="md:flex md:flex-row  lg:justify-between mt-[-8%]">
         {/* left */}
-        <div className="shadow-xl  border-1 lg:ml-[10%]">
+        <div className="shadow-xl  border-1 lg:ml-[10%] bg-white">
           <h1 className="font-Bell text-2xl ml-[10%] mt-[8%]">
             Bridal Mehendi
           </h1>
@@ -127,7 +127,7 @@ function Price() {
           <img className="md:w-fit md:h-fit 2md:w-fit md:sm-[10%] " src={HandLengthImage}></img>
         </div>
         {/* right */}
-        <div className="shadow-xl  border-1 lg:mr-[10%] text-xl">
+        <div className="shadow-xl  border-1 lg:mr-[10%] text-xl bg-white">
           {loading === true ? (
             <div className="relative top-[50%] left-[50%]">
               <RingLoader color="#7E22CE" size={50} />
