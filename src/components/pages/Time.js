@@ -32,7 +32,7 @@ function Time() {
   const [loading, setLoading] = useState(true);
   const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
   const [verf, setVerf] = useState(false);
-  const [isOtpVerified, setOtpVerified] = useState(false);
+  const [isOtpVerified, setOtpVerified] = useState(true);
   // ...
 
   // Define a function to handle reCAPTCHA verification
@@ -121,10 +121,36 @@ function Time() {
 
   const HandleDate = (name) => {
     setSelectedDate(name);
+
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    eventData.Slot = "";
+
+    // Convert the updated object to a JSON string
+    const jsonString = JSON.stringify(eventData);
+
+    // Store the updated JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
+    setSelectedSlot("");
   };
 
   const HandleSlot = (name) => {
     setSelectedSlot(name);
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    eventData.Slot = name || selectedSlot;
+
+    // Convert the updated object to a JSON string
+    const jsonString = JSON.stringify(eventData);
+
+    // Store the updated JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
   };
 
   const formData = useSelector((state) => state.FormData);
@@ -181,135 +207,136 @@ function Time() {
     );
   };
 
-  const userApi = async () => {
-    try {
-      validateData();
-      setshow(true);
-      // Retrieve the existing data from localStorage, if any
-      const existingData = localStorage.getItem("eventData");
-      // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
-      const eventData = existingData ? JSON.parse(existingData) : {};
+  // const userApi = async () => {
+  //   try {
+  //     validateData();
+  //     setshow(true);
+  //     // Retrieve the existing data from localStorage, if any
+  //     const existingData = localStorage.getItem("eventData");
+  //     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+  //     const eventData = existingData ? JSON.parse(existingData) : {};
 
-      if (fName === "" || phone === "" || phone.length < 10 || fName < 2)
-        return;
+  //     if (fName === "" || phone === "" || phone.length < 10 || fName < 2)
+  //       return;
 
-      eventData.Name = fName;
-      eventData.PhoneNumber = phone;
-      // Convert the updated object to a JSON string
-      const jsonString = JSON.stringify(eventData);
+  //     eventData.Name = fName;
+  //     eventData.PhoneNumber = phone;
+  //     // Convert the updated object to a JSON string
+  //     const jsonString = JSON.stringify(eventData);
 
-      // Store the updated JSON string in localStorage
-      localStorage.setItem("eventData", jsonString);
+  //     // Store the updated JSON string in localStorage
+  //     localStorage.setItem("eventData", jsonString);
 
-      dispatch(setData({ Name: fName, PhoneNumber: phone }));
+  //     dispatch(setData({ Name: fName, PhoneNumber: phone }));
 
-      // const codeOtp = Math.floor(100000 + Math.random() * 900000);
+  //     // const codeOtp = Math.floor(100000 + Math.random() * 900000);
 
-      // // const otpResponse = await fetch(`http://smsproadv.in/api/v2/SendSMS?SenderId=SANBAS&Is_Unicode=false&Is_Flash=false&Message=${codeOtp}.&MobileNumbers=+91${phone}&ApiKey=oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D&ClientId=d1d94ba5-44cb-4f51-aa4b-7cf751d58490`);
-      // // console.log(otpResponse)
+  //     // // const otpResponse = await fetch(`http://smsproadv.in/api/v2/SendSMS?SenderId=SANBAS&Is_Unicode=false&Is_Flash=false&Message=${codeOtp}.&MobileNumbers=+91${phone}&ApiKey=oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D&ClientId=d1d94ba5-44cb-4f51-aa4b-7cf751d58490`);
+  //     // // console.log(otpResponse)
 
-      // console.log("otp is : ", codeOtp);
+  //     // console.log("otp is : ", codeOtp);
 
-      // const apiKey = "oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D";
-      // const clientId = "d1d94ba5-44cb-4f51-aa4b-7cf751d58490";
+  //     // const apiKey = "oUsBzN0SIFCeAMVRmxGxMzA3d8GfIF%2BX8xgcgRk35nU%3D";
+  //     // const clientId = "d1d94ba5-44cb-4f51-aa4b-7cf751d58490";
 
-      // const url = `http://localhost:8000/send-sms`;
+  //     // const url = `http://localhost:8000/send-sms`;
 
-      // fetch(url, {
-      //   method: "GET",
-      //   headers: {
-      //     Accept: "text/plain",
-      //     mobile: phone,
-      //     otpcode: codeOtp
-      //   },
-      // })
-      //   .then((response) => {
-      //     if (!response.ok) {
-      //       throw new Error("Network response was not ok");
-      //     }
-      //     return response.text(); // or response.json() if the response is JSON
-      //   })
-      //   .then((data) => {
-      //     // Handle the response data here
-      //     console.log(data);
-      //   })
-      //   .catch((error) => {
-      //     // Handle errors here
-      //     console.error("There was a problem with the fetch operation:", error);
-      //   });
+  //     // fetch(url, {
+  //     //   method: "GET",
+  //     //   headers: {
+  //     //     Accept: "text/plain",
+  //     //     mobile: phone,
+  //     //     otpcode: codeOtp
+  //     //   },
+  //     // })
+  //     //   .then((response) => {
+  //     //     if (!response.ok) {
+  //     //       throw new Error("Network response was not ok");
+  //     //     }
+  //     //     return response.text(); // or response.json() if the response is JSON
+  //     //   })
+  //     //   .then((data) => {
+  //     //     // Handle the response data here
+  //     //     console.log(data);
+  //     //   })
+  //     //   .catch((error) => {
+  //     //     // Handle errors here
+  //     //     console.error("There was a problem with the fetch operation:", error);
+  //     //   });
 
-      const getUser = await fetch("http://localhost:8000/user-data");
-      if (getUser.ok) {
-        const getData = await getUser.json();
-        //console.log(getData);
-        const alreadyIdData = getData.data.filter(
-          (a) => a.mobile === phone && a.name === fName
-        );
-        //console.log(alreadyIdData);
-        const alreadyId =
-          alreadyIdData.length === 0 ? undefined : alreadyIdData[0].uid;
-        console.log(alreadyId);
-        // Add or update the Service and ServiceId properties
-        eventData.UserId = alreadyId;
-        eventData.Name = fName;
-        eventData.PhoneNumber = phone;
-        // Convert the updated object to a JSON string
-        const jsonString = JSON.stringify(eventData);
+  //     const getUser = await fetch("http://localhost:8000/user-data");
+  //     if (getUser.ok) {
+  //       const getData = await getUser.json();
+  //       //console.log(getData);
+  //       const alreadyIdData = getData.data.filter(
+  //         (a) => a.mobile === phone && a.name === fName
+  //       );
+  //       //console.log(alreadyIdData);
+  //       const alreadyId =
+  //         alreadyIdData.length === 0 ? undefined : alreadyIdData[0].uid;
+  //       console.log(alreadyId);
+  //       // Add or update the Service and ServiceId properties
+  //       eventData.UserId = alreadyId;
+  //       eventData.Name = fName;
+  //       eventData.PhoneNumber = phone;
+  //       // Convert the updated object to a JSON string
+  //       const jsonString = JSON.stringify(eventData);
 
-        // Store the updated JSON string in localStorage
-        localStorage.setItem("eventData", jsonString);
+  //       // Store the updated JSON string in localStorage
+  //       localStorage.setItem("eventData", jsonString);
 
-        dispatch(setData({ UserId: alreadyId }));
-        dispatch(setData({ Name: fName, PhoneNumber: phone }));
-      } else {
-        console.log("Request failed with status: " + getUser.status);
-      }
+  //       dispatch(setData({ UserId: alreadyId }));
+  //       dispatch(setData({ Name: fName, PhoneNumber: phone }));
+  //     } else {
+  //       console.log("Request failed with status: " + getUser.status);
+  //     }
 
-      console.log(localData.UserId);
-      if (localData.UserId === undefined) {
-        const data = {
-          name: fName,
-          mobile: phone,
-          isVerified: 0,
-          societyId: formData.SocietyId || localData.SocietyId,
-          serviceId: formData.ServiceId || localData.ServiceId,
-        };
+  //     console.log(localData.UserId);
+  //     if (localData.UserId === undefined) {
+  //       const data = {
+  //         name: fName,
+  //         mobile: phone,
+  //         isVerified: 0,
+  //         societyId: formData.SocietyId || localData.SocietyId,
+  //         serviceId: formData.ServiceId || localData.ServiceId,
+  //       };
 
-        // const response = await fetch("http://localhost:8000/user-data", {
-        //   method: "POST",
-        //   body: JSON.stringify(data),
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // });
-        // const result = await response.json();
-        // console.log(result);
-      } else {
-        const data = {
-          uid: localData.UserId,
-          name: fName,
-          mobile: phone,
-          isVerified: 0,
-          societyId: formData.SocietyId || localData.SocietyId,
-          serviceId: formData.ServiceId || localData.ServiceId,
-        };
-        console.log("else", data);
-        // const response = await fetch("http://localhost:8000/user-data", {
-        //   method: "POST",
-        //   body: JSON.stringify(data),
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // });
-        // const result = await response.json();
-        // console.log(result);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //       // const response = await fetch("http://localhost:8000/user-data", {
+  //       //   method: "POST",
+  //       //   body: JSON.stringify(data),
+  //       //   headers: {
+  //       //     "Content-Type": "application/json",
+  //       //   },
+  //       // });
+  //       // const result = await response.json();
+  //       // console.log(result);
+  //     } else {
+  //       const data = {
+  //         uid: localData.UserId,
+  //         name: fName,
+  //         mobile: phone,
+  //         isVerified: 0,
+  //         societyId: formData.SocietyId || localData.SocietyId,
+  //         serviceId: formData.ServiceId || localData.ServiceId,
+  //       };
+  //       console.log("else", data);
+  //       // const response = await fetch("http://localhost:8000/user-data", {
+  //       //   method: "POST",
+  //       //   body: JSON.stringify(data),
+  //       //   headers: {
+  //       //     "Content-Type": "application/json",
+  //       //   },
+  //       // });
+  //       // const result = await response.json();
+  //       // console.log(result);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   // Your changeHandler function
+
   function changeHandler(event) {
     if (!isOtpVerified) return;
     // const { name, value, checked, type } = event.target;
@@ -378,7 +405,7 @@ function Time() {
               value={fName}
               type="text"
               pattern="[A-Za-z]+"
-            className="focus:border-[#440BB7]  focus:text-blue-800 border rounded-md mt-2 p-3 border-black text-black "
+              className="focus:border-[#440BB7]  focus:text-blue-800 border rounded-md mt-2 p-3 border-black text-black "
               onChange={HandleNameChange}
               required
             />
@@ -402,14 +429,14 @@ function Time() {
             <br />
             {/* <div id="recaptcha-container"></div> */}
 
-            <button
+            {/* <button
               onClick={error ? validateData : userApi}
               style={{ display: !show && !isOtpVerified ? "block" : "none" }}
             >
               Get OTP
-            </button>
+            </button> */}
           </div>
-          <div style={{ display: show && !isOtpVerified ? "block" : "none" }}>
+          {/* <div style={{ display: show && !isOtpVerified ? "block" : "none" }}>
             <input
               type="Number"
               placeholder={"Enter your OTP"}
@@ -422,7 +449,7 @@ function Time() {
             <br />
             <button onClick={() => setOtpVerified(true)}>Verify</button>
           </div>
-          {isOtpVerified && <h1>Verified</h1>}
+          {isOtpVerified && <h1>Verified</h1>} */}
         </div>
 
         <div className="w-1/2  shadow-xl border-1 p-10 rounded-lg">
@@ -488,7 +515,10 @@ function Time() {
           >
             <button
               className={
-                isOtpVerified
+                selectedSlot != null &&
+                phone != "" &&
+                fName != "" &&
+                phone.length === 10
                   ? "bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] ml-[10%] w-[80%]"
                   : "bg-[#440BB7] cursor-not-allowed rounded-lg text-white p-3 mt-[7%] ml-[10%] w-[80%]"
               }
