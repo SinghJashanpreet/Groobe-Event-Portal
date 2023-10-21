@@ -9,9 +9,9 @@ function QR() {
   const generateQRCode = () => {
     setQRData(formData.bID);
   };
-useEffect(()=>{
+  useEffect(() => {
     setQRData(formData.bID);
-})
+  });
   return (
     <div className="flex flex-col items-center mt-10">
       {/* <input

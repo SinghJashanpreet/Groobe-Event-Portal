@@ -19,9 +19,12 @@ function Receipt() {
     // dispatch(print());
   }
   return (
-    <div className="w-full">
-      <img className="flex flex-row ml-[43%]" src={groobeLogo}></img>
-      <div className="border-2 border-gray-500 w-max rounded-lg pr-14 pl-14 pt-3 pb-6 mx-[18%]  text-xl mt-2">
+    <div className="w-full flex flex-col justify-center items-center">
+      <img
+        className="flex flex-row mx-[38%] md:mx-[43%] mb-4"
+        src={groobeLogo}
+      ></img>
+      <div className="border-2 border-gray-500 w-max rounded-lg px-5 md:px-14 pt-3 pb-6 mx-[11%] md:mx-[18%]  text-xl mt-2">
         <div className="flex flex-row mb-3">
           <h1>Name :</h1>
           <h1 className="ml-1">{formData.Name}</h1>
@@ -62,7 +65,7 @@ function Receipt() {
         <h1 className="mb-3 mx-7 font-bold">s.no : {formData.bID}</h1>
       </div>
       <div>
-        <button className="bg-[#440BB7] rounded-md px-5 pt-2 pb-2 w-1/4 mx-[37%] mb-7 mt-10 text-white">
+        <button className="bg-[#440BB7] rounded-md px-3 md:px-5 pt-2 pb-2 mb-4 mt-8 text-white">
           Download
         </button>
       </div>
