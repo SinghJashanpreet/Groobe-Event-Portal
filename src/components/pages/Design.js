@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import Homeheader from "../Header";
 import { useLocation } from "react-router-dom";
 import Footer from "../Footer";
+import { useNavigate } from "react-router-dom";
 // import img1 from "../../assets/images/Design/Varanasi_Mehndi_Design_Images_Pictures_(Ideas)-transformed 1.svg";
 // import img2 from "../../assets/images/Design/Arabic_Mehndi_Designs-removebg-preview 1.svg";
 // import img3 from "../../assets/images/Design/Stylish_Mehndi_Designs-removebg-preview 1.svg";
@@ -20,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../../Redux/Slices/FormSlice";
 import whatsapp from "../../assets/images/Frame 2219.svg";
 function Design() {
+  const Navigate = useNavigate();
   //const location = useLocation();
   //console.log(location.state)
   //const { serviceId } = location.state;
@@ -84,6 +86,17 @@ function Design() {
     dispatch(setData({ Design: selectedDesign }));
     dispatch(print());
   }
+
+
+  useEffect(()=>{
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+  
+    if(eventData.bID != undefined)
+      Navigate("/confirm");
+  }, [])
 
   return (
     <div className="">

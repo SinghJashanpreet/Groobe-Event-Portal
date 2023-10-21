@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import RingLoader from "react-spinners/RingLoader";
 import { print, setData } from "../../Redux/Slices/FormSlice";
 import whatsapp from "../../assets/images/Frame 2219.svg";
+import { useNavigate } from "react-router-dom";
 function Society() {
+  const Navigate = useNavigate();
   const [SocietyApiData, setSocietyApiData] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -56,6 +58,7 @@ function Society() {
 
     eventData.Society = event;
     eventData.SocietyId = idd;
+    eventData.Hands = "Both Hands";
 
     // Convert the object to a JSON string
     const jsonString = JSON.stringify(eventData);
@@ -64,6 +67,15 @@ function Society() {
     dispatch(setData({ Society: event, SocietyId: idd }));
     dispatch(print());
   }
+  useEffect(()=>{
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+  
+    if(eventData.bID != undefined)
+      Navigate("/confirm");
+  }, [])
 
   return (
     <div className="justify-start items-center 2xl:mt-12 2xl:ml-80 2xl:mr-80 xl:mt-12 xl:ml-60 xl:mr-60 lg:mt-12 lg:ml-32 lg:mr-32 md:mt-6 md:ml-10 md:mr-10 sm:mt-6 sm:ml-4 sm:mr-4 m:ml-2 m:mr-2 s:ml-1.5 s:mr-1.5">
@@ -76,6 +88,8 @@ function Society() {
           className="fixed top-[50vh] right-0"
         ></img>
       </a>
+
+      
       <h1 className="text-purple-700 font-[600] font-inter text-3xl m:ml-2 m:mr-2 m:mt-2 ">
         Choose Your Society
       </h1>

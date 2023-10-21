@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { print, setData } from "../Redux/Slices/FormSlice";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +10,9 @@ import { print, setData } from "../Redux/Slices/FormSlice";
 import groobe from "../assets/images/groobe logo2.svg";
 import { Link } from "react-router-dom";
 import Receipt from "./Receipt";
+
 const PopupContent = ({ onClose }) => {
+  const navigate = useNavigate();
   let formData = localStorage.getItem("eventData");
   formData = JSON.parse(formData);
   const dispatch = useDispatch();
@@ -31,23 +34,23 @@ const PopupContent = ({ onClose }) => {
 
   useEffect(() => {
     // Add a scroll event listener to the window
-    const handleScroll = () => {
-      // Close the modal when the background is scrolled
-      if (showReceipt === true)
-        dispatch(setData({ showReceipt: false }));
+    // const handleScroll = () => {
+    //   // Close the modal when the background is scrolled
+    //   if (showReceipt === true)
+    //     dispatch(setData({ showReceipt: false }));
 
-      onClose();
-    };
+    //   onClose();
+    // };
 
-    if (showReceipt === true)
-      dispatch(setData({ showReceipt: false }));
+    //if (showReceipt === true) dispatch(setData({ showReceipt: false }));
+    // if (showReceipt === true) navigate("/")
 
-    window.addEventListener("scroll", handleScroll);
+    //window.addEventListener("scroll", handleScroll);
 
     // Remove the scroll event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    // return () => {
+    //   window.removeEventListener("scroll", handleScroll);
+    // };
   }, [onClose]);
 
   const HandleMethod = async (event) => {
@@ -116,11 +119,24 @@ const PopupContent = ({ onClose }) => {
     }
   };
 
+
+  useEffect(()=>{
+    const existingData = localStorage.getItem("eventData");
+  
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+  
+    if(eventData.bID != undefined){
+      dispatch(setData({ showReceipt: true }))
+      setShowReceipt(true);}
+  }, [])
+
+
   return (
     <div className="relative">
-      {showReceipt === false ? (
+      {!showReceipt  ? (
         <>
-          {showReceipt === false ? (
+          {!showReceipt  ? (
             <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full">
               <img src={groobe} width="60px"></img>
             </h1>

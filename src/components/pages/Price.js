@@ -7,11 +7,13 @@ import { print, setData } from "../../Redux/Slices/FormSlice";
 import { Link } from "react-router-dom";
 import RingLoader from "react-spinners/RingLoader";
 import whatsapp from "../../assets/images/Frame 2219.svg";
+import { useNavigate } from "react-router-dom";
 function Price() {
+  const Navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem("eventData"));
   const [SelectedPrice, setSelectedPrice] = useState(localData.Length || null);
-  const [SelectedHands, setSelectedHands] = useState(localData.Hands ||null);
-  const [price, setPrice] = useState(localData.Price ||null);
+  const [SelectedHands, setSelectedHands] = useState(localData.Hands || null);
+  const [price, setPrice] = useState(localData.Price || null);
   const [PriceApiData, setPriceApiData] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -61,27 +63,38 @@ function Price() {
     const selectedLength = SelectedPrice;
     const selectp = price;
 
-     // Retrieve the existing data from localStorage, if any
-     const existingData = localStorage.getItem("eventData");
+    // Retrieve the existing data from localStorage, if any
+    const existingData = localStorage.getItem("eventData");
 
-     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
-     const eventData = existingData ? JSON.parse(existingData) : {};
- 
-     // Add or update the Service and ServiceId properties
-     eventData.Hands = selectedHands;
-     eventData.Length = selectedLength;
-     eventData.Price = selectp;
- 
-     // Convert the updated object to a JSON string
-     const jsonString = JSON.stringify(eventData);
- 
-     // Store the updated JSON string in localStorage
-     localStorage.setItem("eventData", jsonString);
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    // Add or update the Service and ServiceId properties
+    eventData.Hands = selectedHands;
+    eventData.Length = selectedLength;
+    eventData.Price = selectp;
+
+    // Convert the updated object to a JSON string
+    const jsonString = JSON.stringify(eventData);
+
+    // Store the updated JSON string in localStorage
+    localStorage.setItem("eventData", jsonString);
 
     dispatch(setData({ Hands: selectedHands }));
     dispatch(setData({ Length: selectedLength, Price: selectp }));
     dispatch(print());
   }
+
+  useEffect(()=>{
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+  
+    if(eventData.bID != undefined)
+      Navigate("/confirm");
+  }, [])
+
 
   return (
     <div>
@@ -93,7 +106,9 @@ function Price() {
           className="fixed top-[50vh] right-0"
         ></img>
       </a>
-      <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
+      <div className="z-[-5000]">
+        <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
+      </div>
       <div className="md:flex md:flex-row  lg:justify-between ">
         {/* left */}
         <div className="shadow-xl  border-1 lg:ml-[10%]">
@@ -116,15 +131,18 @@ function Price() {
               name="Single Hand"
               className={
                 SelectedHands === "Single Hand"
-                ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
-                : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
+                  ? "bg-[#440BB7] text-white rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
+                  : "bg-[#EFEFEF] text-black rounded-md lg:w-40 lg:h-10 md:w-40 md:h-10 sm:h-10 sm:p-2 m:h-10 m:pt-1 lg:p-1 p-1"
               }
               onClick={() => HandleHands("Single Hand")}
             >
               Single Hand
             </button>
           </div>
-          <img className="md:w-fit md:h-fit 2md:w-fit md:sm-[10%] " src={HandLengthImage}></img>
+          <img
+            className="md:w-fit md:h-fit 2md:w-fit md:sm-[10%] "
+            src={HandLengthImage}
+          ></img>
         </div>
         {/* right */}
         <div className="shadow-xl  border-1 lg:mr-[10%] text-xl">
@@ -154,7 +172,12 @@ function Price() {
           )}
 
           <Link to="/time">
-            <button className="bg-[#440BB7] text-white w-72 s:mt-[10%] h-10 rounded-lg m-10" onClick={changeHandler}>BOOK</button>
+            <button
+              className="bg-[#440BB7] text-white w-72 s:mt-[10%] h-10 rounded-lg m-10"
+              onClick={changeHandler}
+            >
+              BOOK
+            </button>
           </Link>
         </div>
       </div>

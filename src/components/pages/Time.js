@@ -8,12 +8,16 @@ import { Link, json } from "react-router-dom";
 import RingLoader from "react-spinners/RingLoader";
 import { app, auth, RecaptchaVerifier } from "../../firebase";
 import whatsapp from "../../assets/images/Frame 2219.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 import {
   GoogleReCaptchaProvider,
   GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 
 function Time() {
+  const Navigate = useNavigate();
   //console.log(new Date().getDate() , new Date().getMonth() )
   let localData = localStorage.getItem("eventData");
   localData = JSON.parse(localData);
@@ -116,6 +120,17 @@ function Time() {
     fun();
   }, [isOtpVerified]);
 
+  useEffect(()=>{
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+  
+    if(eventData.bID != undefined)
+      Navigate("/confirm");
+  }, [])
+
+
   const HandleNameChange = (event) => {
     seterror(false);
     setFname(event.target.value);
@@ -133,7 +148,10 @@ function Time() {
 
   const HandlePhoneChange = (event) => {
     seterror(false);
-    setPhone(event.target.value);
+    const numericInput = event.target.value.replace(/[^0-9]/g, "");
+    setPhone(numericInput);
+
+    // Update the 'phone' state with the cleaned numeric input
 
     const phonePattern = /^[0-9]+$/;
 
@@ -149,9 +167,7 @@ function Time() {
       seterror(true);
       dispatch(setData({ error: "Enter Correct PhoneNumber!" }));
     }
-
   };
-
 
   const HandleDate = (name) => {
     setSelectedDate(name);
@@ -168,7 +184,7 @@ function Time() {
 
     // Store the updated JSON string in localStorage
     localStorage.setItem("eventData", jsonString);
-    setSelectedSlot("");
+    setSelectedSlot(null);
   };
 
   const HandleSlot = (name) => {
@@ -373,9 +389,37 @@ function Time() {
 
   function changeHandler(event) {
     if (!isOtpVerified) return;
+
+    if (selectedSlot == null || selectedSlot === "") {
+      toast("Select Slot!");
+      return;
+    }
+    if (phone === "") {
+      toast("Enter Phone Number!");
+      return;
+    }
+    if (fName === "") {
+      toast("Enter Name!");
+      return;
+    }
+    if (phone.length < 10) {
+      toast("Enter 10 Digit Phone Number!");
+      return;
+    }
+    if (errorN) {
+      toast("Enter correct name!");
+      return;
+    }
+    if (errorP) {
+      toast("Enter correct Phone Number!");
+      return;
+    }
+
     // const { name, value, checked, type } = event.target;
     setReCAPTCHALoaded(true);
+
     seterror(fName === "" || phone === "" ? true : false);
+
     const Date = selectedDate;
     const Slot = selectedSlot;
     const ph = phone;
@@ -430,6 +474,8 @@ function Time() {
         ></img>
       </a>
 
+      <ToastContainer />
+
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
       <div className="md:flex md:flex-row  justify-evenly ">
         <div className="flex flex-col shadow-xl border-1 p-10 rounded-lg">
@@ -455,6 +501,8 @@ function Time() {
             <input
               value={phone}
               type="tel"
+              maxLength={10}
+              pattern="[0-9]*"
               onChange={HandlePhoneChange}
               placeholder="phone number"
               className={
@@ -547,20 +595,27 @@ function Time() {
               fName === "" ||
               phone === "" ||
               phone.length < 10 ||
-              !isOtpVerified
+              !isOtpVerified ||
+              selectedSlot === null ||
+              selectedSlot === "" ||
+              errorN ||
+              errorP
                 ? ""
                 : "/confirm"
             }
+            className="ml-[10%]"
           >
             <button
               className={
-                selectedSlot != null &&
+                selectedSlot !== null &&
                 phone != "" &&
                 fName != "" &&
                 phone.length === 10 &&
-                !error && !errorN && !errorP
-                  ? "bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] ml-[10%] w-[80%]"
-                  : "bg-[#440BB7] cursor-not-allowed rounded-lg text-white p-3 mt-[7%] ml-[10%] w-[80%]"
+                !error &&
+                !errorN &&
+                !errorP
+                  ? "bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] w-[80%]"
+                  : "bg-[#440BB7] cursor-not-allowed rounded-lg text-white p-3 mt-[7%] w-[80%]"
               }
               onClick={changeHandler}
             >

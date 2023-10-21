@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import Homeheader from "../Header";
 import Footer from "../Footer";
 import Modal from "react-modal";
@@ -15,17 +15,20 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 import {
   GoogleReCaptchaProvider,
   GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
 
 function Confirm() {
+  const Navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
   const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
   const [verf, setVerf] = useState(false);
   const [loading, setLoading] = useState(true);
   // ...
+
   const formData2 = useSelector((state) => state.FormData);
   let formData = localStorage.getItem("eventData");
   formData = JSON.parse(formData);
@@ -145,6 +148,15 @@ function Confirm() {
     }
   };
 
+  useEffect(() => {
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+
+    if (eventData.bID != undefined) setModalOpen(!isModalOpen);
+  }, []);
+
   return (
     <>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
@@ -200,7 +212,7 @@ function Confirm() {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col justify-evenly">
+              <div className="flex flex-col justify-evenly ml-2">
                 <h2 className="flex items-center text-xl">
                   <p className="inline clear-left text-xl font-bold">
                     {formData.Price}

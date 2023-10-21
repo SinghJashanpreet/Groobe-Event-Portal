@@ -4,6 +4,9 @@ import { print, setData } from "../Redux/Slices/FormSlice";
 import groobeLogo from "../assets/images/groobe logo2.svg";
 import QR from "../assets/images/Receipt/QR.svg";
 import QRCodeGenerator from "../components/QR";
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { Link } from "react-router-dom";
 
 function Receipt() {
   // const formData = useSelector((state) => state.FormData);
@@ -18,8 +21,23 @@ function Receipt() {
     // dispatch(setData({ Society: selectedSociety }));
     // dispatch(print());
   }
+
+
+function downloadReceiptAsPDF() {
+  // Reference to the target component (receipt.js) to be captured
+  const targetComponent = document.getElementById('receiptComponent');
+
+  html2canvas(targetComponent).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    pdf.addImage(imgData, 'PNG', 10, 10);
+    pdf.save('receipt.pdf');
+  });
+}
+
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <>
+    <div className="w-full flex flex-col justify-center items-center " id="receiptComponent">
       <img
         className="flex flex-row mx-[38%] md:mx-[43%] mb-4"
         src={groobeLogo}
@@ -64,12 +82,22 @@ function Receipt() {
         </div>
         <h1 className="mb-3 mx-7 font-bold">s.no : {formData.bID}</h1>
       </div>
-      <div>
-        <button className="bg-[#440BB7] rounded-md px-3 md:px-5 pt-2 pb-2 mb-4 mt-8 text-white">
+    </div>
+      <div className="flex flex-col justify-center items-center">
+        <button className="bg-[#440BB7] rounded-md px-3 md:px-5 pt-2 pb-2 mb-2 mt-5 text-white"
+        onClick={downloadReceiptAsPDF}>
           Download
         </button>
+        <Link to="/">
+        <button className="bg-[#440BB7] rounded-md px-3 md:px-5 pt-2 pb-2 mb-4  text-white"
+        onClick={()=>{
+          localStorage.removeItem("eventData");
+        }}>
+          Book a new Service
+        </button>
+        </Link>
       </div>
-    </div>
+    </>
   );
 }
 
