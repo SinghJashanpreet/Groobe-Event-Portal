@@ -15,6 +15,7 @@ import {
   GoogleReCaptchaProvider,
   GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
+import { async } from "q";
 
 function Time() {
   const Navigate = useNavigate();
@@ -34,7 +35,8 @@ function Time() {
   const [timeApiData, setTimeAPiData] = useState(null);
   const [UniqueDateData, setUniqueDateData] = useState(null);
   const [SlotsData, setSlotsData] = useState([]);
-
+  const [unique , setUnique] = useState(false);
+const [uniquephonecheck, setuniqephnchek] = useState("");
   const [loading, setLoading] = useState(true);
   const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
   const [verf, setVerf] = useState(false);
@@ -81,6 +83,32 @@ function Time() {
       setSlotsData(timeApiData.filter((a) => a.date === selectedDate));
   }, [selectedDate]);
 
+  useEffect(()=>{
+    const fu = async() =>{
+      const getBookingData = await fetch("http://localhost:8000/booking");
+      if (getBookingData.ok || getBookingData.status == 500) {
+        let Bdata = await getBookingData.json();
+        if (Bdata.message !== "Cannot read properties of null (reading 'list')") {
+          const BFilterdata = Bdata.data.filter((a) => {
+            return a.mobile == phone;
+          });
+  
+          const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+  
+          if (bID !== undefined) {
+            
+            //dispatch(setData({ error: "Unique" }));
+       
+            setUnique(true);
+           setuniqephnchek(phone);
+           
+          }
+        }
+      }
+    }
+    fu();
+  },[phone])
+
   useEffect(() => {
     const fun = async () => {
       const getUser = await fetch("http://localhost:8000/user-data");
@@ -120,16 +148,14 @@ function Time() {
     fun();
   }, [isOtpVerified]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const existingData = localStorage.getItem("eventData");
 
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
     const eventData = existingData ? JSON.parse(existingData) : {};
-  
-    if(eventData.bID != undefined)
-      Navigate("/confirm");
-  }, [])
 
+    if (eventData.bID != undefined) Navigate("/confirm");
+  }, []);
 
   const HandleNameChange = (event) => {
     seterror(false);
@@ -147,6 +173,7 @@ function Time() {
   };
 
   const HandlePhoneChange = (event) => {
+
     seterror(false);
     const numericInput = event.target.value.replace(/[^0-9]/g, "");
     setPhone(numericInput);
@@ -167,6 +194,8 @@ function Time() {
       seterror(true);
       dispatch(setData({ error: "Enter Correct PhoneNumber!" }));
     }
+    if(uniquephonecheck != phone)
+    setUnique(false);
   };
 
   const HandleDate = (name) => {
@@ -387,7 +416,12 @@ function Time() {
 
   // Your changeHandler function
 
-  function changeHandler(event) {
+  async function changeHandler(event) {
+    if(unique){
+      toast("Mobile Number Already Exists!");
+      seterrorP(true);
+      return;
+    }
     if (!isOtpVerified) return;
 
     if (selectedSlot == null || selectedSlot === "") {
@@ -599,12 +633,13 @@ function Time() {
               selectedSlot === null ||
               selectedSlot === "" ||
               errorN ||
-              errorP
+              errorP || error || unique
                 ? ""
                 : "/confirm"
             }
             className="ml-[10%]"
           >
+            {console.log(unique , error)}
             <button
               className={
                 selectedSlot !== null &&
@@ -613,7 +648,7 @@ function Time() {
                 phone.length === 10 &&
                 !error &&
                 !errorN &&
-                !errorP
+                !errorP 
                   ? "bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] w-[80%]"
                   : "bg-[#440BB7] cursor-not-allowed rounded-lg text-white p-3 mt-[7%] w-[80%]"
               }
@@ -630,6 +665,7 @@ function Time() {
         </div>
       </div>
       <Footer />
+    
     </div>
   );
 }

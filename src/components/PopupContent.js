@@ -32,26 +32,27 @@ const PopupContent = ({ onClose }) => {
     toggleDetails(index); // Toggle the details state
   };
 
-  useEffect(() => {
-    // Add a scroll event listener to the window
-    // const handleScroll = () => {
-    //   // Close the modal when the background is scrolled
-    //   if (showReceipt === true)
-    //     dispatch(setData({ showReceipt: false }));
+  // useEffect(() => {
 
-    //   onClose();
-    // };
+  //   // Add a scroll event listener to the window
+  //   // const handleScroll = () => {
+  //   //   // Close the modal when the background is scrolled
+  //   //   if (showReceipt === true)
+  //   //     dispatch(setData({ showReceipt: false }));
 
-    //if (showReceipt === true) dispatch(setData({ showReceipt: false }));
-    // if (showReceipt === true) navigate("/")
+  //   //   onClose();
+  //   // };
 
-    //window.addEventListener("scroll", handleScroll);
+  //   //if (showReceipt === true) dispatch(setData({ showReceipt: false }));
+  //   // if (showReceipt === true) navigate("/")
 
-    // Remove the scroll event listener when the component unmounts
-    // return () => {
-    //   window.removeEventListener("scroll", handleScroll);
-    // };
-  }, [onClose]);
+  //   //window.addEventListener("scroll", handleScroll);
+
+  //   // Remove the scroll event listener when the component unmounts
+  //   // return () => {
+  //   //   window.removeEventListener("scroll", handleScroll);
+  //   // };
+  // }, []);
 
   const HandleMethod = async (event) => {
     try {
@@ -74,43 +75,42 @@ const PopupContent = ({ onClose }) => {
 
       dispatch(setData({ PayMethod: method }));
 
-      const getBookingData = await fetch("http://localhost:8000/booking");
-      if (getBookingData.ok) {
-        let Bdata = await getBookingData.json();
+      // const getBookingData = await fetch("http://localhost:8000/booking");
+      // if (getBookingData.ok) {
+      //   let Bdata = await getBookingData.json();
 
-        const BFilterdata = Bdata.data.filter((a) => {
-          console.log(a.id, eventData.bID);
-          return a.id == eventData.bID;
-        });
+      //   const BFilterdata = Bdata.data.filter((a) => {
+      //     console.log(a.id, eventData.bID);
+      //     return a.id == eventData.bID;
+      //   });
 
-        console.log(BFilterdata);
+      //   console.log(BFilterdata);
 
-        const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+      //   const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
 
-        console.log(bID);
-        eventData.bID = bID;
-        const jsonString = JSON.stringify(eventData);
+      //   console.log(bID);
 
-        // Store the updated JSON string in localStorage
-        localStorage.setItem("eventData", jsonString);
-        dispatch(setData({ showReceipt: true }));
-        const data = {
-          id: bID,
-          paymentStatus: "UnPaid",
-          paymentMode: method,
-        };
-        const response = await fetch("http://localhost:8000/booking", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const result = await response.json();
-        console.log(result);
-      } else {
-        console.log("Request failed with status: " + getBookingData.status);
-      }
+      //   eventData.bID = bID;
+      //   const jsonString = JSON.stringify(eventData);
+
+      //   // Store the updated JSON string in localStorage
+      //   localStorage.setItem("eventData", jsonString);
+      //   dispatch(setData({ showReceipt: true }));
+      console.log("this is bid tp be updated: ", eventData.bID);
+      const data = {
+        id: eventData.bID,
+        paymentStatus: "UnPaid",
+        paymentMode: method,
+      };
+      const response = await fetch("http://localhost:8000/booking", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
 
       dispatch(print());
       setShowReceipt(true);
@@ -119,24 +119,27 @@ const PopupContent = ({ onClose }) => {
     }
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const existingData = localStorage.getItem("eventData");
-  
+
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
     const eventData = existingData ? JSON.parse(existingData) : {};
-  
-    if(eventData.bID != undefined && eventData.paymentMode !== undefined){
-      dispatch(setData({ showReceipt: true }))
-      setShowReceipt(true);}
-  }, [])
 
+    if (
+      eventData.bID != undefined &&
+      eventData.PayMethod != undefined &&
+      eventData.taskcompleted === true
+    ) {
+      dispatch(setData({ showReceipt: true }));
+      setShowReceipt(true);
+    }
+  }, []);
 
   return (
     <div className="relative">
-      {!showReceipt  ? (
+      {!showReceipt ? (
         <>
-          {!showReceipt  ? (
+          {!showReceipt ? (
             <h1 className="sticky top-0 z-10 text-xl 2m:text-2xl md:text-3xl font-inter font-[400] flex justify-center items-center pt-3 pb-5 bg-[#F0F0F0] w-full ">
               <img src={groobe} width="60px"></img>
             </h1>

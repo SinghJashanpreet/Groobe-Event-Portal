@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { print, setData } from "../Redux/Slices/FormSlice";
 import groobeLogo from "../assets/images/groobe logo2.svg";
@@ -14,13 +14,25 @@ function Receipt() {
   formData = JSON.parse(formData);
   const dispatch = useDispatch();
 
-  // Your changeHandler function
-  function changeHandler(event) {
-    // const { name, value, checked, type } = event.target;
-    // const selectedSociety = event.target.getAttribute('name');
-    // dispatch(setData({ Society: selectedSociety }));
-    // dispatch(print());
-  }
+  useEffect(()=>{
+    if(formData.taskcompleted === false ){
+      
+      formData.taskcompleted = true;
+
+      const jsonString = JSON.stringify(formData);
+
+      // Store the updated JSON string in localStorage
+      localStorage.setItem("eventData", jsonString);
+
+    }
+  }, [])
+  // // Your changeHandler function
+  // function changeHandler(event) {
+  //   // const { name, value, checked, type } = event.target;
+  //   // const selectedSociety = event.target.getAttribute('name');
+  //   // dispatch(setData({ Society: selectedSociety }));
+  //   // dispatch(print());
+  // }
 
 
 function downloadReceiptAsPDF() {

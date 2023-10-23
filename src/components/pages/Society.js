@@ -58,6 +58,7 @@ function Society() {
 
     eventData.Society = event;
     eventData.SocietyId = idd;
+    eventData.taskcompleted = false;
     eventData.Hands = "Both Hands";
 
     // Convert the object to a JSON string

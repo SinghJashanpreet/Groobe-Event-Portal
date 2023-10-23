@@ -17,7 +17,8 @@ const initialFormData = {
   UserId:"",
   BookingId:"",
   showReceipt: false,
-  error: ""
+  error: "",
+  taskcompleted: false
 };
 
 const FormSlice = createSlice({
