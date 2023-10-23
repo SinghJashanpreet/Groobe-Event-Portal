@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import RingLoader from "react-spinners/RingLoader";
 import whatsapp from "../../assets/images/Frame 2219.svg";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 function Price() {
   const Navigate = useNavigate();
   const localData = JSON.parse(localStorage.getItem("eventData"));
@@ -16,6 +17,7 @@ function Price() {
   const [price, setPrice] = useState(localData.Price || null);
   const [PriceApiData, setPriceApiData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [err , setErr] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -44,12 +46,25 @@ function Price() {
     // You can include dependencies if needed, like [someId]
   }, []); // Pass an empty array if no dependencies are needed
 
+
+  // useEffect(()=>{
+  //   if(SelectedPrice == null || SelectedHands == null){
+  //     console.log("jelloo" , SelectedHands, SelectedPrice)
+  //     setErr(true);
+  //     toast("Select Details first!");
+  //     return;
+  //   }
+  // },[]);
+
   const HandleLength = (elm) => {
+    setErr(false);
+    
     setSelectedPrice(elm.name);
     setPrice(elm.price);
   };
 
   const HandleHands = (name) => {
+    setErr(false);
     setSelectedHands(name);
   };
 
@@ -59,6 +74,7 @@ function Price() {
   // Your changeHandler function
   function changeHandler(event) {
     // const { name, value, checked, type } = event.target;
+
     const selectedHands = SelectedHands;
     const selectedLength = SelectedPrice;
     const selectp = price;
@@ -107,6 +123,7 @@ function Price() {
         ></img>
       </a>
       <Homeheader line1="Choose Style" line2="5+ Mehendi Design" />
+      <ToastContainer />
       <div className="md:flex md:flex-row  lg:justify-between mt-[-8%]">
         {/* left */}
         <div className="shadow-xl  border-1 lg:ml-[10%] bg-white rounded-lg">
@@ -169,7 +186,7 @@ function Price() {
             })
           )}
 
-          <Link to="/time">
+          <Link to={err ? "" : "/time"}>
             <button
               className="bg-[#440BB7] text-white w-72 s:mt-[10%] h-10 rounded-lg m-10"
               onClick={changeHandler}

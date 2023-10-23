@@ -5,7 +5,7 @@ const initialFormData = {
   Service: "",
   Design: "",
   Hands: "Both Hands",
-  Length: "Full",
+  Length: "Palm Length",
   Name: "",
   PhoneNumber: "",
   Date: "",
