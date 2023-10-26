@@ -16,18 +16,14 @@ function Service() {
   const [serviceID, setServiceID] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const existingData = localStorage.getItem("eventData");
 
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
 
-
-    useEffect(()=>{
-      const existingData = localStorage.getItem("eventData");
-
-      // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
-      const eventData = existingData ? JSON.parse(existingData) : {};
-    
-      if(eventData.bID != undefined)
-        Navigate("/confirm");
-    }, [])
+    if (eventData.bID != undefined) Navigate("/confirm");
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -70,8 +66,6 @@ function Service() {
   //   },
   // ];
 
-
-  
   const formData = useSelector((state) => state.FormData);
   const dispatch = useDispatch();
 

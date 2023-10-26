@@ -48,8 +48,15 @@ function Confirm() {
   const toggleModal = async () => {
     try {
       if (isModalOpen === true) {
-        setModalOpen(!isModalOpen);
-        return;
+        console.log("trying to close", isModalOpen)
+        if(formData.taskcompleted === true){
+          setModalOpen(true);
+          return;
+        }
+        else{
+          setModalOpen(!isModalOpen);
+          return;
+        }
       }
 
       setReCAPTCHALoaded(true);
