@@ -27,20 +27,23 @@ function Time() {
   var [error, seterror] = useState(false);
   var [errorN, seterrorN] = useState(false);
   var [errorP, seterrorP] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(localData.Date || "28 OCT");
+  const [selectedDate, setSelectedDate] = useState(
+    localData.Date || "2023-10-29"
+  );
   const [selectedSlot, setSelectedSlot] = useState(localData.Slot || null);
-  const [otp, setotp] = useState("");
-  const [show, setshow] = useState(false);
-  const [final, setfinal] = useState("");
+  // const [otp, setotp] = useState("");
+  // const [show, setshow] = useState(false);
+  // const [final, setfinal] = useState("");
   const [timeApiData, setTimeAPiData] = useState(null);
   const [UniqueDateData, setUniqueDateData] = useState(null);
   const [SlotsData, setSlotsData] = useState([]);
-  const [unique , setUnique] = useState(false);
-const [uniquephonecheck, setuniqephnchek] = useState("");
+  const [unique, setUnique] = useState(false);
+  const [uniquephonecheck, setuniqephnchek] = useState("");
   const [loading, setLoading] = useState(true);
   const [reCAPTCHALoaded, setReCAPTCHALoaded] = useState(false);
   const [verf, setVerf] = useState(false);
   const [isOtpVerified, setOtpVerified] = useState(true);
+  const [buttonClicked, setButtonClicked] = useState(false);
   // ...
 
   // Define a function to handle reCAPTCHA verification
@@ -62,8 +65,20 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
           const data = await response.json();
           console.log("price Data fetched", data);
           setTimeAPiData(data.data);
-          setUniqueDateData([...new Set(data.data.map((elm) => elm.date))]);
-          setSlotsData(data.data.filter((a) => a.date === selectedDate));
+
+          setUniqueDateData([
+            ...new Set(
+              data.data.map((a) => {
+                return a.time.split(" ")[0];
+              })
+            ),
+          ]);
+          setSlotsData(
+            data.data.filter((a) => {
+              return a.time.split(" ")[0] == selectedDate;
+            })
+          );
+
           setLoading(false);
         } else {
           console.log("Request failed with status: " + response.status);
@@ -79,83 +94,85 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
   }, []); // Pass an empty array if no dependencies are needed
 
   useEffect(() => {
-    if (timeApiData)
-      setSlotsData(timeApiData.filter((a) => a.date === selectedDate));
+    if (timeApiData) {
+      setSlotsData(
+        timeApiData.filter((a) => {
+          return a.time.split(" ")[0] == selectedDate;
+        })
+      );
+      //setSlotsData(timeApiData.filter((a) => a.date === selectedDate));
+    }
   }, [selectedDate]);
 
-  useEffect(()=>{
-    const fu = async() =>{
+  useEffect(() => {
+    const fu = async () => {
       const getBookingData = await fetch("http://localhost:8000/booking");
       if (getBookingData.ok || getBookingData.status == 500) {
         let Bdata = await getBookingData.json();
-        if (Bdata.message !== "Cannot read properties of null (reading 'list')") {
+        if (
+          Bdata.message !== "Cannot read properties of null (reading 'list')"
+        ) {
           const BFilterdata = Bdata.data.filter((a) => {
             return a.mobile == phone;
           });
-  
+
           const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
-  
+
           if (bID !== undefined) {
-            
             //dispatch(setData({ error: "Unique" }));
-       
+
             setUnique(true);
-           setuniqephnchek(phone);
-           
+            setuniqephnchek(phone);
           }
         }
       }
-    }
-    fu();
-  },[phone])
-
-  useEffect(() => {
-    const fun = async () => {
-      const getUser = await fetch("http://localhost:8000/user-data");
-      if (getUser.ok) {
-        const getData = await getUser.json();
-        //console.log(getData);
-        const alreadyIdData = getData.data.filter(
-          (a) => a.mobile === phone && a.name === fName
-        );
-        //console.log(alreadyIdData);
-        const alreadyId =
-          alreadyIdData.length === 0 ? undefined : alreadyIdData[0].uid;
-        console.log(alreadyId);
-
-        const data = {
-          uid: alreadyId,
-          name: fName,
-          mobile: phone,
-          isVerified: 1,
-          societyId: formData.SocietyId || localData.SocietyId,
-          serviceId: formData.ServiceId || localData.ServiceId,
-        };
-
-        const response = await fetch("http://localhost:8000/user-data", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const result = await response.json();
-        console.log(result);
-      } else {
-        console.log("Request failed with status: " + getUser.status);
-      }
     };
-    fun();
-  }, [isOtpVerified]);
+    fu();
+  }, [phone]);
 
-  useEffect(() => {
-    const existingData = localStorage.getItem("eventData");
+  // useEffect(() => {
+  //   const fun = async () => {
+  //     const getUser = await fetch("http://localhost:8000/user-data");
+  //     if (getUser.ok) {
+  //       const getData = await getUser.json();
+  //       //console.log(getData);
+  //       const alreadyIdData = getData.data.filter(
+  //         (a) => a.mobile === phone && a.name === fName
+  //       );
+  //       //console.log(alreadyIdData);
+  //       const alreadyId =
+  //         alreadyIdData.length === 0 ? undefined : alreadyIdData[0].uid;
+  //       console.log(alreadyId);
 
-    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
-    const eventData = existingData ? JSON.parse(existingData) : {};
+  //       const data = {
+  //         uid: alreadyId,
+  //         name: fName,
+  //         mobile: phone,
+  //         isVerified: 1,
+  //         societyId: formData.SocietyId || localData.SocietyId,
+  //         serviceId: formData.ServiceId || localData.ServiceId,
+  //       };
 
-    if (eventData.bID != undefined) Navigate("/confirm");
-  }, []);
+  //       const response = await fetch("http://localhost:8000/user-data", {
+  //         method: "POST",
+  //         body: JSON.stringify(data),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       const result = await response.json();
+  //       console.log(result);
+  //     } else {
+  //       console.log("Request failed with status: " + getUser.status);
+  //     }
+  //   };
+  //   fun();
+  // }, [isOtpVerified]);
+
+  // useEffect(() => {
+
+  //   //fun();
+  // }, [buttonClicked]);
 
   const HandleNameChange = (event) => {
     seterror(false);
@@ -173,7 +190,6 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
   };
 
   const HandlePhoneChange = (event) => {
-
     seterror(false);
     const numericInput = event.target.value.replace(/[^0-9]/g, "");
     setPhone(numericInput);
@@ -194,8 +210,7 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
       seterror(true);
       dispatch(setData({ error: "Enter Correct PhoneNumber!" }));
     }
-    if(uniquephonecheck != phone)
-    setUnique(false);
+    if (uniquephonecheck != phone) setUnique(false);
   };
 
   const HandleDate = (name) => {
@@ -417,7 +432,7 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
   // Your changeHandler function
 
   async function changeHandler(event) {
-    if(unique){
+    if (unique) {
       toast("Mobile Number Already Exists!");
       seterrorP(true);
       return;
@@ -471,6 +486,7 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
     eventData.Date = Date;
     eventData.Slot = Slot;
 
+    setButtonClicked(true);
     // Convert the updated object to a JSON string
     const jsonString = JSON.stringify(eventData);
 
@@ -480,6 +496,79 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
     dispatch(setData({ Name: name, PhoneNumber: ph, Date: Date, Slot: Slot }));
 
     dispatch(print());
+
+    if (eventData.bID != undefined) Navigate("/confirm");
+
+    const fun = async () => {
+      const getBookingData = await fetch("http://localhost:8000/booking");
+      if (getBookingData.ok || getBookingData.status == 500) {
+        //let Bdata = await getBookingData.json();
+        // if (
+        //   Bdata.message !== "Cannot read properties of null (reading 'list')"
+        // ) {
+        //   const BFilterdata = Bdata.data.filter((a) => {
+        //     return a.mobile == ph;
+        //   });
+
+        //   const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+
+        //   if (bID !== undefined && eventData.PayMethod != undefined) {
+        //     toast("Mobile Number Already Exists!");
+        //     return;
+        //   }
+
+        //   eventData.bID = bID;
+
+        //   const jsonString = JSON.stringify(eventData);
+        //   console.log("bid from with id if: ", bID);
+
+        //   // Store the updated JSON string in localStorage
+        //   localStorage.setItem("eventData", jsonString);
+        // }
+        // eventData.Name = name;
+        // eventData.PhoneNumber = ph;
+        // eventData.Date = Date;
+        // eventData.Slot = Slot;
+        const data = {
+          sid: eventData.SocietyId,
+          time: eventData.Slot,
+          date: eventData.Date,
+          location: eventData.Society,
+          name: eventData.Name,
+          mobile: eventData.PhoneNumber,
+          paymentStatus: "Unverified",
+          //bookedServices: eventData.ServiceId,
+          paymentMode: "None",
+          amountL: eventData.Price,
+          transaction_id: "None",
+          categoryId: eventData.ServiceId,
+          booking_status: "Pending",
+        };
+        const response = await fetch("http://localhost:8000/booking", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const result = await response.json();
+        const d = result.Data;
+        const idArray = d.filter((a) => a.mobile === eventData.PhoneNumber);
+        console.log("resilt: ", idArray);
+
+        eventData.bID = idArray[0].id;
+        console.log("bid from wthout id resoine: ", idArray[0].id);
+        const jsonStri = JSON.stringify(eventData);
+
+        // Store the updated JSON string in localStorage
+        localStorage.setItem("eventData", jsonStri);
+        //console.log(result);
+      } else {
+        console.log("Request failed with status: " + getBookingData.status);
+      }
+    };
+
+    fun();
   }
 
   const slotsArray = [
@@ -496,6 +585,34 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
     "2:30 pm",
     "3:00 pm",
   ];
+
+  const dateChange = (inputDate) => {
+    // Parse the input date
+    const parsedDate = new Date(inputDate);
+
+    // Create an array of month names in abbreviated form
+    const monthNames = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ];
+
+    // Extract the day and month
+    const day = parsedDate.getDate();
+    const month = monthNames[parsedDate.getMonth()];
+
+    // Format the date as "DD MMM"
+    return `${day} ${month}`;
+  };
 
   return (
     <div>
@@ -583,7 +700,7 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
             ) : (
               <>
                 {/* This console.log should be outside the JSX block */}
-                {UniqueDateData.map((elm) => (
+                {UniqueDateData.sort().map((elm) => (
                   <button
                     className={
                       selectedDate === elm
@@ -592,7 +709,7 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
                     }
                     onClick={() => HandleDate(elm)}
                   >
-                    {elm}
+                    {dateChange(elm)}
                   </button>
                 ))}
               </>
@@ -602,13 +719,13 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
               ? SlotsData.map((slot) => (
                   <buttton
                     className={
-                      selectedSlot === slot.time
+                      selectedSlot === slot.time.split(" ")[1]
                         ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 text-center"
                         : "border border-black rounded-md m-3 p-1 text-center"
                     }
-                    onClick={() => HandleSlot(slot.time)}
+                    onClick={() => HandleSlot(slot.time.split(" ")[1])}
                   >
-                    {slot.time}
+                    {slot.time.split(" ")[1]}
                   </buttton>
                 ))
               : slotsArray.map((slot) => (
@@ -633,13 +750,15 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
               selectedSlot === null ||
               selectedSlot === "" ||
               errorN ||
-              errorP || error || unique
+              errorP ||
+              error ||
+              unique
                 ? ""
                 : "/confirm"
             }
             className="ml-[10%]"
           >
-            {console.log(unique , error)}
+            {/* {console.log(unique, error)} */}
             <button
               className={
                 selectedSlot !== null &&
@@ -648,7 +767,7 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
                 phone.length === 10 &&
                 !error &&
                 !errorN &&
-                !errorP 
+                !errorP
                   ? "bg-[#440BB7] rounded-lg text-white p-3 mt-[7%] w-[80%]"
                   : "bg-[#440BB7] cursor-not-allowed rounded-lg text-white p-3 mt-[7%] w-[80%]"
               }
@@ -665,7 +784,6 @@ const [uniquephonecheck, setuniqephnchek] = useState("");
         </div>
       </div>
       <Footer />
-    
     </div>
   );
 }

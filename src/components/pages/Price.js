@@ -60,6 +60,7 @@ function Price() {
     setErr(false);
     
     setSelectedPrice(elm.name);
+    console.log(elm)
     setPrice(elm.price);
   };
 

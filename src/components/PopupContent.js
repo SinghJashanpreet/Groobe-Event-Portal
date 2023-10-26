@@ -99,8 +99,10 @@ const PopupContent = ({ onClose }) => {
       console.log("this is bid tp be updated: ", eventData.bID);
       const data = {
         id: eventData.bID,
-        paymentStatus: "UnPaid",
+        // transaction_id: "None",
+        paymentStatus: "Unverified",
         paymentMode: method,
+        // booking_status: "Pending"
       };
       const response = await fetch("http://localhost:8000/booking", {
         method: "POST",

@@ -10,6 +10,7 @@ import Confirm from "./components/pages/Confirm";
 import Time from "./components/pages/Time";
 import Price from "./components/pages/Price";
 import Receipt from "./components/Receipt";
+import PaymentRzp from "./components/PaymentRzp";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="time" element={<Time />} />
       <Route path="confirm" element={<Confirm />} />
       <Route path="receipt" element={<Receipt/>} />
+      <Route path="rzp" element={<PaymentRzp/>} />
     </Routes>
   );
 }
