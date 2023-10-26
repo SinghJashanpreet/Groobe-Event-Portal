@@ -15,7 +15,7 @@ function PaymentRzp() {
       amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: "INR",
 
-      //   name: "Acme Corp",
+     
       //   description: "Test Transaction",
       //   image: "https://example.com/your_logo",
       //   order_id: "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of createOrder().
