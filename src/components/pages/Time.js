@@ -27,15 +27,15 @@ function Time() {
   var [error, seterror] = useState(false);
   var [errorN, seterrorN] = useState(false);
   var [errorP, seterrorP] = useState(false);
+  const [UniqueDateData, setUniqueDateData] = useState(null);
   const [selectedDate, setSelectedDate] = useState(
-    localData.Date || "2023-10-29"
+    localData.Date || "2023-10-31"
   );
   const [selectedSlot, setSelectedSlot] = useState(localData.Slot || null);
   // const [otp, setotp] = useState("");
   // const [show, setshow] = useState(false);
   // const [final, setfinal] = useState("");
   const [timeApiData, setTimeAPiData] = useState(null);
-  const [UniqueDateData, setUniqueDateData] = useState(null);
   const [SlotsData, setSlotsData] = useState([]);
   const [unique, setUnique] = useState(false);
   const [uniquephonecheck, setuniqephnchek] = useState("");
@@ -71,8 +71,17 @@ function Time() {
               data.data.map((a) => {
                 return a.time.split(" ")[0];
               })
-            ),
-          ]);
+              ),
+            ]);
+            const uDates = [
+              ...new Set(
+                data.data.map((a) => {
+                  return a.time.split(" ")[0];
+                })
+                ),
+              ];
+            setSelectedDate(uDates.sort()[0])
+          
           setSlotsData(
             data.data.filter((a) => {
               return a.time.split(" ")[0] == selectedDate;
@@ -700,9 +709,10 @@ function Time() {
             ) : (
               <>
                 {/* This console.log should be outside the JSX block */}
+                
                 {UniqueDateData.sort().map((elm) => (
                   <button
-                    className={
+                  className={
                       selectedDate === elm
                         ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-3"
                         : "border border-black rounded-md m-3 p-3"
