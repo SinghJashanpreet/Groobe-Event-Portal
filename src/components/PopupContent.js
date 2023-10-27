@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { print, setData } from "../Redux/Slices/FormSlice";
+import useRazorpay from "react-razorpay";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 // import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -19,6 +20,7 @@ const PopupContent = ({ onClose }) => {
   // Initialize an array of isDetailsOpen states, one for each details element
   const [isDetailsOpen, setIsDetailsOpen] = useState(new Array(12).fill(false));
   const [showReceipt, setShowReceipt] = useState(false);
+  const [Razorpay] = useRazorpay();
 
   // Function to toggle the state of a specific details element
   const toggleDetails = (index) => {
@@ -100,7 +102,7 @@ const PopupContent = ({ onClose }) => {
       const data = {
         id: eventData.bID,
         // transaction_id: "None",
-        paymentStatus: "Unverified",
+        paymentStatus: "COD",
         paymentMode: method,
         // booking_status: "Pending"
       };
@@ -137,6 +139,158 @@ const PopupContent = ({ onClose }) => {
     }
   }, []);
 
+  const handlePayment = async (params) => {
+    const existingData = localStorage.getItem("eventData");
+
+    // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+    const eventData = existingData ? JSON.parse(existingData) : {};
+    try {
+      // const orderID = await createOrder(params); // Create order on your backend
+      //const orderID = "order_9A33XWu170gUtm"; // Create order on your backend
+
+      // Define the options for the Razorpay payment
+
+      const options = {
+        key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
+        amount: eventData.Price * 100, // Amount is in currency subunits (paise)
+        // Other payment options...
+        //order_id: orderID, // Use the order ID obtained from the createOrder function
+        handler: async function (response) {
+          try {
+            // Handle the payment response
+            //console.log(response.razorpay_payment_id);
+            const data = {
+              id: eventData.bID,
+              transaction_id: response.razorpay_payment_id,
+              paymentStatus: "Paid",
+              paymentMode: "Online",
+            };
+
+            // Call an async function to make the fetch request
+            await sendPaymentDataToServer(data);
+            dispatch(setData({ showReceipt: true }));
+            setShowReceipt(true);
+            // You can include more handling logic here, e.g., updating the UI
+          } catch (error) {
+            console.error("Error handling payment response:", error);
+            // Handle the error, e.g., show an error message to the user
+          }
+        },
+        prefill: {
+          name: eventData.Name,
+          contact: eventData.PhoneNumber,
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      // Create a new Razorpay instance and open the payment modal
+      const rzp1 = new Razorpay(options);
+      rzp1.on("payment.failed",async function (response) {
+        // Handle payment failure
+        // Alert or handle as needed
+
+        const data = {
+          id: eventData.bID,
+          transaction_id: response.error.metadata.payment_id,
+          paymentStatus: "Cancelled",
+          paymentMode: "Online",
+        };
+
+        // Call an async function to make the fetch request
+        await sendPaymentDataToServer(data);
+
+        console.log(response.error.code);
+        console.log(response.error.description);
+        console.log(response.error.source);
+        console.log(response.error.step);
+        console.log(response.error.reason);
+        console.log(response.error.metadata.order_id);
+        console.log(response.error.metadata.payment_id);
+      });
+      rzp1.open();
+
+      async function sendPaymentDataToServer(data) {
+        try {
+          const response = await fetch("http://localhost:8000/booking", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const result = await response.json();
+          console.log(result);
+        } catch (error) {
+          console.error("Error sending payment data to server:", error);
+          // Handle any errors related to the server request
+        }
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+      // Handle the error, e.g., show an error message to the user
+    }
+
+    try {
+      //const method = event.target.getAttribute("name");
+
+      // Add or update the Service and ServiceId properties
+      eventData.PayMethod = "Online";
+
+      // Convert the updated object to a JSON string
+      const jsonString = JSON.stringify(eventData);
+
+      // Store the updated JSON string in localStorage
+      localStorage.setItem("eventData", jsonString);
+
+      dispatch(setData({ PayMethod: "Online" }));
+
+      // const getBookingData = await fetch("http://localhost:8000/booking");
+      // if (getBookingData.ok) {
+      //   let Bdata = await getBookingData.json();
+
+      //   const BFilterdata = Bdata.data.filter((a) => {
+      //     console.log(a.id, eventData.bID);
+      //     return a.id == eventData.bID;
+      //   });
+
+      //   console.log(BFilterdata);
+
+      //   const bID = BFilterdata.length === 0 ? undefined : BFilterdata[0].id;
+
+      //   console.log(bID);
+
+      //   eventData.bID = bID;
+      //   const jsonString = JSON.stringify(eventData);
+
+      //   // Store the updated JSON string in localStorage
+      //   localStorage.setItem("eventData", jsonString);
+      //   dispatch(setData({ showReceipt: true }));
+      // console.log("this is bid tp be updated: ", eventData.bID);
+      // const data = {
+      //   id: eventData.bID,
+      //   transaction_id: "krda update wait",
+      //   paymentStatus: "Paid/Unpaid",
+      //   paymentMode: "Online",
+      //   // booking_status: "Pending"
+      // };
+      // const response = await fetch("http://localhost:8000/booking", {
+      //   method: "POST",
+      //   body: JSON.stringify(data),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      // const result = await response.json();
+      // console.log(result);
+
+      // dispatch(print());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="relative">
       {!showReceipt ? (
@@ -161,7 +315,7 @@ const PopupContent = ({ onClose }) => {
             <h1
               className="border border-gray-300 pl-5 pt-2 pb-2  mb-5 shadow-lg rounded-lg"
               name="Online"
-              onClick={HandleMethod}
+              onClick={handlePayment}
             >
               Pay Now
             </h1>

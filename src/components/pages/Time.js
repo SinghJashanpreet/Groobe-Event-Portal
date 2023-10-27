@@ -539,7 +539,7 @@ function Time() {
           paymentStatus: "Unverified",
           //bookedServices: eventData.ServiceId,
           paymentMode: "None",
-          amountL: eventData.Price,
+          amount: eventData.Price,
           transaction_id: "None",
           categoryId: eventData.ServiceId,
           booking_status: "Pending",
