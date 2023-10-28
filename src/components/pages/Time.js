@@ -36,6 +36,7 @@ function Time() {
   // const [show, setshow] = useState(false);
   // const [final, setfinal] = useState("");
   const [timeApiData, setTimeAPiData] = useState(null);
+  const [timeIdData, setTimeIdData] = useState(null);
   const [SlotsData, setSlotsData] = useState([]);
   const [unique, setUnique] = useState(false);
   const [uniquephonecheck, setuniqephnchek] = useState("");
@@ -71,23 +72,33 @@ function Time() {
               data.data.map((a) => {
                 return a.time.split(" ")[0];
               })
-              ),
-            ]);
-            const uDates = [
-              ...new Set(
-                data.data.map((a) => {
-                  return a.time.split(" ")[0];
-                })
-                ),
-              ];
-            setSelectedDate(uDates.sort()[0])
-          
+            ),
+          ]);
+          const uDates = [
+            ...new Set(
+              data.data.map((a) => {
+                return a.time.split(" ")[0];
+              })
+            ),
+          ];
+          setSelectedDate(uDates.sort()[0]);
+
           setSlotsData(
             data.data.filter((a) => {
               return a.time.split(" ")[0] == selectedDate;
             })
           );
+          const dtry = data.data.filter((a) => {
+            return a.time.split(" ")[0] == selectedDate;
+          });
+          if (dtry.length > 0) setTimeIdData(dtry[0]);
+          // setTimeIdData(
+          //   data.data.filter((a) => {
+          //     return a.time.split(" ")[0] == selectedDate;
+          //   })
+          // );
 
+          // console.log("this is time id data", timeIdData);
           setLoading(false);
         } else {
           console.log("Request failed with status: " + response.status);
@@ -109,6 +120,15 @@ function Time() {
           return a.time.split(" ")[0] == selectedDate;
         })
       );
+      const dtry = timeApiData.filter((a) => {
+        return a.time.split(" ")[0] == selectedDate;
+      });
+      if (dtry.length > 0) setTimeIdData(dtry[0].id);
+      // setTimeIdData(
+      //   timeApiData.filter((a) => {
+      //     return a.time.split(" ")[0] == selectedDate;
+      //   })
+      // );
       //setSlotsData(timeApiData.filter((a) => a.date === selectedDate));
     }
   }, [selectedDate]);
@@ -494,6 +514,7 @@ function Time() {
     eventData.PhoneNumber = ph;
     eventData.Date = Date;
     eventData.Slot = Slot;
+    eventData.TimeId = timeIdData;
 
     setButtonClicked(true);
     // Convert the updated object to a JSON string
@@ -709,10 +730,10 @@ function Time() {
             ) : (
               <>
                 {/* This console.log should be outside the JSX block */}
-                
+
                 {UniqueDateData.sort().map((elm) => (
                   <button
-                  className={
+                    className={
                       selectedDate === elm
                         ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-3"
                         : "border border-black rounded-md m-3 p-3"

@@ -48,12 +48,11 @@ function Confirm() {
   const toggleModal = async () => {
     try {
       if (isModalOpen === true) {
-        console.log("trying to close", isModalOpen)
-        if(formData.taskcompleted === true){
+        console.log("trying to close", isModalOpen);
+        if (formData.taskcompleted === true) {
           setModalOpen(true);
           return;
-        }
-        else{
+        } else {
           setModalOpen(!isModalOpen);
           return;
         }
@@ -146,9 +145,9 @@ function Confirm() {
       //   //console.log(result);
 
       // } else {
-        //   console.log("Request failed with status: " + getBookingData.status);
-        // }
-        setModalOpen(!isModalOpen);
+      //   console.log("Request failed with status: " + getBookingData.status);
+      // }
+      setModalOpen(!isModalOpen);
     } catch (e) {
       console.log(e);
     }

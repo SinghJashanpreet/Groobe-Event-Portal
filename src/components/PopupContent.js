@@ -168,6 +168,9 @@ const PopupContent = ({ onClose }) => {
 
             // Call an async function to make the fetch request
             await sendPaymentDataToServer(data);
+            
+            await updateBookingTimeApi();
+
             dispatch(setData({ showReceipt: true }));
             setShowReceipt(true);
             // You can include more handling logic here, e.g., updating the UI
@@ -226,6 +229,52 @@ const PopupContent = ({ onClose }) => {
           console.error("Error sending payment data to server:", error);
           // Handle any errors related to the server request
         }
+      }
+      async function updateBookingTimeApi(data) {
+        try {
+          const id = eventData.TimeId;
+          const sid = eventData.SocietyId;
+          // Make the API call
+          const apiResponse = await fetch("http://localhost:8000/time-slot");
+  
+          // Check if the response status code indicates success
+          if (apiResponse.ok) {
+            // Parse the JSON response data
+            const apiData = await apiResponse.json();
+  
+            const bookingCountAlready = apiData.data.filter((a) => {
+              return a.id == id && a.sid == sid;
+            })[0].bookings;
+  
+            const dataTobeUpdated = {
+              id: id,
+              bookings: (parseInt(bookingCountAlready) + 1).toString()
+            };
+            // console.log("This is your time data:", bookingCountAlready);
+            const postResponse = await fetch("http://localhost:8000/time-slot", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(dataTobeUpdated),
+            });
+  
+            if (postResponse.ok) {
+              console.log("Data updated successfully");
+            } else {
+              console.error(
+                "Failed to update data with status:",
+                postResponse.status
+              );
+            }
+          } else {
+            console.error("API request failed with status:", apiResponse.status);
+          }
+        } catch (error) {
+          // Handle any network or fetch-related errors
+          console.error("An error occurred while fetching data:", error);
+        }
+  
       }
     } catch (error) {
       console.error("Error creating order:", error);
