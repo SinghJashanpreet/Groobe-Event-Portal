@@ -27,6 +27,10 @@ function Service() {
 
   useEffect(() => {
     async function fetchData() {
+      const existingData = localStorage.getItem("eventData");
+      // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
+      const eventData = existingData ? JSON.parse(existingData) : {};
+
       try {
         setLoading(true);
         const response = await fetch(window.backendUrl + "service-data", {
@@ -38,7 +42,10 @@ function Service() {
         if (response.ok) {
           const data = await response.json();
           console.log("Service Data fetched", data);
-          setServiceApiData(data.data);
+          const filterSocietyWise = data.data.filter((a)=>{
+            return a.sid === eventData.SocietyId
+          })
+          setServiceApiData(filterSocietyWise);
           setLoading(false);
         } else {
           console.log("Request failed with status: " + response.status);

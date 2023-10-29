@@ -64,19 +64,22 @@ function Time() {
         });
         if (response.ok) {
           const data = await response.json();
-          console.log("price Data fetched", data);
-          setTimeAPiData(data.data);
+          console.log("time Data fetched", data);
+          const filterSocietyWiseData = data.data.filter((a) => {
+            return a.sid === localData.SocietyId;
+          });
+          setTimeAPiData(filterSocietyWiseData);
 
           setUniqueDateData([
             ...new Set(
-              data.data.map((a) => {
+              filterSocietyWiseData.map((a) => {
                 return a.time.split(" ")[0];
               })
             ),
           ]);
           const uDates = [
             ...new Set(
-              data.data.map((a) => {
+              filterSocietyWiseData.map((a) => {
                 return a.time.split(" ")[0];
               })
             ),
@@ -84,11 +87,11 @@ function Time() {
           setSelectedDate(uDates.sort()[0]);
 
           setSlotsData(
-            data.data.filter((a) => {
+            filterSocietyWiseData.filter((a) => {
               return a.time.split(" ")[0] == selectedDate;
             })
           );
-          const dtry = data.data.filter((a) => {
+          const dtry = filterSocietyWiseData.filter((a) => {
             return a.time.split(" ")[0] == selectedDate;
           });
           if (dtry.length > 0) setTimeIdData(dtry[0]);
@@ -722,7 +725,7 @@ function Time() {
 
         <div className="shadow-xl border-1 p-10 m:p-5 rounded-lg bg-white text-lg">
           <p>Time and Date</p>
-          <div className="border border-black grid grid-cols-4 rounded-md p-1 mt-2">
+          <div className="border border-black grid grid-cols-3 sm:grid-cols-4 rounded-md p-1 mt-2">
             {loading === true ? (
               <div className="relative top-[50%] left-[50%]">
                 <RingLoader color="#7E22CE" size={50} />
