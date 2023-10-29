@@ -76,7 +76,7 @@ const PopupContent = ({ onClose }) => {
       localStorage.setItem("eventData", jsonString);
 
       dispatch(setData({ PayMethod: method }));
-
+      dispatch(setData({ showReceipt: true }));
       // const getBookingData = await fetch("http://localhost:8000/booking");
       // if (getBookingData.ok) {
       //   let Bdata = await getBookingData.json();
