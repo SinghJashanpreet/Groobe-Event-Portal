@@ -32,7 +32,7 @@ function Design() {
       try {
         setLoading(true);
         const response = await fetch(
-          "http://localhost:8000/service-detail-data",
+          window.backendUrl + "service-detail-data",
           {
             method: "GET",
             headers: {

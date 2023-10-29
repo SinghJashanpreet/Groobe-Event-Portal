@@ -106,7 +106,7 @@ const PopupContent = ({ onClose }) => {
         paymentMode: method,
         // booking_status: "Pending"
       };
-      const response = await fetch("http://localhost:8000/booking", {
+      const response = await fetch(window.backendUrl + "booking", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -168,7 +168,7 @@ const PopupContent = ({ onClose }) => {
 
             // Call an async function to make the fetch request
             await sendPaymentDataToServer(data);
-            
+
             await updateBookingTimeApi();
 
             dispatch(setData({ showReceipt: true }));
@@ -216,7 +216,7 @@ const PopupContent = ({ onClose }) => {
 
       async function sendPaymentDataToServer(data) {
         try {
-          const response = await fetch("http://localhost:8000/booking", {
+          const response = await fetch(window.backendUrl + "booking", {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -235,7 +235,7 @@ const PopupContent = ({ onClose }) => {
           const id = eventData.TimeId;
           const sid = eventData.SocietyId;
           // Make the API call
-          const apiResponse = await fetch("http://localhost:8000/time-slot");
+          const apiResponse = await fetch(window.backendUrl + "time-slot");
   
           // Check if the response status code indicates success
           if (apiResponse.ok) {
@@ -251,7 +251,7 @@ const PopupContent = ({ onClose }) => {
               bookings: (parseInt(bookingCountAlready) + 1).toString()
             };
             // console.log("This is your time data:", bookingCountAlready);
-            const postResponse = await fetch("http://localhost:8000/time-slot", {
+            const postResponse = await fetch(window.backendUrl + "time-slot", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

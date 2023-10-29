@@ -29,7 +29,7 @@ function Service() {
     async function fetchData() {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8000/service-data", {
+        const response = await fetch(window.backendUrl + "service-data", {
           method: "GET",
           headers: {
             usertype: "user",

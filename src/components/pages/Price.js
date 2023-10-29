@@ -22,7 +22,7 @@ function Price() {
     async function fetchData() {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8000/pricing", {
+        const response = await fetch(window.backendUrl + "pricing", {
           method: "GET",
           headers: {
             usertype: "user",

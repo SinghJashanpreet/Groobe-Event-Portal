@@ -13,7 +13,7 @@ function Society() {
     async function fetchData() {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8000/society-data", {
+        const response = await fetch(window.backendUrl+"society-data", {
           method: "GET",
           headers: {
             usertype: "user",

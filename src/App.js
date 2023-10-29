@@ -13,6 +13,7 @@ import Receipt from "./components/Receipt";
 import PaymentRzp from "./components/PaymentRzp";
 
 function App() {
+  window.backendUrl = `https://event-backend-484f.onrender.com/`;
   return (
     <Routes>
       <Route path="/" element={<Main />} />

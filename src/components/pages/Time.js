@@ -59,7 +59,7 @@ function Time() {
     async function fetchData() {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:8000/time-slot", {
+        const response = await fetch(window.backendUrl + "time-slot", {
           method: "GET",
         });
         if (response.ok) {
@@ -135,7 +135,7 @@ function Time() {
 
   useEffect(() => {
     const fu = async () => {
-      const getBookingData = await fetch("http://localhost:8000/booking");
+      const getBookingData = await fetch(window.backendUrl + "booking");
       if (getBookingData.ok || getBookingData.status == 500) {
         let Bdata = await getBookingData.json();
         if (
@@ -530,7 +530,7 @@ function Time() {
     if (eventData.bID != undefined) Navigate("/confirm");
 
     const fun = async () => {
-      const getBookingData = await fetch("http://localhost:8000/booking");
+      const getBookingData = await fetch(window.backendUrl + "booking");
       if (getBookingData.ok || getBookingData.status == 500) {
         //let Bdata = await getBookingData.json();
         // if (
@@ -574,7 +574,7 @@ function Time() {
           categoryId: eventData.ServiceId,
           booking_status: "Pending",
         };
-        const response = await fetch("http://localhost:8000/booking", {
+        const response = await fetch(window.backendUrl + "booking", {
           method: "POST",
           body: JSON.stringify(data),
           headers: {
