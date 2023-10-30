@@ -66,7 +66,7 @@ function Design() {
   const bg = formData.Service === "Nail Art" ? 1 : undefined;
 
   // Your changeHandler function
-  function changeHandler(event) {
+  function changeHandler(event, idd) {
     // const { name, value, checked, type } = event.target;
     const selectedDesign = event;
     const existingData = localStorage.getItem("eventData");
@@ -74,15 +74,25 @@ function Design() {
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
     const eventData = existingData ? JSON.parse(existingData) : {};
 
-    // Add or update the Service and ServiceId properties
-    eventData.Design = selectedDesign;
+ 
     
+
+
+
+    if (eventData.Design != event && eventData.CatagoryId != idd) {
+   // Add or update the Service and ServiceId properties
+   eventData.Design = selectedDesign;
+   eventData.CatagoryId = idd;
+
 
     // Convert the updated object to a JSON string
     const jsonString = JSON.stringify(eventData);
 
     // Store the updated JSON string in localStorage
     localStorage.setItem("eventData", jsonString);
+    }
+
+
     dispatch(setData({ Design: selectedDesign }));
     dispatch(print());
   }
@@ -125,7 +135,7 @@ function Design() {
             max-h-[400px] w-full rounded-lg my-7
             md:mt-[1.5rem]`}
                 name={design.name}
-                onClick={()=>changeHandler(design.name)}
+                onClick={()=>changeHandler(design.name, design.id)}
               >
                 <span
                   className="flex flex-col justify-center"

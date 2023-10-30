@@ -91,10 +91,11 @@ function Time() {
               return a.time.split(" ")[0] == selectedDate;
             })
           );
-          const dtry = filterSocietyWiseData.filter((a) => {
-            return a.time.split(" ")[0] == selectedDate;
-          });
-          if (dtry.length > 0) setTimeIdData(dtry[0]);
+          // const dtry = filterSocietyWiseData.filter((a) => {
+          //   return a.time.split(" ")[0] == selectedDate;
+          // });
+          // console.log("first",dtry)
+          // if (dtry.length > 0) setTimeIdData(dtry[0]);
           // setTimeIdData(
           //   data.data.filter((a) => {
           //     return a.time.split(" ")[0] == selectedDate;
@@ -123,10 +124,11 @@ function Time() {
           return a.time.split(" ")[0] == selectedDate;
         })
       );
-      const dtry = timeApiData.filter((a) => {
-        return a.time.split(" ")[0] == selectedDate;
-      });
-      if (dtry.length > 0) setTimeIdData(dtry[0].id);
+      // const dtry = timeApiData.filter((a) => {
+      //   return a.time.split(" ")[0] == selectedDate;
+      // });
+      // console.log("second",dtry)
+      // if (dtry.length > 0) setTimeIdData(dtry[0].id);
       // setTimeIdData(
       //   timeApiData.filter((a) => {
       //     return a.time.split(" ")[0] == selectedDate;
@@ -263,8 +265,9 @@ function Time() {
     setSelectedSlot(null);
   };
 
-  const HandleSlot = (name) => {
+  const HandleSlot = (name, idd) => {
     setSelectedSlot(name);
+    setTimeIdData(idd);
     const existingData = localStorage.getItem("eventData");
 
     // Parse the existing data as a JSON object, or create an empty object if it doesn't exist
@@ -574,7 +577,7 @@ function Time() {
           paymentMode: "None",
           amount: eventData.Price,
           transaction_id: "None",
-          categoryId: eventData.ServiceId,
+          categoryId: eventData.CatagoryId,
           booking_status: "Pending",
         };
         const response = await fetch(window.backendUrl + "booking", {
@@ -587,10 +590,10 @@ function Time() {
         const result = await response.json();
         const d = result.Data;
         const idArray = d.filter((a) => a.mobile === eventData.PhoneNumber);
-        console.log("resilt: ", idArray);
+        //console.log("resilt: ", idArray);
 
         eventData.bID = idArray[0].id;
-        console.log("bid from wthout id resoine: ", idArray[0].id);
+        //console.log("bid from wthout id resoine: ", idArray[0].id);
         const jsonStri = JSON.stringify(eventData);
 
         // Store the updated JSON string in localStorage
@@ -601,7 +604,7 @@ function Time() {
       }
     };
 
-    fun();
+    await fun();
   }
 
   const slotsArray = [
@@ -757,7 +760,7 @@ function Time() {
                         ? "border border-[#440BB7] bg-[#440BB7] text-white rounded-md m-3 p-1 text-center"
                         : "border border-black rounded-md m-3 p-1 text-center"
                     }
-                    onClick={() => HandleSlot(slot.time.split(" ")[1])}
+                    onClick={() => HandleSlot(slot.time.split(" ")[1] , slot.id)}
                   >
                     {slot.time.split(" ")[1]}
                   </buttton>

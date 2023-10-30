@@ -58,8 +58,7 @@ const PopupContent = ({ onClose }) => {
 
   const HandleMethod = async (event) => {
     try {
-      const method = event.target.getAttribute("name");
-
+      const method = "Pay After Service";
       // Retrieve the existing data from localStorage, if any
       const existingData = localStorage.getItem("eventData");
 
@@ -67,16 +66,14 @@ const PopupContent = ({ onClose }) => {
       const eventData = existingData ? JSON.parse(existingData) : {};
 
       // Add or update the Service and ServiceId properties
-      eventData.PayMethod = method;
-
+      eventData.PayMethod = "Pay After Service";
+      console.log("this is method: ", method);
       // Convert the updated object to a JSON string
       const jsonString = JSON.stringify(eventData);
 
       // Store the updated JSON string in localStorage
       localStorage.setItem("eventData", jsonString);
 
-      dispatch(setData({ PayMethod: method }));
-      dispatch(setData({ showReceipt: true }));
       // const getBookingData = await fetch("http://localhost:8000/booking");
       // if (getBookingData.ok) {
       //   let Bdata = await getBookingData.json();
@@ -98,25 +95,97 @@ const PopupContent = ({ onClose }) => {
       //   // Store the updated JSON string in localStorage
       //   localStorage.setItem("eventData", jsonString);
       //   dispatch(setData({ showReceipt: true }));
-      console.log("this is bid tp be updated: ", eventData.bID);
+      console.log("this is bid tp be updated: ", eventData);
+
       const data = {
         id: eventData.bID,
         // transaction_id: "None",
         paymentStatus: "COD",
-        paymentMode: method,
+        paymentMode: "Pay After Service",
         // booking_status: "Pending"
       };
-      const response = await fetch(window.backendUrl + "booking", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = await response.json();
-      console.log(result);
+
+      async function sendPaymentDataToServer(data) {
+        try {
+          const response = await fetch(window.backendUrl + "booking", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const result = await response.json();
+          console.log(result);
+        } catch (error) {
+          console.error("Error sending payment data to server:", error);
+          // Handle any errors related to the server request
+        }
+      }
+      // const response = await fetch(window.backendUrl + "booking", {
+      //   method: "POST",
+      //   body: JSON.stringify(data),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+
+      // const result = await response.json();
+      await sendPaymentDataToServer(data);
+      async function updateBookingTimeApi(data) {
+        try {
+          const id = eventData.TimeId;
+          const sid = eventData.SocietyId;
+          // Make the API call
+          const apiResponse = await fetch(window.backendUrl + "time-slot");
+
+          // Check if the response status code indicates success
+          if (apiResponse.ok) {
+            // Parse the JSON response data
+            const apiData = await apiResponse.json();
+
+            const bookingCountAlready = apiData.data.filter((a) => {
+              return a.id == id && a.sid == sid;
+            })[0].bookings;
+            console.log("booking count is : ", bookingCountAlready);
+            const dataTobeUpdated = {
+              id: id,
+              bookings: (parseInt(bookingCountAlready) + 1).toString(),
+            };
+            console.log("data new is : ", dataTobeUpdated);
+            // console.log("This is your time data:", bookingCountAlready);
+            const postResponse = await fetch(window.backendUrl + "time-slot", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(dataTobeUpdated),
+            });
+
+            if (postResponse.ok) {
+              console.log("Data updated successfully");
+            } else {
+              console.error(
+                "Failed to update data with status:",
+                postResponse.status
+              );
+            }
+          } else {
+            console.error(
+              "API request failed with status:",
+              apiResponse.status
+            );
+          }
+        } catch (error) {
+          // Handle any network or fetch-related errors
+          console.error("An error occurred while fetching data:", error);
+        }
+      }
+
+      await updateBookingTimeApi();
 
       dispatch(print());
+      dispatch(setData({ PayMethod: method }));
+      dispatch(setData({ showReceipt: true }));
       setShowReceipt(true);
     } catch (e) {
       console.log(e);
@@ -151,8 +220,8 @@ const PopupContent = ({ onClose }) => {
       // Define the options for the Razorpay payment
 
       const options = {
-        // key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
-        key: "rzp_live_RxKmr3sDSHt06N", // Your Razorpay API Key
+        //key: "rzp_live_RxKmr3sDSHt06N", // Your Razorpay API Key
+        key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
         amount: eventData.Price * 100, // Amount is in currency subunits (paise)
 
         config: {
@@ -176,7 +245,7 @@ const PopupContent = ({ onClose }) => {
                 ],
               },
             },
-            
+
             sequence: ["block.banks"],
             preferences: {
               show_default_blocks: true, // Should Checkout show its default blocks?
@@ -320,11 +389,12 @@ const PopupContent = ({ onClose }) => {
             const bookingCountAlready = apiData.data.filter((a) => {
               return a.id == id && a.sid == sid;
             })[0].bookings;
-
+            console.log("booking count is : ", bookingCountAlready);
             const dataTobeUpdated = {
               id: id,
               bookings: (parseInt(bookingCountAlready) + 1).toString(),
             };
+            console.log("data new is : ", dataTobeUpdated);
             // console.log("This is your time data:", bookingCountAlready);
             const postResponse = await fetch(window.backendUrl + "time-slot", {
               method: "POST",
