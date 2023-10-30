@@ -144,7 +144,7 @@ function Time() {
       if (getBookingData.ok || getBookingData.status == 500) {
         let Bdata = await getBookingData.json();
         if (
-          Bdata.message !== "Cannot read properties of null (reading 'list')"
+          Bdata.message != "Cannot read properties of null (reading 'list')"
         ) {
           const BFilterdata = Bdata.data.filter((a) => {
             return a.mobile == phone;
