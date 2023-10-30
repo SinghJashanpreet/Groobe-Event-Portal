@@ -220,8 +220,8 @@ const PopupContent = ({ onClose }) => {
       // Define the options for the Razorpay payment
 
       const options = {
-        //key: "rzp_live_RxKmr3sDSHt06N", // Your Razorpay API Key
-        key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
+        key: "rzp_live_RxKmr3sDSHt06N", // Your Razorpay API Key
+        //key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
         amount: eventData.Price * 100, // Amount is in currency subunits (paise)
 
         config: {
