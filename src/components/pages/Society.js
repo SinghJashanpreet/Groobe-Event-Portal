@@ -61,7 +61,7 @@ function Society() {
     eventData.taskcompleted = false;
     eventData.Hands = "Both Hands";
     eventData.Length = "Palm Length";
-    eventData.Price = "1100";
+    //eventData.Price = "1100";
 
     // Convert the object to a JSON string
     const jsonString = JSON.stringify(eventData);

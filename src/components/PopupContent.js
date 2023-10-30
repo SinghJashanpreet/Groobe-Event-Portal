@@ -151,28 +151,103 @@ const PopupContent = ({ onClose }) => {
       // Define the options for the Razorpay payment
 
       const options = {
-        key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
+        // key: "rzp_test_eTUkfD3gqLeX0A", // Your Razorpay API Key
+        key: "rzp_live_RxKmr3sDSHt06N", // Your Razorpay API Key
         amount: eventData.Price * 100, // Amount is in currency subunits (paise)
+
+        config: {
+          display: {
+            blocks: {
+              banks: {
+                name: "Upi payment methods",
+                instruments: [
+                  {
+                    method: "upi", // Include UPI as a payment method
+                  },
+                  // {
+                  //   method: "card",
+                  // },
+                  // {
+                  //   method: "wallet",
+                  // },
+                  // {
+                  //   method: "netbanking",
+                  // },
+                ],
+              },
+            },
+            
+            sequence: ["block.banks"],
+            preferences: {
+              show_default_blocks: true, // Should Checkout show its default blocks?
+            },
+          },
+        },
         // Other payment options...
         //order_id: orderID, // Use the order ID obtained from the createOrder function
         handler: async function (response) {
           try {
             // Handle the payment response
             //console.log(response.razorpay_payment_id);
-            const data = {
-              id: eventData.bID,
-              transaction_id: response.razorpay_payment_id,
-              paymentStatus: "Paid",
-              paymentMode: "Online",
-            };
+            if (response.method === "upi") {
+              // Handle UPI payment here
+              console.log("UPI Payment ID: ", response.razorpay_payment_id);
+              console.log(
+                "UPI Transaction ID: ",
+                response.razorpay_upi_transaction_id
+              );
+              const data = {
+                id: eventData.bID,
+                transaction_id: response.razorpay_upi_transaction_id,
+                paymentStatus: "Paid",
+                paymentMode: "Online",
+              };
 
-            // Call an async function to make the fetch request
-            await sendPaymentDataToServer(data);
+              eventData.PayMethod = "Online";
 
-            await updateBookingTimeApi();
+              // Convert the updated object to a JSON string
+              const jsonString = JSON.stringify(eventData);
 
-            dispatch(setData({ showReceipt: true }));
-            setShowReceipt(true);
+              // Store the updated JSON string in localStorage
+              localStorage.setItem("eventData", jsonString);
+
+              dispatch(setData({ PayMethod: "Online" }));
+
+              // Call an async function to make the fetch request
+              await sendPaymentDataToServer(data);
+
+              await updateBookingTimeApi();
+
+              dispatch(setData({ showReceipt: true }));
+              setShowReceipt(true);
+              // You can include specific logic for UPI payments here
+            } else {
+              eventData.PayMethod = "Online";
+
+              // Convert the updated object to a JSON string
+              const jsonString = JSON.stringify(eventData);
+
+              // Store the updated JSON string in localStorage
+              localStorage.setItem("eventData", jsonString);
+
+              dispatch(setData({ PayMethod: "Online" }));
+
+              const data = {
+                id: eventData.bID,
+                transaction_id: response.razorpay_payment_id,
+                paymentStatus: "Paid",
+                paymentMode: "Online",
+              };
+
+              // Call an async function to make the fetch request
+              await sendPaymentDataToServer(data);
+
+              await updateBookingTimeApi();
+
+              dispatch(setData({ showReceipt: true }));
+              setShowReceipt(true);
+            }
+
             // You can include more handling logic here, e.g., updating the UI
           } catch (error) {
             console.error("Error handling payment response:", error);
@@ -190,7 +265,7 @@ const PopupContent = ({ onClose }) => {
 
       // Create a new Razorpay instance and open the payment modal
       const rzp1 = new Razorpay(options);
-      rzp1.on("payment.failed",async function (response) {
+      rzp1.on("payment.failed", async function (response) {
         // Handle payment failure
         // Alert or handle as needed
 
@@ -236,19 +311,19 @@ const PopupContent = ({ onClose }) => {
           const sid = eventData.SocietyId;
           // Make the API call
           const apiResponse = await fetch(window.backendUrl + "time-slot");
-  
+
           // Check if the response status code indicates success
           if (apiResponse.ok) {
             // Parse the JSON response data
             const apiData = await apiResponse.json();
-  
+
             const bookingCountAlready = apiData.data.filter((a) => {
               return a.id == id && a.sid == sid;
             })[0].bookings;
-  
+
             const dataTobeUpdated = {
               id: id,
-              bookings: (parseInt(bookingCountAlready) + 1).toString()
+              bookings: (parseInt(bookingCountAlready) + 1).toString(),
             };
             // console.log("This is your time data:", bookingCountAlready);
             const postResponse = await fetch(window.backendUrl + "time-slot", {
@@ -258,7 +333,7 @@ const PopupContent = ({ onClose }) => {
               },
               body: JSON.stringify(dataTobeUpdated),
             });
-  
+
             if (postResponse.ok) {
               console.log("Data updated successfully");
             } else {
@@ -268,13 +343,15 @@ const PopupContent = ({ onClose }) => {
               );
             }
           } else {
-            console.error("API request failed with status:", apiResponse.status);
+            console.error(
+              "API request failed with status:",
+              apiResponse.status
+            );
           }
         } catch (error) {
           // Handle any network or fetch-related errors
           console.error("An error occurred while fetching data:", error);
         }
-  
       }
     } catch (error) {
       console.error("Error creating order:", error);

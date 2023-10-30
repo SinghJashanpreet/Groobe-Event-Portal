@@ -42,10 +42,11 @@ function Service() {
         if (response.ok) {
           const data = await response.json();
           console.log("Service Data fetched", data);
-          const filterSocietyWise = data.data.filter((a)=>{
-            return a.sid === eventData.SocietyId
-          })
+          const filterSocietyWise = data.data.filter((a) => {
+            return a.sid === eventData.SocietyId;
+          });
           setServiceApiData(filterSocietyWise);
+          
           setLoading(false);
         } else {
           console.log("Request failed with status: " + response.status);
